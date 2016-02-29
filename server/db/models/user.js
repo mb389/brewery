@@ -13,10 +13,10 @@ var schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    orders: {
+    orders: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Order'
-    },
+    }],
     isAdmin: {
       type: Boolean,
       default: false
