@@ -13,7 +13,7 @@ var schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    _orders: {
+    orders: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Order'
     },

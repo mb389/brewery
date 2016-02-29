@@ -5,7 +5,7 @@ var User = mongoose.model('User');
 
 router.get('/', (req, res, next) => {
   User.find()
-  .then((users) => {
+  .then(users => {
     res.json(users);
   })
   .then(null, next);
@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   User.findById(req.params.id)
-  .then((user) => {
+  .then(user => {
     res.json(user);
   })
   .then(null, next);
@@ -21,15 +21,16 @@ router.get('/:id', (req, res, next) => {
 
 router.get('/:id/orders', (req, res, next) => {
   User.findById(req.params.id).populate('orders').exec()
-  .then((user) => {
+  .then(user => {
     res.json(user.orders);
   })
   .then(null, next);
 })
 
+//check admin status, send back 404?
 router.get('/:id/isAdmin', (req, res, next) => {
   User.findById(req.params.id)
-  .then((user) => {
+  .then(user => {
     if(user.isAdmin) res.json(user);
     else res.sendStatus(404);
   })
@@ -38,7 +39,7 @@ router.get('/:id/isAdmin', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   User.create(req.body)
-  .then((user) => {
+  .then(user => {
     res.json(user);
   })
   .then(null, next);
@@ -46,7 +47,7 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   User.findBydId(req.params.id)
-  .then((user) => {
+  .then(user => {
     user = req.body;
     user.save();
     res.json(user);
@@ -56,7 +57,7 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
   User.findById(req.params.id)
-  .then((user) => {
+  .then(user => {
     user.remove();
     res.sendStatus(204);
   })
