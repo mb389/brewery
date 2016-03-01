@@ -1,6 +1,8 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
+var mongoose = require('mongoose');
+var Product = mongoose.model('Product');
 
 router.use('/products');
 
@@ -25,18 +27,18 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   Product.findBydId(req.params.id)
-  .then(Product => {
-    Product = req.body;
-    Product.save();
-    res.json(Product);
+  .then(product => {
+    product = req.body;
+    product.save();
+    res.json(product);
   })
   .then(null, next);
 });
 
 router.delete('/:id', (req, res, next) => {
   Product.findById(req.params.id)
-  .then(Product => {
-    Product.remove();
+  .then(product => {
+    product.remove();
     res.sendStatus(204);
   })
   .then(null, next);
