@@ -31,8 +31,11 @@ module.exports = function (app) {
       //need to send a obj with email, password
       User.create(req.body)
       .then(user => {
-        res.json(user);
-      });
+        req.login(user, function(){
+          res.status(201).json(user);
+        })
+      })
+      .then(null, next);
     });
 
     // A POST /login route is created to handle login.
@@ -48,8 +51,8 @@ module.exports = function (app) {
                 return next(error);
             }
 
-            // req.logIn will establish our session.
-            req.logIn(user, function (loginErr) {
+            // req.login will establish our session.
+            req.login(user, function (loginErr) {
                 if (loginErr) return next(loginErr);
                 // We respond with a response object that has user with _id and email.
                 res.status(200).send({
