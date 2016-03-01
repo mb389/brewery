@@ -2,8 +2,9 @@
 var router = require('express').Router();
 module.exports = router;
 var mongoose = require('mongoose');
-var Promise = require('bluebird')
-var Order = mongoose.model('Order')
+var Promise = require('bluebird');
+var Order = mongoose.model('Order');
+var User = mongoose.model('User');
 
 
 router.get('/', (req, res, next) => {
@@ -56,8 +57,7 @@ router.delete('/:cartId/:userId', (req, res, next) => {
     ])
   .spread((user, order) => {
     //delete the order from the users list of orders
-    if
-    user.orders.forEach((userOrder, index, array => {
+    user.orders.forEach((userOrder, index, array) => {
       if (userOrder === order._id) array.splice(index, 1)
     })
     res.sendStatus(204)

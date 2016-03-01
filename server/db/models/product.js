@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 
 
-var Product = new mongoose.Schema({
+var schema = new mongoose.Schema({
     name: {
       type: String,
       default: "Delicious Beer"
@@ -15,3 +15,5 @@ var Product = new mongoose.Schema({
     }
 
 });
+
+mongoose.model('Product', schema);
