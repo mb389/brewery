@@ -1,10 +1,8 @@
 'use strict';
 var router = require('express').Router();
-module.exports = router;
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 
-router.use('/products');
 
 
 router.get('/', (req, res, next) => {
@@ -44,9 +42,4 @@ router.delete('/:id', (req, res, next) => {
   .then(null, next);
 });
 
-
-// Make sure this is after all of
-// the registered routes!
-router.use(function (req, res) {
-    res.status(404).end();
-});
+module.exports = router;

@@ -12,7 +12,10 @@ var schema = new mongoose.Schema({
     price: {
       type: Number,
       default: 9.99
-    }
+    },
+    reviews: [{
+      type: mongoose.Schema.Types.ObjectId, ref: 'Review'
+    }]
 
 });
 
