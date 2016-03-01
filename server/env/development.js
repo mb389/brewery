@@ -1,19 +1,21 @@
+var dotenv = require('dotenv').config();
+
 module.exports = {
-  "DATABASE_URI": "mongodb://localhost:27017/fsg-app",
-  "SESSION_SECRET": "Optimus Prime is my real dad",
+  "DATABASE_URI": process.env.DATABASE_URI,
+  "SESSION_SECRET": process.env.SESSION_SECRET,
   "TWITTER": {
-    "consumerKey": "INSERT_TWITTER_CONSUMER_KEY_HERE",
-    "consumerSecret": "INSERT_TWITTER_CONSUMER_SECRET_HERE",
-    "callbackUrl": "INSERT_TWITTER_CALLBACK_HERE"
+    "consumerKey": process.env.TWTR_KEY,
+    "consumerSecret": process.env.TWTR_SECRET,
+    "callbackUrl": process.env.TWTR_URL
   },
   "FACEBOOK": {
-    "clientID": "INSERT_FACEBOOK_CLIENTID_HERE",
-    "clientSecret": "INSERT_FACEBOOK_CLIENT_SECRET_HERE",
-    "callbackURL": "INSERT_FACEBOOK_CALLBACK_HERE"
+    "clientID": process.env.FB_KEY,
+    "clientSecret": process.env.FB_SECRET,
+    "callbackURL": process.env.FB_URL
   },
   "GOOGLE": {
-    "clientID": "INSERT_GOOGLE_CLIENTID_HERE",
-    "clientSecret": "INSERT_GOOGLE_CLIENT_SECRET_HERE",
-    "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
+    "clientID": process.env.GOOG_KEY,
+    "clientSecret": process.env.GOOG_SECRET,
+    "callbackURL": process.env.GOOG_URL
   }
 };
