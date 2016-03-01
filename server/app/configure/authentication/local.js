@@ -27,7 +27,7 @@ module.exports = function (app) {
 
     //A POST /signup route to handle new users
     app.post('/signup', function (req, res, next) {
-      //need to send a obj with email, password
+      //need to send a obj with email password
       User.create(req.body)
       .then(user => {
         req.login(user, function(){
