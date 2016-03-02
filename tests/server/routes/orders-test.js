@@ -79,7 +79,7 @@ describe('Order management', function () {
     })
 
     it('should create an order if not fed an id', function (done) {
-      agent.post('/api/orders/add/new')
+      agent.post('/api/orders/add')
         .send({
           product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'),
           quantity: 1
@@ -93,12 +93,12 @@ describe('Order management', function () {
     });
 
     it('should return one order given the id', function (done) {
-       agent.post('/api/orders/add/'+orderCreated.id)
+       agent.put('/api/orders/add/'+orderCreated.id)
          .send({
           product: mongoose.Types.ObjectId('569ed8269353e9f4c51617bb'),
           quantity: 1
         })
-        .expect(201)
+        .expect(202)
         .end(function(err, res) {
           if(err) return done(err)
           expect(res.body).to.not.be.an('array');
@@ -108,12 +108,12 @@ describe('Order management', function () {
     })
 
     it('should add products to an order that exists', function (done) {
-       agent.post('/api/orders/add/'+orderCreated.id)
+       agent.put('/api/orders/add/'+orderCreated.id)
          .send({
           product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'),
           quantity: 1
         })
-        .expect(201)
+        .expect(202)
         .end(function(err, res) {
           if(err) return done(err)
           expect(res.body).to.not.be.an('array');
