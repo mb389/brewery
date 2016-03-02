@@ -20,7 +20,7 @@ module.exports = function (app) {
     // Our sessions will get stored in Mongo using the same connection from
     // mongoose. Check out the sessions collection in your MongoCLI.
     app.use(session({
-        secret: app.getValue('env').SESSION_SECRET,
+        secret: process.env.SESSION_SECRET,
         store: new MongoStore({mongooseConnection: mongoose.connection}),
         resave: false,
         saveUninitialized: false
