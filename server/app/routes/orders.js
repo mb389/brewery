@@ -23,7 +23,7 @@ router.get('/:sessionId', (req, res, next) => {
   //get any current pending orders for the current session Id
   Order.findOne({sessionId: req.params.sessionId, status: 'pending'})
   .then(order => res.json(order))
-  .then(null, res.json({}))
+  .then(null, res.sendStatus(404))
 })
 
 router.put('/add/:id', (req, res, next) => {
@@ -33,10 +33,8 @@ router.put('/add/:id', (req, res, next) => {
   .then(null, next)
 })
 
-router.post('/add/:id', (req, res, next) => {
+router.post('/add', (req, res, next) => {
   //req.body will be the productId, quantity to add
-  //if no oder then the route is /add/new
-  if (req.params.id === 'new') {
     //if no order then create a order
     var newOrder = new Order();
     if (req.user && req.user.id) {
@@ -61,18 +59,12 @@ router.post('/add/:id', (req, res, next) => {
     })
     .then(order => res.status(201).json(order))
     .then(null, next)
-  } else {
-    //if there is an order add or create the product and qunaitity
-    Order.addOrCreateProduct(req.params.id, req.body)
-    .then(newProductTotal => res.status(201).json(newProductTotal))
-    .then(null, next)
-  }
 })
 
 
 router.put('/purchase/:id', (req, res, next) => {
   Order.findById(req.params.id).
-  then(order => order.purchase())
+  then(order => order.purchaseById())
   .then(order => res.json(order))
   .then(null, next)
 })
