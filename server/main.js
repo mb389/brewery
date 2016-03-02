@@ -6,6 +6,7 @@ var chalk = require('chalk');
 var dotenv = require('dotenv').config();
 var startDb = require('./db');
 
+
 // Create a node server instance! cOoL!
 var server = require('http').createServer();
 
