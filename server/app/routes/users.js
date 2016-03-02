@@ -2,6 +2,7 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var _ = require('lodash');
 
 router.get('/', (req, res, next) => {
   User.find()
@@ -40,15 +41,15 @@ router.get('/:id/isAdmin', (req, res, next) => {
 router.post('/', (req, res, next) => {
   User.create(req.body)
   .then(user => {
-    res.json(user);
+    res.status(201).json(user);
   })
   .then(null, next);
 });
 
 router.put('/:id', (req, res, next) => {
-  User.findBydId(req.params.id)
+  User.findById(req.params.id)
   .then(user => {
-    user = req.body;
+    _.merge(user, req.body);
     user.save();
     res.json(user);
   })
