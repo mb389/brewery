@@ -48,12 +48,6 @@ function validateEmail(email) {
    return emailRegex.test(email);
 }
 
-// schema.pre('validate', function(next){
-//   if(validateEmail(this.email) === true) next();
-//   var err = new Error('Not a valid email address');
-//   next(err);
-// });
-
 // method to remove sensitive information from user objects before sending them out
 schema.methods.sanitize = function () {
     return _.omit(this.toJSON(), ['password', 'salt']);
