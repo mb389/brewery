@@ -22,6 +22,13 @@ router.get('/product/:productId', (req, res, next) => {
   .then(null,next);
 });
 
+router.get('/user/:userId', (req, res, next) => {
+  Review.findByUser(req.params.userId)
+  .then(reviews => res.json(reviews))
+  .then(null,next);
+});
+
+
 router.post('/', (req, res, next) => {
   Review.create(req.body)
   .then(review => res.json(review))

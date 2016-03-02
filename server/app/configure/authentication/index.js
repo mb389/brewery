@@ -6,6 +6,7 @@ var passport = require('passport');
 var path = require('path');
 var mongoose = require('mongoose');
 var UserModel = mongoose.model('User');
+var dotenv = require('dotenv').config();
 
 var ENABLED_AUTH_STRATEGIES = [
     'local',
@@ -20,7 +21,7 @@ module.exports = function (app) {
     // Our sessions will get stored in Mongo using the same connection from
     // mongoose. Check out the sessions collection in your MongoCLI.
     app.use(session({
-        secret: app.getValue('env').SESSION_SECRET,
+        secret: process.env.SESSION_SECRET,
         store: new MongoStore({mongooseConnection: mongoose.connection}),
         resave: false,
         saveUninitialized: false
