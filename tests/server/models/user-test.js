@@ -141,6 +141,33 @@ describe('User model', function () {
             });
 
         });
+        describe('Validations', function () {
+
+            it('errors without valid email', function (done) {
+              var user = new User({email: 'notanemail', password: 'mytestpassword'})
+                user.validate( function(err){
+                  expect(err.errors.email.message).to.equal("Not a valid email address");
+                  done();
+                })
+            });
+
+            it('errors without any email', function (done) {
+              var user = new User({ password: 'mytestpassword'})
+                user.validate( function(err){
+                  expect(err.message).to.equal("User validation failed");
+                  done();
+                })
+            });
+
+            it('errors without a password', function (done){
+              var user = new User({email: 'notanemail'})
+                user.validate( function(err){
+                  expect(err.message).to.equal("User validation failed");
+                  done();
+                })
+            })
+        });
+
 
         describe('sanitize method', function () {
 
