@@ -4,10 +4,14 @@ var mongoose = require('mongoose');
 var _ = require('lodash');
 
 var schema = new mongoose.Schema({
-    email: {
+    email: { //not required for Oath
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: {
+          validator: validateEmail,
+          message: "Not a valid email address"
+        }
     },
     password: {
         type: String,
@@ -37,6 +41,12 @@ var schema = new mongoose.Schema({
         id: String
     }
 });
+
+//expect an email string
+function validateEmail(email) {
+   var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+   return emailRegex.test(email);
+}
 
 // method to remove sensitive information from user objects before sending them out
 schema.methods.sanitize = function () {

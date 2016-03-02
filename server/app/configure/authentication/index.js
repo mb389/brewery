@@ -20,6 +20,11 @@ module.exports = function (app) {
     // First, our session middleware will set/read sessions from the request.
     // Our sessions will get stored in Mongo using the same connection from
     // mongoose. Check out the sessions collection in your MongoCLI.
+    // app.use(function(){
+    //   console.log("process.env", process.env);
+    //   console.log('app.getvalue', app.getValue('env'));
+    //   console.log("process.env.SESSION_SECRET", process.env.SESSION_SECRET);
+    // });
     app.use(session({
         secret: process.env.SESSION_SECRET,
         store: new MongoStore({mongooseConnection: mongoose.connection}),
