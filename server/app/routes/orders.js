@@ -26,16 +26,9 @@ router.get('/session/:sessionId', (req, res, next) => {
   .then(null, next)
 })
 
-router.put('/add/:id', (req, res, next) => {
-  //req.body will be the product, new quantity
-  Order.addOrCreateProduct(req.params.id, req.body)
-  .then(updatedOrder => res.status(202).json(updatedOrder))
-  .then(null, next)
-})
 
-router.post('/add', (req, res, next) => {
+router.post('/', (req, res, next) => {
   //req.body will be the productId, quantity to add
-    //if no order then create a order
     var newOrder = new Order();
     if (req.user && req.user.id) {
       newOrder.user =req.user._id
@@ -45,7 +38,7 @@ router.post('/add', (req, res, next) => {
     newOrder.save()
     //then add the products to the order
     .then(order => {
-      Order.addOrCreateProduct(order.id, req.body)
+      order.addOrCreateProduct(req.body)
       return order
     })
     .then(order => {
@@ -59,6 +52,15 @@ router.post('/add', (req, res, next) => {
     })
     .then(order => res.status(201).json(order))
     .then(null, next)
+})
+
+
+router.put('/:id', (req, res, next) => {
+  //req.body will be the product, new quantity
+  Order.findById(req.params.id)
+  .then(order => order.addOrCreateProduct(req.body))
+  .then(updatedOrder => res.status(202).json(updatedOrder))
+  .then(null, next)
 })
 
 
@@ -77,9 +79,9 @@ router.put('/status/:id/:status', (req, res, next) => {
 })
 
 
-router.delete('/:orderId', (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   //delete the order and the delete the order within the user
-  Order.remove({_id: req.params.orderId})
+  Order.remove({_id: req.params.id})
   .then(() => {
     //delete the order from the users list of orders
     res.sendStatus(204)
