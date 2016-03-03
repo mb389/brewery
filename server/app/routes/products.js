@@ -2,6 +2,7 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
+var _ = require('lodash');
 
 router.get('/', (req, res, next) => {
   Product.find()
@@ -31,10 +32,7 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   Product.findById(req.params.id)
   .then(product => {
-    for (var key in product) {
-      if (req.body[key])
-        product[key] = req.body[key];
-    }
+    product=_.merge(product,req.body);
     product.save();
     res.json(product);
   })

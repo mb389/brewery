@@ -4,9 +4,8 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts) {
 
 });
 
-/* ARTIST (SINGULAR) CONTROLLER */
 
-juke.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct) {
+app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct) {
 
   $scope.product = theProduct;
 

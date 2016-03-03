@@ -51,12 +51,12 @@ describe('Review http requests', function () {
            review: values[1],
            stars: 3,
            content: "fantastical beerz"
+         }).then(review => {
+           newRev=review;
+           done();
          });
-       }).then(review => {
-         newRev=review;
-         done();
        });
-     })
+     });
 
      afterEach('Clear test database', function (done) {
        clearDB(done);
@@ -79,7 +79,7 @@ describe('Review http requests', function () {
           });
       });
 
-      xit('/GET by Id', function(done) {
+      it('/GET by Id', function(done) {
         agent
             .get('/api/reviews/'+newRev.id)
             .end(function(err,res) {
@@ -89,7 +89,7 @@ describe('Review http requests', function () {
           });
       });
 
-      xit('/PUT by Id', function(done) {
+      it('/PUT by Id', function(done) {
         agent
             .put('/api/reviews/'+newRev.id)
             .send({stars: 4})
@@ -101,7 +101,7 @@ describe('Review http requests', function () {
           });
       });
 
-      xit('/DELETE by Id', function(done) {
+      it('/DELETE by Id', function(done) {
         agent
             .delete('/api/reviews/'+newRev.id)
             .expect(204, done)

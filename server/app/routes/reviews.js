@@ -2,7 +2,7 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
 var Review = mongoose.model('Review');
-
+var _ = require('lodash');
 
 router.get('/', (req, res, next) => {
   Review.find()
@@ -36,11 +36,11 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  Review.findBydId(req.params.id)
+  Review.findById(req.params.id)
   .then(review => {
-    review = req.body;
+    review=_.merge(review,req.body);
     review.save();
-    res.json(Review);
+    res.json(review);
   })
   .then(null, next);
 });
