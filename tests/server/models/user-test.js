@@ -145,24 +145,31 @@ describe('User model', function () {
 
             it('errors without valid email', function (done) {
               var user = new User({email: 'notanemail', password: 'mytestpassword'})
-                user.validate( function(err){
+                user.save( function(err){
                   expect(err.errors.email.message).to.equal("Not a valid email address");
                   done();
                 })
             });
 
-            it('errors without any email', function (done) {
-              var user = new User({ password: 'mytestpassword'})
-                user.validate( function(err){
+            it('errors without a password or googleid', function (done) {
+              var user = new User({ email: 'testemail@gmail.com'})
+                user.save( function(err){
                   expect(err.message).to.equal("User validation failed");
                   done();
                 })
             });
 
-            it('errors without a password', function (done){
-              var user = new User({email: 'notanemail'})
-                user.validate( function(err){
-                  expect(err.message).to.equal("User validation failed");
+            it('works with an email and password', function (done){
+              var user = new User({email: 'testemailandpassword@gmail.com', password: 'testpassword'})
+                user.save( function(err, newUser){
+                  expect(newUser.email).to.equal("testemailandpassword@gmail.com");
+                  done();
+                })
+            })
+            it('works with an email and googleId', function (done){
+              var user = new User({email: 'testemailandgoogleid@gmail.com', google:{id: 12345} })
+                user.save( function(err, newUser){
+                  expect(newUser.email).to.equal('testemailandgoogleid@gmail.com');
                   done();
                 })
             })

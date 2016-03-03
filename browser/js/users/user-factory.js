@@ -14,7 +14,6 @@ app.factory('UserFactory', function ($http){
         })
     },
     getOrderForUser: function (userId){
-      console.log('getOrderForUser');
       return $http.get('/api/users/' + userId + '/orders')
         .then(response => {
           return response.data;

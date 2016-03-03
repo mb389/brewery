@@ -1,0 +1,16 @@
+<div>
+  <h3>Products</h3>
+  <div class="row">
+  <div class="col-xs-4" ng-repeat="product in products" >
+        {{product.name}}
+        {{product.description}}
+        <img ng-src="{{ product.photo }}">
+        <h4>
+          <span>{{ product.name }}</span>
+        </h4>
+        <h5>
+          <span>{{ product.description }}</span>
+        </h5>
+    </div>
+  </div>
+  </div>
