@@ -3,6 +3,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Order = mongoose.model('Order');
 
 module.exports = function (app) {
 
@@ -28,10 +29,22 @@ module.exports = function (app) {
     //A POST /signup route to handle new users
     app.post('/signup', function (req, res, next) {
       //need to send a obj with email password
+      var userToUpdate;
       User.create(req.body)
       .then(user => {
-        req.login(user, function(){
-          res.status(201).json(user);
+        userToUpdate = user;
+        return Order.findOne({sessionId: req.session.id})
+      })
+      .then(order => {
+        //if order associated with session id, add user to order and order to user
+        if(order) {
+          order.user = userToUpdate._id;
+          userToUpdate.orders.push(order);
+        }
+      })
+      .then(() => {
+        req.login(userToUpdate, function(){
+          res.status(201).json(userToUpdate);
         })
       })
       .then(null, next);
@@ -49,18 +62,32 @@ module.exports = function (app) {
                 error.status = 401;
                 return next(error);
             }
-
-            // req.login will establish our session.
-            req.login(user, function (loginErr) {
-                if (loginErr) return next(loginErr);
-                // We respond with a response object that has user with _id and email.
-                res.status(200).send({
-                    user: user.sanitize()
+            var orderToAdd;
+            Order.findOne({sessionId: req.session.id})
+              .then(order => {
+                orderToAdd = order;
+                return User.findById(user._id).populate('orders');
+              })
+              .then(user => {
+                  var pendingOrder = user.orders.filter( function (ord){
+                    return ord.status === 'pending';
+                  })
+                  if(pendingOrder) _.merge(pendingOrder, orderToAdd); //will these keep all products?
+                  else user.orders.push(orderToAdd)
+                  return user
+                })
+              .then(function (updatedUser){
+                  // req.login will establish our session
+                  req.login(updatedUser, function (loginErr) {
+                    if (loginErr) return next(loginErr);
+                    // We respond with a response object that has user with _id and email.
+                    res.status(200).send({
+                        user: updatedUser.sanitize()
+                    });
                 });
-            });
-
-        };
-
+              })
+          }
+        //passport is called with the auth callback defined above
         passport.authenticate('local', authCb)(req, res, next);
 
     });

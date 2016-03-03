@@ -1,7 +1,5 @@
-app.controller('FullcartController', function ($scope, orders, AuthService, UserFactory, OrderFactory){
-  console.log('hihi');
+app.controller('FullcartController', function ($scope, orders){
   $scope.orders = orders;
-  console.log('orders', $scope.orders);
   $scope.removeItem = function (orderId, productId) {
     console.log('remove', orderId, productId);
   }
@@ -10,6 +8,6 @@ app.controller('FullcartController', function ($scope, orders, AuthService, User
   }
 })
 
-app.controller('CheckoutController', function ($scope, user, AuthService, UserFactory, OrderFactory){
+app.controller('CheckoutController', function ($scope, user){
   $scope.currentUser = user;
 })
