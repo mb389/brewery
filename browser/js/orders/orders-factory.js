@@ -20,13 +20,13 @@ app.factory('OrderFactory', function ($http){
         })
     },
     updateOrAddProductToOrder: function (orderId, productToAdd){
-      return $http.put('/api/orders/add/' + orderId, productToAdd)
+      return $http.put('/api/orders/' + orderId, productToAdd)
         .then( response => {
           return response.data;
         })
     },
-    updateOrCreateOrderAndAddProduct: function (productToAdd){
-      return $http.post('/api/orders/add', productToAdd)
+    createOrderAndAddProduct: function (productToAdd){
+      return $http.post('/api/orders/', productToAdd)
         .then( response => {
           return response.data;
         })
