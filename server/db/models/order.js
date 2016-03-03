@@ -1,6 +1,5 @@
 'use strict';
 var mongoose = require('mongoose');
-var _ = require('lodash');
 var Product = mongoose.model('Product');
 
 
@@ -56,6 +55,13 @@ schema.pre('save', function(next) {
 })
 
 
+// schema.statics.mergeAnyOrders = function (userId ) {
+//   //merges any orders user may have open on log in
+
+
+// }
+
+
 schema.statics.addOrCreateProduct = function (id, productUpdateObj) {
   //updates quantity and price if product in baseket or adds product
   // var self = this;
@@ -76,11 +82,6 @@ schema.statics.addOrCreateProduct = function (id, productUpdateObj) {
 }
 
 
-schema.methods.purchaseById = function() {
-  this.status = 'purchased';
-  addPriceToCart();
-}
-
 
 function addPriceToCart () {
   return Promise.all(this.products.map(productInCart => {
@@ -95,41 +96,40 @@ function addPriceToCart () {
   })
 }
 
-schema.methods.updateStatus = function(status) {
-  //notifications on post purchase status, incl. shipping, delivery
-  this.status = status;
-  switch(this.status) {
-    case "created":
-      created(this);
-    case "processing":
-      processing(this);
-    case "cancelled":
-      cancelled(this);
-    case "completed":
-      completed(this);
-    default:
 
-  }
+schema.methods.purchaseById = function() {
+  this.status = 'purchased';
+  addPriceToCart();
 }
 
 
-function created (order) {
+// schema.methods.updateStatus = function(status) {
+//   //notifications on post purchase status, incl. shipping, delivery
+//   this.status = status;
+//   switch(this.status) {;
+//     case "processing":
+//       processing(this);
+//     case "cancelled":
+//       cancelled(this);
+//     case "completed":
+//       completed(this);
+//     default:
 
-}
+//   }
+// }
+
+// function processing (order) {
+
+// }
 
 
-function processing (order) {
+// function cancelled (order) {
 
-}
+// }
 
+// function completed (order) {
 
-function cancelled (order) {
-
-}
-
-function completed (order) {
-
-}
+// }
 
 
 

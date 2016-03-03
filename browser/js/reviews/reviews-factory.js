@@ -26,13 +26,13 @@ app.factory('ReviewFactory', function($http) {
   }
 
   RF.saveReview = function(reviewObj) {
-    $http.post('/api/reviews/')
+    $http.post('/api/reviews/', reviewObj)
     .then(res => res.data)
     .catch(console.error)
   }
 
   RF.updateReview = function(reviewObj) {
-    $http.put('/api/reviews/'+reviewObj.id)
+    $http.put('/api/reviews/'+reviewObj.id, reviewObj)
     .then(res => res.data)
     .catch(console.error)
   }
