@@ -4,7 +4,7 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/reviews/tempaltes/productReviews.html',
         controller: 'ProductReviewsController',
         resolve: {
-          productReviews: function($stateParams) {
+          productReviews: function($stateParams, ReviewFactory) {
             return ReviewFactory.getReviewsForProduct($stateParams.productId)
           }
         }
@@ -18,7 +18,7 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/reviews/review.html',
         controller: 'ProductReviewsController',
         resolve: {
-          oneReview: function($stateParams) {
+          oneReview: function($stateParams, ReviewFactory) {
             return ReviewFactory.getOneReview($stateParams.reviewId)
           }
         }

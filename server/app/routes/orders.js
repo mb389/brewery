@@ -23,7 +23,7 @@ router.get('/session/:sessionId', (req, res, next) => {
   //get any current pending orders for the current session Id
   Order.findOne({sessionId: req.params.sessionId, status: 'pending'})
   .then(order => res.json(order))
-  .then(null, res.sendStatus(404))
+  .then(null, next)
 })
 
 router.put('/add/:id', (req, res, next) => {
@@ -80,7 +80,7 @@ router.put('/status/:id/:status', (req, res, next) => {
 router.delete('/:orderId', (req, res, next) => {
   //delete the order and the delete the order within the user
   Order.remove({_id: req.params.orderId})
-  .then(order => {
+  .then(() => {
     //delete the order from the users list of orders
     res.sendStatus(204)
   })

@@ -26,3 +26,4 @@ return this.find({user: id}).exec();
 }
 
 mongoose.model('Review', schema);
+
