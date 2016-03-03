@@ -72,7 +72,11 @@ module.exports = function (app) {
                   var pendingOrder = user.orders.filter( function (ord){
                     return ord.status === 'pending';
                   })
-                  if(pendingOrder) _.merge(pendingOrder, orderToAdd); //will these keep all products?
+                  if(pendingOrder){
+                    var productsToAdd = pendingOrder.products;
+                    _.merge(pendingOrder, orderToAdd); //will these keep all products?
+                    pendingOrder.products.push.apply(null, productsToAdd);
+                  }
                   else user.orders.push(orderToAdd)
                   return user
                 })
