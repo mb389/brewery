@@ -32,8 +32,8 @@ router.get('/:id/orders', (req, res, next) => {
 router.get('/:id/isAdmin', (req, res, next) => {
   User.findById(req.params.id)
   .then(user => {
-    if(user.isAdmin) res.json(user);
-    else res.sendStatus(404);
+    if(user.isAdmin) res.send(true);
+    else res.send(false);
   })
   .then(null, next);
 })

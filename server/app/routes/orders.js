@@ -19,7 +19,7 @@ router.get('/:id', (req, res, next) => {
   .then(null, next)
 })
 
-router.get('/:sessionId', (req, res, next) => {
+router.get('/session/:sessionId', (req, res, next) => {
   //get any current pending orders for the current session Id
   Order.findOne({sessionId: req.params.sessionId, status: 'pending'})
   .then(order => res.json(order))
@@ -108,9 +108,6 @@ router.delete('/:orderId/:userId', (req, res, next) => {
   })
   .then(null, next)
 })
-
-
-
 
 // Make sure this is after all of
 // the registered routes!
