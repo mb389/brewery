@@ -1,9 +1,10 @@
 app.controller('FullcartController', function ($scope, orders, AuthService, UserFactory, OrderFactory){
   console.log('hihi');
-  $scope.currentorders = orders;
+  $scope.orders = orders;
+  console.log('orders', $scope.orders);
   $scope.removeItem = function (orderId, productId) {
-    console.log('remove');
-  })
+    console.log('remove', orderId, productId);
+  }
   $scope.checkout = function(){
     console.log('checkout');
   }
