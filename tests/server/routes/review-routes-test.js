@@ -48,7 +48,7 @@ describe('Review http requests', function () {
        .then(function(values) {
          Review.create({
            user: values[0],
-           review: values[1],
+           product: values[1],
            stars: 3,
            content: "fantastical beerz"
          }).then(review => {
@@ -85,6 +85,26 @@ describe('Review http requests', function () {
             .end(function(err,res) {
               if (err) return done (err);
               expect(res.body.stars).to.equal(3);
+            done();
+          });
+      });
+
+      it('/GET by userId', function(done) {
+        agent
+            .get('/api/reviews/user/'+newRev.user.id)
+            .end(function(err,res) {
+              if (err) return done (err);
+              expect(res.body[0].stars).to.equal(3);
+            done();
+          });
+      });
+
+      it('/GET by productId', function(done) {
+        agent
+            .get('/api/reviews/product/'+newRev.product.id)
+            .end(function(err,res) {
+              if (err) return done (err);
+              expect(res.body[0].stars).to.equal(3);
             done();
           });
       });
