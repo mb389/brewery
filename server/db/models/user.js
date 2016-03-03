@@ -9,13 +9,12 @@ var schema = new mongoose.Schema({
         required: true,
         unique: true,
         validate: {
-          validator: validateEmail,
+          validator: validateAll,
           message: "Not a valid email address"
         }
     },
     password: {
         type: String,
-        required: true
     },
     orders: [{
       type: mongoose.Schema.Types.ObjectId,
@@ -41,6 +40,15 @@ var schema = new mongoose.Schema({
         id: String
     }
 });
+
+function validateAll(email) {
+  if(!validateEmail(email)) return false;
+  return checkPasswordOrGoogleId.call(this);
+}
+
+function checkPasswordOrGoogleId (){
+  return !!(this.password || this.google.id);
+}
 
 //expect an email string
 function validateEmail(email) {
