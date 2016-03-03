@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #fdfdfd;
+
 }
 
 @mixin clearfix {
@@ -18,6 +18,17 @@ body {
   padding-top: 60px;
   margin: 0 auto;
 }
+
+// .dark-primary-color    { background: #0288D1; }
+// .default-primary-color { background: #03A9F4; }
+// .light-primary-color   { background: #B3E5FC; }
+// .text-primary-color    { color: #FFFFFF; }
+// .accent-color          { background: #FFC107; }
+// .primary-text-color    { color: #212121; }
+// .secondary-text-color  { color: #727272; }
+// .divider-color         { border-color: #B6B6B6; }
+
+
 
 @import 'directives/main';
 @import 'home/main';
