@@ -1,0 +1,14 @@
+<div class='container'>
+  <h2> View Cart </h2>
+
+  <div class="list-group" ng-repeat="order in orders">
+    <h4>Cart</h4>
+    <h5>{{order}}</h5>
+    <li ng-click="removeItem(order.id, product.id)" class="list-group-item" ng-repeat="product in order.products">PRODUCT: {{product}}   x   {{product.quantity}}
+      <a ng-click="removeItem()" class="btn-danger badge ">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+      </a>
+    </li>
+  </div>
+  <button ng-click="checkout()" ui-sref="checkout" type="button" class="btn btn-lg btn-primary">Checkout</button>
+</div>
