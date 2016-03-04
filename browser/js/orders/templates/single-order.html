@@ -1,0 +1,17 @@
+<div class="row" id="cart-row">
+    <div class="col-sm-2" id="cart-img">
+        <img ui-src="{{product.profile}}" alt="Product Photo">
+    </div>
+    <div class="row" id="align-middle">
+        <div class="col-sm-4">
+            <a href="/product/dark-coffee-table">{{product.name}}</a>
+        </div>
+        <div class="col-sm-2">
+            <input ng-model="product.quantity" type="text" id="quantity" value="{{product.quantity}}">
+        </div>
+        <div class="col-sm-3" id="item-middle">
+            <p class="col-sm-9">{{product.price}}</p>
+            <a class="col-sm-3" id="item-close" ng-click="removeItem(product.id)"><i class="fa fa-times" id="remove-cart-item"></i></a>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,22 @@
 app.config(function ($stateProvider) {
+    $stateProvider.state('OneReview', {
+        url: '/reviews/write',
+        templateUrl: 'js/reviews/templates/review.html',
+        controller: 'ReviewController'
+        // ,
+        // resolve: {
+        //   oneReview: function($stateParams, ReviewFactory) {
+        //     return ReviewFactory.getOneReview($stateParams.reviewId)
+        //   }
+        // }
+    });
+});
+
+
+app.config(function ($stateProvider) {
     $stateProvider.state('ProductReviews', {
-        url: '/reviews/:productId',
-        templateUrl: 'js/reviews/tempaltes/productReviews.html',
+        url: 'product/reviews/:productId',
+        templateUrl: 'js/reviews/templates/productReviews.html',
         controller: 'ProductReviewsController',
         resolve: {
           productReviews: function($stateParams, ReviewFactory) {
@@ -12,15 +27,3 @@ app.config(function ($stateProvider) {
 });
 
 
-app.config(function ($stateProvider) {
-    $stateProvider.state('OneReview', {
-        url: '/reviews/:reviewId',
-        templateUrl: 'js/reviews/review.html',
-        controller: 'ProductReviewsController',
-        resolve: {
-          oneReview: function($stateParams, ReviewFactory) {
-            return ReviewFactory.getOneReview($stateParams.reviewId)
-          }
-        }
-    });
-});

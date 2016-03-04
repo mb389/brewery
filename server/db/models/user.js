@@ -9,17 +9,34 @@ var schema = new mongoose.Schema({
         required: true,
         unique: true,
         validate: {
-          validator: validateAll,
+          validator: validateEmail,
           message: "Not a valid email address"
         }
     },
     password: {
-        type: String,
+        type: String
     },
-    orders: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Order'
-    }],
+    firstName: {
+      type: String
+    },
+    lastName: {
+      type: String
+    },
+    streetAddress: {
+      type: String
+    },
+    city: {
+      type: String
+    },
+    state: {
+      type: String
+    },
+    zipcode: {
+      type: String
+    },
+    phone: {
+      type: String
+    },
     isAdmin: {
       type: Boolean,
       default: false
@@ -41,20 +58,15 @@ var schema = new mongoose.Schema({
     }
 });
 
-function validateAll(email) {
-  if(!validateEmail(email)) return false;
-  return checkPasswordOrGoogleId.call(this);
-}
-
-function checkPasswordOrGoogleId (){
-  return !!(this.password || this.google.id);
-}
-
 //expect an email string
 function validateEmail(email) {
    var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
    return emailRegex.test(email);
 }
+
+schema.virtual('fullname').get(function(){
+  return this.firstName + ' ' + this.lastName;
+})
 
 // method to remove sensitive information from user objects before sending them out
 schema.methods.sanitize = function () {
