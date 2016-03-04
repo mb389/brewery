@@ -1,8 +1,8 @@
 
 
 module.exports = {
-  "DATABASE_URI": process.env.DATABASE_URI,
-  "SESSION_SECRET": process.env.SESSION_SECRET,
+  "DATABASE_URI": 'mongodb://localhost:27017/brewery',
+  "SESSION_SECRET": 'Three is better than four',
   "TWITTER": {
     "consumerKey": process.env.TWTR_KEY,
     "consumerSecret": process.env.TWTR_SECRET,

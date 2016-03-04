@@ -54,15 +54,6 @@ router.post('/', (req, res, next) => {
       order.addOrCreateProduct(req.body)
       return order
     })
-    .then(order => {
-      if(req.user) {
-        User.findById(req.user.id)
-        .then(user => {
-          user.orders.push(order._id);
-          return order
-        })
-      }
-    })
     .then(order => res.status(201).json(order))
     .then(null, next)
 })
@@ -104,23 +95,8 @@ router.delete('/:id', (req, res, next) => {
 
 
 router.delete('/:orderId/:userId', (req, res, next) => {
-  //delete the order and the delete the order within the user
-  Promise.all([
-    User.findById(req.params.userId),
-    Order.remove({_id: req.params.orderId})
-    ])
-  .spread(user => {
-    //delete the order from the users list of orders
-    var newOrders = user.orders.filter((userOrder) => {
-      if (String(userOrder) !== req.params.orderId) {
-        return userOrder
-      }
-    })
-    user.orders = newOrders
-    user.save().then(() => {
-      res.sendStatus(204)
-    })
-  })
+  Order.remove({_id: req.params.orderId})
+  .then(() => res.sendStatus(204))
   .then(null, next)
 })
 

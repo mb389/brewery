@@ -111,8 +111,10 @@ describe('Order model', () => {
 
     describe('add or create product to order', function () {
       it('adds a product to order if it is not in cart', function (done) {
-
-        Order.addOrCreateProduct(order._id, {product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'), quantity: 2})
+        Order.findById(order.id)
+        .then(order => {
+          return order.addOrCreateProduct({product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'), quantity: 2})
+        })
         .then(newOrder => {
           expect(newOrder.products.length).to.equal(1);
           expect(newOrder.products[0].quantity).to.equal(2);
@@ -121,15 +123,19 @@ describe('Order model', () => {
       });
 
       it('updates the quantity in the cart if product in cart', function (done) {
-        Order.addOrCreateProduct(order._id, {product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'), quantity: 6})
+        Order.findById(order.id)
+        .then(order => {
+          return order.addOrCreateProduct({product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'), quantity: 6})
+        })
         .then(newOrder => {
-          return Order.addOrCreateProduct(newOrder._id, {product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'), quantity: 2})
+          return newOrder.addOrCreateProduct({product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'), quantity: 2})
         })
         .then(nextOrder => {
           expect(nextOrder.products.length).to.equal(1);
           expect(nextOrder.products[0].quantity).to.equal(8)
           done()
         })
+        .then(null, done)
       });
 
     });
