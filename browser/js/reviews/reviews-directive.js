@@ -12,7 +12,7 @@ app.directive('reviewBox', function(ReviewFactory) {
 app.directive('reviewWriter', function(ReviewFactory) {
   return {
     restrict: 'E',
-    templateUrl: 'js/reviews/templates/reviewWriter.html',
+    templateUrl: 'js/reviews/templates/reviewWriter.html'
   }
 })
 

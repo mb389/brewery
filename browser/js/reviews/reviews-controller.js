@@ -1,7 +1,15 @@
-app.controller('ReviewController', function($scope) {
-  $scope.review = {};
-  $scope.review.rating = "";
-  $scope.review.isReadonly = false;
+app.controller('ReviewController', function($scope, ReviewFactory, $state) {
+
+  $scope.reviewIsReadonly = false;
+
+  $scope.saveReview = function (productId) {
+    ReviewFactory.saveReview({
+      product: productId,
+      stars: $scope.rating,
+      content: $scope.reviewContent
+    })
+    $state.go('oneProduct', {id: productId})
+  }
 
 })
 
