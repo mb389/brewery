@@ -13,6 +13,12 @@ app.factory('OrderFactory', function ($http){
           return response.data;
         })
     },
+    getOrderByUserIdOrSessionId: function (userId) {
+      return $http.get('/api/orders/user/session/' + userId)
+        .then(response => {
+            return response.data;
+        })
+    },
     getOrderBySessionId: function (sessionId){
       return $http.get('/api/orders/session/' + sessionId)
         .then( response => {

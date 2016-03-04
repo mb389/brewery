@@ -26,6 +26,19 @@ router.get('/session/:sessionId', (req, res, next) => {
   .then(null, next)
 })
 
+//get pending order by user or session
+router.get('/user/session/:userid', (req, res, next) => {
+  Order.findOne({user: req.params.userid, status: 'pending'})
+    .then(order => {
+      console.log('ORDER', order);
+      if(order) res.json(order)
+      else return Order.findOne({sessionId: req.session.id, status: 'pending'})
+    })
+    .then(sessionOrder => {
+      res.json(sessionOrder);
+    })
+    .then(null, next);
+})
 
 router.post('/', (req, res, next) => {
   //req.body will be the productId, quantity to add

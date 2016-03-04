@@ -1,7 +1,8 @@
-app.controller('FullcartController', function ($scope, orders){
-  $scope.orders = orders;
-  $scope.removeItem = function (orderId, productId) {
-    console.log('remove', orderId, productId);
+app.controller('FullcartController', function ($scope, pendingOrder){
+  $scope.order = pendingOrder;
+  console.log("HERE ARE ORDERS", pendingOrder);
+  $scope.removeItem = function (productId) {
+    console.log('remove', productId);
   }
   $scope.checkout = function(){
     console.log('checkout');
