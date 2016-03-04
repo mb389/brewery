@@ -32,13 +32,13 @@ describe('Product http requests', function () {
          "name": "Lansoprazole",
          "description": "Dis mineral metabol NEC",
          "quantity": 20,
-         "categories": ["IPA"],
          "price": 23.6,
-         "photo": "http://dummyimage.com/242x118.gif/dddddd/000000"
-       }).then(product => {
+         "picture": "http://dummyimage.com/242x118.gif/dddddd/000000"
+       })
+       .then(product => {
          newProd=product;
          done();
-       });
+       }).then(null,done)
      })
 
      afterEach('Clear test database', function (done) {
@@ -72,15 +72,15 @@ describe('Product http requests', function () {
           });
       });
 
-      it('/GET by Category', function(done) {
-        agent
-            .get('/api/products/category/'+"IPA")
-            .end(function(err,res) {
-              if (err) return done (err);
-              expect(res.body[0].name).to.equal('Lansoprazole');
-            done();
-          });
-      });
+      // it('/GET by Category', function(done) {
+      //   agent
+      //       .get('/api/products/category/'+"IPA")
+      //       .end(function(err,res) {
+      //         if (err) return done (err);
+      //         expect(res.body[0].name).to.equal('Lansoprazole');
+      //       done();
+      //     });
+      // });
 
       it('/PUT by Id', function(done) {
         agent
@@ -100,16 +100,15 @@ describe('Product http requests', function () {
             .expect(204, done)
       });
 
-      it('/POST', function(done) {
+      it('/POSTs', function(done) {
         agent
             .post('/api/products/')
             .send({
               "name": "Lanny",
               "description": "Dis mineral metabol NEC",
               "quantity": 20,
-              "categories": ["IPA"],
               "price": 23.6,
-              "photo": "http://dummyimage.com/242x118.gif/dddddd/000000"
+              "picture": "http://dummyimage.com/242x118.gif/dddddd/000000"
             })
             .end(function(err,res) {
               if (err) return done(err);

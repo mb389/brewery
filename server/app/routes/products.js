@@ -32,11 +32,15 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   Product.findById(req.params.id)
   .then(product => {
-    product=angular.extend(product,req.body);
-    product.save();
+    _.merge(product,req.body);
+    return product.save();
   })
-  .then(res => res.json(product))
-  .catch(err => {throw err; });
+  .then(function(updatedProd) {
+    res.json(updatedProd);
+    next();
+  })
+  .then(null,next)
+
 });
 
 router.delete('/:id', (req, res, next) => {

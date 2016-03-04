@@ -13,7 +13,8 @@ var schema = new mongoose.Schema({
     },
     content: {
       type: String,
-      min: 25
+      min: 5,
+      required: true
     }
 });
 

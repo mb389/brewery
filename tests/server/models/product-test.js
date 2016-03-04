@@ -68,7 +68,6 @@ describe('Product model', function () {
           description: 'Indian Pale Ale',
           tags: 'hoppy',
         }).then(function(category){
-          console.log('CATEGORY', category);
           IPACategory = category;
           Product.create({
             "name": "Lansoprazole",

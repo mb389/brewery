@@ -3,14 +3,15 @@ var router = require('express').Router();
 var mongoose = require('mongoose');
 var Review = mongoose.model('Review');
 var _ = require('lodash');
-var review;
+
 
 router.param('id',(req,res,next, id) => {
-  Review.findbyId(id)
+  Review.findById(id)
   .then(review => {
     req.review = review
+    next();
   })
-  .catch(err => next(err))
+  .then(null,next);
 })
 
 router.get('/', (req, res, next) => {
@@ -20,7 +21,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  res.json(req.review);
+  res.json(req.review)
 });
 
 router.get('/product/:productId', (req, res, next) => {
@@ -43,17 +44,20 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  review=angular.extend(req.review,req.body);
-  review.save()
+  _.merge(req.review,req.body);
+  req.review.save()
   .then(function() {
-    res.json(review);
+    res.json(req.review);
     next();
   });
 });
 
 router.delete('/:id', (req, res, next) => {
-  req.review.remove()
-  .then(res => res.sendStatus(204))
+  Review.findById(req.params.id)
+  .then(review => {
+    review.remove();
+    res.sendStatus(204);
+  })
   .then(null, next);
 });
 

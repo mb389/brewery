@@ -39,13 +39,12 @@ describe('Review http requests', function () {
          "name": "Lansoprazole",
          "description": "Dis mineral metabol NEC",
          "quantity": 20,
-         "categories": "IPA",
          "price": 23.6,
-         "photo": "http://dummyimage.com/242x118.gif/dddddd/000000"
+         "picture": "http://dummyimage.com/242x118.gif/dddddd/000000"
        });
 
        Promise.all([userPromise,productPromise])
-       .then(function(values) {
+       .then(values => {
          Review.create({
            user: values[0],
            product: values[1],
@@ -56,6 +55,7 @@ describe('Review http requests', function () {
            done();
          });
        });
+
      });
 
      afterEach('Clear test database', function (done) {
