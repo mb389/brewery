@@ -1,6 +1,6 @@
-app.controller('FullcartController', function ($scope, orders){
-  $scope.orders = orders;
-  console.log("HERE ARE ORDERS", orders);
+app.controller('FullcartController', function ($scope, pendingOrder){
+  $scope.order = pendingOrder;
+  console.log("HERE ARE ORDERS", pendingOrder);
   $scope.removeItem = function (productId) {
     console.log('remove', productId);
   }

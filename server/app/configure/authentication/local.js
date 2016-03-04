@@ -39,7 +39,6 @@ module.exports = function (app) {
         //if order associated with session id, add user to order and order to user
         if(order) {
           order.user = userToUpdate._id;
-          userToUpdate.orders.push(order);
         }
       })
       .then(() => {
@@ -63,23 +62,25 @@ module.exports = function (app) {
                 return next(error);
             }
             var orderToAdd;
+            var currentUser;
             Order.findOne({sessionId: req.session.id})
               .then(order => {
                 orderToAdd = order;
-                return User.findById(user._id).populate('orders');
+                return User.findById(user._id)
               })
-              .then(user => {
-                  var pendingOrder = user.orders.filter( function (ord){
-                    return ord.status === 'pending';
-                  })
-                  if(pendingOrder){
-                    var productsToAdd = pendingOrder.products;
-                    _.merge(pendingOrder, orderToAdd); //will these keep all products?
-                    pendingOrder.products.push.apply(null, productsToAdd);
-                  }
-                  else user.orders.push(orderToAdd)
-                  return user
-                })
+              .then(userToEdit => {
+                  currentUser = userToEdit;
+                  return Order.findOne({user: userToEdit, status: 'pending'})
+              })
+              .then(currentOrder => {
+                if(currentOrder){
+                  var productsToAdd = orderToAdd.products;
+                    _.merge(currentOrder, orderToAdd); //will these keep all products?
+                    currentOrder.products.push.apply(null, productsToAdd);
+                }
+                else orderToAdd.user = currentUser;
+                return user
+              })
               .then(function (updatedUser){
                   // req.login will establish our session
                   req.login(updatedUser, function (loginErr) {

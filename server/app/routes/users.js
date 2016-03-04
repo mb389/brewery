@@ -20,6 +20,14 @@ router.get('/:id', (req, res, next) => {
   .then(null, next);
 });
 
+router.get('/:id/orders/pending', (req, res, next) => {
+  User.findById(req.params.id).populate('orders').exec()
+    .then(user => {
+      var pendingOrder = _.find(user.orders, {'status': 'pending'});
+      res.json(pendingOrder);
+    })
+})
+
 router.get('/:id/orders', (req, res, next) => {
   User.findById(req.params.id).populate('orders').exec()
   .then(user => {

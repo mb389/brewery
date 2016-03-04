@@ -16,10 +16,15 @@ var schema = new mongoose.Schema({
     password: {
         type: String
     },
-    orders: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Order'
-    }],
+    name: {
+      type: String
+    },
+    address: {
+      type: String
+    },
+    phone: {
+      type: String
+    },
     isAdmin: {
       type: Boolean,
       default: false

@@ -5,8 +5,8 @@ app.config(function ($stateProvider){
     templateUrl: '/js/orders/templates/cartview.html',
     controller: 'FullcartController',
     resolve: {
-      orders: function ($stateParams, UserFactory) {
-        return UserFactory.getOrderForUser($stateParams.id);
+      pendingOrder: function ($stateParams, OrderFactory){
+        return OrderFactory.getOrderByUserIdOrSessionId($stateParams.id)
       }
     }
   })
