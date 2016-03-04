@@ -19,9 +19,9 @@ router.get('/:id', (req, res, next) => {
   .then(null, next)
 })
 
-router.get('/session/:sessionId', (req, res, next) => {
+router.get('/session/', (req, res, next) => {
   //get any current pending orders for the current session Id
-  Order.findOne({sessionId: req.params.sessionId, status: 'pending'})
+  Order.findOne({sessionId: req.session.id , status: 'pending'})
   .then(order => res.json(order))
   .then(null, next)
 })

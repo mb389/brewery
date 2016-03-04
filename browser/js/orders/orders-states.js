@@ -1,16 +1,21 @@
 app.config(function ($stateProvider){
   $stateProvider
   .state('fullcart', {
-    url:'/fullcart/:id',
+    url:'/fullcart',
     templateUrl: '/js/orders/templates/cartview.html',
     controller: 'FullcartController',
     resolve: {
-      pendingOrder: function ($stateParams, OrderFactory){
-        return OrderFactory.getOrderByUserIdOrSessionId($stateParams.id)
+      pendingOrder: function (OrderFactory, AuthService){
+        AuthService.getLoggedInUser(true)
+        .then(user => {
+          console.log('heres users', user);
+          if(user) return OrderFactory.getOrderByUserIdOrSessionId(user.id);
+          else return OrderFactory.getOrderBySessionId()
+        })
       }
     }
   })
-  .state('checkout', {
+  .state('fullcart.checkout', {
     url: '/checkout',
     templateUrl:'/js/orders/templates/checkout.html',
     controller: 'CheckoutController',
@@ -19,7 +24,8 @@ app.config(function ($stateProvider){
         return AuthService.getLoggedInUser().then(user => {
           return user;
         })
-      }
+      },
+
     }
   })
   .state('checkout.completed', {

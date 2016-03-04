@@ -19,8 +19,8 @@ app.factory('OrderFactory', function ($http){
             return response.data;
         })
     },
-    getOrderBySessionId: function (sessionId){
-      return $http.get('/api/orders/session/' + sessionId)
+    getOrderBySessionId: function (){
+      return $http.get('/api/orders/session/')
         .then( response => {
           return response.data;
         })
