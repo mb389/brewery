@@ -15,8 +15,8 @@ var schema = new mongoose.Schema({
       type: String, default: 'pending'
     },
     products: [{
-      product: {type: mongoose.Schema.Types.ObjectId, ref: 'Product', default: null},
-      quantity: {type: Number, min: 0, default: null},
+      product: {type: mongoose.Schema.Types.ObjectId, ref: 'Product', default: null, required: true},
+      quantity: {type: Number, min: 0, default: null, required: true},
       price: {type: Number, min: 0, default: null}
     }],
     creationDate: {
@@ -48,17 +48,17 @@ schema.pre('validate', function(next) {
 })
 
 
-schema.pre('save', function(next) {
-  var productsInOrder = this.products;
-  if(productsInOrder.length !== 0) {
-    productsInOrder.forEach(product => {
-      if(!product.product || typeof product.quantity !== 'number') {
-        next(new Error('something went wrong'))
-      }
-    })
-  }
-  next()
-})
+// schema.pre('save', function(next) {
+//   var productsInOrder = this.products;
+//   if(productsInOrder.length !== 0) {
+//     productsInOrder.forEach(product => {
+//       if(!product.product || typeof product.quantity !== 'number') {
+//         next(new Error('something went wrong'))
+//       }
+//     })
+//   }
+//   next()
+// })
 
 
 
