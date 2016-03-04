@@ -1,4 +1,4 @@
-app.factory('OrderFactory', function ($http){
+app.factory('OrderFactory', function ($http, AuthFactory){
 
   return {
     getAllOrders: function (){
@@ -24,6 +24,17 @@ app.factory('OrderFactory', function ($http){
         .then( response => {
           return response.data;
         })
+    },
+    addOrCreate: function(productToAdd) {
+      AuthService.getLoggedInUser()
+      .then(function (user){
+        if(!user) return $http.get('/api/orders/session/') //get order by session
+        else return $http.get('/api/orders/user/session/' + user.id) //get order by user
+      })
+      .then(function (order){
+        if(order) this.updateOrAddProductToOrder (order.id, productToAdd.id);
+        else createOrderAndAddProduct (productToAdd.id);
+      })
     },
     updateOrAddProductToOrder: function (orderId, productToAdd){
       return $http.put('/api/orders/' + orderId, productToAdd)
