@@ -79,7 +79,7 @@ describe('Order management', function () {
     })
 
     it('should create an order if not fed an id', function (done) {
-      agent.post('/api/orders/add')
+      agent.post('/api/orders/')
         .send({
           product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'),
           quantity: 1
@@ -93,7 +93,7 @@ describe('Order management', function () {
     });
 
     it('should return one order given the id', function (done) {
-       agent.put('/api/orders/add/'+orderCreated.id)
+       agent.put('/api/orders/'+orderCreated.id)
          .send({
           product: mongoose.Types.ObjectId('569ed8269353e9f4c51617bb'),
           quantity: 1
@@ -108,7 +108,7 @@ describe('Order management', function () {
     })
 
     it('should add products to an order that exists', function (done) {
-       agent.put('/api/orders/add/'+orderCreated.id)
+       agent.put('/api/orders/'+orderCreated.id)
          .send({
           product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'),
           quantity: 1
@@ -123,7 +123,7 @@ describe('Order management', function () {
     })
 
     it('should add products to an order that exists', function (done) {
-      agent.put('/api/orders/add/'+orderCreated.id)
+      agent.put('/api/orders/'+orderCreated.id)
          .send({
           product: mongoose.Types.ObjectId('569ed8269353e9f4c51617aa'),
           quantity: 4
@@ -167,9 +167,6 @@ describe('Order management', function () {
         return User.findByIdAndUpdate(user.id,{orders:[order._id]},{new:true})
       }).then(updatedUser => {
           user = updatedUser
-          console.log('user:', updatedUser);
-          console.log('agent:', agent);
-          console.log('order:', orderCreated);
           done()
       }).then(null, err => {console.error; done()})
     })
@@ -202,18 +199,18 @@ describe('Order management', function () {
         });
     });
 
-    it('deletes an order from the users order when given an order id and a user id', function (done) {
-      agent.delete('/api/orders/'+orderCreated.id+'/'+user.id)
-        .expect(204)
-        .end(function(err, res) {
-          if(err) return done(err)
-          User.findById(user.id)
-          .then(userFound => {
-            expect(userFound.orders).to.have.length(0)
-            done();
-          })
-        });
-    });
+    // it('deletes an order from the users order when given an order id and a user id', function (done) {
+    //   agent.delete('/api/orders/'+orderCreated.id+'/'+user.id)
+    //     .expect(204)
+    //     .end(function(err, res) {
+    //       if(err) return done(err)
+    //       User.findById(user.id)
+    //       .then(userFound => {
+    //         expect(userFound.orders).to.have.length(0)
+    //         done();
+    //       })
+    //     });
+    // });
 
   });
 
