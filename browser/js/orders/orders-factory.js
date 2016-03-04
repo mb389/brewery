@@ -32,8 +32,8 @@ app.factory('OrderFactory', function ($http, AuthFactory){
         else return $http.get('/api/orders/user/session/' + user.id) //get order by user
       })
       .then(function (order){
-        if(order) this.updateOrAddProductToOrder (order.id, productToAdd.id);
-        else createOrderAndAddProduct (productToAdd.id);
+        if(order) this.updateOrAddProductToOrder (order.id, productToAdd);
+        else this.createOrderAndAddProduct (productToAdd);
       })
     },
     updateOrAddProductToOrder: function (orderId, productToAdd){
