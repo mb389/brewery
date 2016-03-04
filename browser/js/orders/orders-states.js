@@ -28,7 +28,7 @@ app.config(function ($stateProvider){
 
     }
   })
-  .state('checkout.completed', {
+  .state('fullcart.checkout.completed', {
     url:'/completed',
     templateUrl:'/js/orders/templates/completed.html'
   })

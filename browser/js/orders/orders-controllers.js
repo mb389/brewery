@@ -9,6 +9,7 @@ app.controller('FullcartController', function ($scope, pendingOrder){
   }
 })
 
-app.controller('CheckoutController', function ($scope, user){
+app.controller('CheckoutController', function ($scope, user, pendingOrder){
   $scope.currentUser = user;
+  $scope.order = pendingOrder;
 })
