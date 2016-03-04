@@ -1,11 +1,7 @@
 app.controller('ReviewController', function($scope) {
   $scope.review = {};
-  $scope.review.rating = 3;
+  $scope.review.rating = "";
   $scope.review.isReadonly = false;
-
-
-
-
 
 })
 
