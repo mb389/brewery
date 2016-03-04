@@ -16,18 +16,18 @@ var schema = new mongoose.Schema({
       type: Number,
       required: true
     },
-    categories: {
-      type: [String],
+    categories: [{
+      type: mongoose.Schema.Types.ObjectId, ref: 'Category',
       required: true
-    },
+    }],
     price: {
       type: Number,
       default: 9.99
     },
-    picture: {
+    picture: [{
       type: String,
       default: "http://lorempixel.com/400/200/"
-    },
+    }],
     reviews: [{
       type: mongoose.Schema.Types.ObjectId, ref: 'Review'
     }]

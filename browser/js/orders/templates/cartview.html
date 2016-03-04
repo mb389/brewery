@@ -1,0 +1,32 @@
+<div id="container">
+<div class="row content" id="cartt">
+    <form class="custom" method="post" action="/cart">
+        <div id="cart-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <h1>SHOPPING CART</h1>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div ng-repeat="product in order.products" class="items-holder">
+                        <product></product>
+                    </div>
+                </div>
+                <div class="row col-md-3">
+                    <p>Order Summary</p>
+                    <ul class="price-list list-group">
+                        <li class="list-group-item important">Total: $470.00</li>
+                    </ul>
+                    <div class="col-xs-12 form-group" id="coupon">
+                        <input type="text" class="form-control" id="coupon-code" name="coupon" placeholder="Coupon Code" value="" />
+                    </div>
+                    <a class="btn btn-default col-xs-12 btn-lg solid" href="#" data-ajax-handler="shop:cart" data-ajax-update="#cart-content=shop-cart-content, #mini-cart=shop-minicart, #navbar-totals=shop-minicart-totals">Update Cart <i class="fa fa-refresh"></i></a>
+                    <a class="col-xs-12 btn btn-important solid btn-lg" href="//tanto.lemonstand.com/checkout-start">Checkout</a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </form>
+</div>
+</div>

@@ -19,6 +19,12 @@ app.factory('UserFactory', function ($http){
           return response.data;
         })
     },
+    getPendingOrderForUser: function (userId){
+      return $http.get('/api/users/' + userId + '/orders/pending')
+        .then(response =>{
+          return response.data;
+        })
+    },
     checkAdminStatus: function (userId) {
       return $http.get('/api/users/' + userId + '/isAdmin')
         .then(response => {

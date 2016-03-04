@@ -151,14 +151,6 @@ describe('User model', function () {
                 })
             });
 
-            it('errors without a password or googleid', function (done) {
-              var user = new User({ email: 'testemail@gmail.com'})
-                user.save( function(err){
-                  expect(err.message).to.equal("User validation failed");
-                  done();
-                })
-            });
-
             it('works with an email and password', function (done){
               var user = new User({email: 'testemailandpassword@gmail.com', password: 'testpassword'})
                 user.save( function(err, newUser){
