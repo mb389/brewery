@@ -100,7 +100,8 @@ describe('Review model', function () {
         .populate("product")
         .then(function (result) {
             expect(result.user.email).to.equal("newuser@gmail.com");
-          }).then(done,done)
+            done();
+          }).then(null,done)
       });
 
       it('find by product static', function(done) {
@@ -112,7 +113,8 @@ describe('Review model', function () {
           .then(result => {
             //console.log("found reviews:",result)
               expect(result[0].stars).to.equal(3);
-            }).then(done,done);
+              done();
+            }).then(null,done);
       })
     });
 
@@ -123,7 +125,8 @@ describe('Review model', function () {
         Review.findByUser(user._id)
         .then(function (result) {
             expect(result[0].stars).to.equal(3);
-          }).then(done,done)
+            done();
+          }).then(null,done)
     })
   });
 

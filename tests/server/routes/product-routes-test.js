@@ -113,7 +113,10 @@ describe('Product http requests', function () {
             })
             .end(function(err,res) {
               if (err) return done(err);
-              expect(res.body.name).to.equal('Lanny');
+              Product.findOne({name: res.body.name})
+              .then(res => {
+                expect(res.quantity).to.equal(20);
+              });
               done();
             });
       });

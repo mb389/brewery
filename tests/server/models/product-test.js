@@ -98,8 +98,9 @@ describe('Product model', function () {
     it('find by name', function(done) {
       Product.findOne({ name: "Lansoprazole" })
       .then(function (result) {
-          expect(result.quantity).to.equal(20)
-        }).then(done,done)
+          expect(result.quantity).to.equal(20);
+          done();
+        }).then(null,done)
     })
 
     it('find by category static finds all matches', function(done) {
@@ -109,7 +110,8 @@ describe('Product model', function () {
             if(_.find(product.categories, {'name': 'IPA' })) return true;
           })
           expect(productsOfCategory.length).to.equal(2);
-        }).then(done,done)
+          done();
+        }).then(null,done)
     })
   })
 

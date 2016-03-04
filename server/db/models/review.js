@@ -8,7 +8,8 @@ var schema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId, ref: 'Product'},
     stars: {
       type: Number,
-      required: true
+      required: true,
+      enum: [1,2,3,4,5]
     },
     content: {
       type: String,
@@ -26,4 +27,3 @@ return this.find({user: id}).exec();
 }
 
 mongoose.model('Review', schema);
-

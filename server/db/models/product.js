@@ -27,9 +27,6 @@ var schema = new mongoose.Schema({
     picture: [{
       type: String,
       default: "http://lorempixel.com/400/200/"
-    }],
-    reviews: [{
-      type: mongoose.Schema.Types.ObjectId, ref: 'Review'
     }]
 
 });
@@ -41,5 +38,7 @@ schema.statics.findByCategory = function(cat) {
         }
     }).exec();
 };
+
+
 
 mongoose.model('Product', schema);
