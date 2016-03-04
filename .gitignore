@@ -6,4 +6,4 @@ public
 coverage
 .env
 seed.js
-server/env/development
+server/env/development.js
