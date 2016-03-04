@@ -9,7 +9,7 @@ var schema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null
     },
     sessionId: {
-      type: String, validate: validateUserSession, default: null
+      type: String, default: null
     },
     status: {
       type: String, default: 'pending'
@@ -31,9 +31,13 @@ var schema = new mongoose.Schema({
     }
 });
 
-function validateUserSession () {
-  return this.user || this.sessionId
-}
+schema.pre('save', function(next) {
+  if (!this.user && !this.sessionId) {
+    next();
+  } else {
+    next(new Error('orders need a sessionId or user'))
+  }
+})
 
 // schema.pre('save', function(next) {
 //   if(!this.user && !this.sessionId) {
@@ -62,23 +66,18 @@ schema.pre('save', function(next) {
 // }
 
 
-schema.statics.addOrCreateProduct = function (id, productUpdateObj) {
+schema.methods.addOrCreateProduct = function (productUpdateObj) {
   //updates quantity and price if product in baseket or adds product
   // var self = this;
-  return this.findById(id)
-  .then(orderToUpdate => {
-    var toUpdate = orderToUpdate.products.filter(productInArray => {
-      return productInArray.product.toString() === productUpdateObj.product.toString()
-    })
-    if(toUpdate.length) {
-      toUpdate[0].quantity += productUpdateObj.quantity
-    } else {
-      orderToUpdate.products.push(productUpdateObj)
-    }
-    return orderToUpdate.save().then(function(updatedOrder) {
-      return updatedOrder
-    })
+  var toUpdate = this.products.filter(productInArray => {
+    return productInArray.product.toString() === productUpdateObj.product.toString()
   })
+  if(toUpdate.length) {
+    toUpdate[0].quantity += productUpdateObj.quantity
+  } else {
+    this.products.push(productUpdateObj)
+  }
+  return this.save()
 }
 
 
@@ -91,15 +90,13 @@ function addPriceToCart () {
       return productInCart.save()
     })
   }))
-  .then(arrOfUpdatedProducts => {
-    return arrOfUpdatedProducts
-  })
 }
 
 
 schema.methods.purchaseById = function() {
   this.status = 'purchased';
-  addPriceToCart();
+  addPriceToCart.call(this);
+  //add price to car returns an array of products in cart - should just be then'd off of
 }
 
 
