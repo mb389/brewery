@@ -16,10 +16,22 @@ var schema = new mongoose.Schema({
     password: {
         type: String
     },
-    name: {
+    firstName: {
       type: String
     },
-    address: {
+    lastName: {
+      type: String
+    },
+    streetAddress: {
+      type: String
+    },
+    city: {
+      type: String
+    },
+    state: {
+      type: String
+    },
+    zipcode: {
       type: String
     },
     phone: {
@@ -51,6 +63,10 @@ function validateEmail(email) {
    var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
    return emailRegex.test(email);
 }
+
+schema.virtual('fullname').get(function(){
+  return this.firstName + ' ' + this.lastName;
+})
 
 // method to remove sensitive information from user objects before sending them out
 schema.methods.sanitize = function () {
