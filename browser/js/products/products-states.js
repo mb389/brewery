@@ -1,15 +1,6 @@
 app.config(function ($stateProvider) {
 
-  $stateProvider.state('oneProduct', {
-    url: '/product',
-      templateUrl: '/js/products/templates/product.html',
-      controller: 'ProductCtrl',
-      resolve: {
-        theProduct: function (ProductFactory) {
-          return ProductFactory.getOneProduct();
-        }
-      }
-  });
+
 
   $stateProvider.state('allProducts', {
     url: '/products',
@@ -18,6 +9,17 @@ app.config(function ($stateProvider) {
       resolve: {
         allProducts: function (ProductFactory) {
           return ProductFactory.getAllProducts();
+        }
+      }
+  });
+
+  $stateProvider.state('oneProduct', {
+    url: '/product/:id',
+      templateUrl: '/js/products/templates/product.html',
+      controller: 'ProductCtrl',
+      resolve: {
+        theProduct: function (ProductFactory,$stateParams) {
+          return ProductFactory.getOneProduct($stateParams.id);
         }
       }
   });

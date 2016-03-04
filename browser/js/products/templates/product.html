@@ -1,0 +1,54 @@
+<div id="container">
+
+  <div class="jumbotron">
+<!-- <form  class="custom" onsubmit="return false" method="post" action="/product/dark-coffee-table"> -->
+        <div class="row" id="product" >
+      <div id="product-page">
+        <div class="row content">
+
+<div class="col-md-6">
+  <ul class="col-md-12 thumblist">
+        <li>
+          <!-- TODO: Fix clicks -->
+      <img onclick='changeImage("{{product.picture}}")' src="{{product.picture}}" alt="beer">
+    </li>
+        <li>
+      <img onclick='changeImage("{{product.picture}}")' src="{{product.picture}}" alt="beer">
+    </li>
+      </ul>
+
+  <div class="col-md-12" id="main-img">
+    <img id="big-thumb" src="{{product.picture}}" alt="beer">
+  </div>
+</div>
+
+<div id="product-detail" class="col-md-6">
+
+  <div class="col-md-12">
+    <h2>{{product.name}}</h2>
+
+    <h3>${{product.price}}</h3>
+
+    <p><p>{{product.description}} </p></p>
+
+
+            <input type="hidden" name="productId" value="7"/>
+        <div class="add-cart-holder form-group">
+          <div class="quantity-selector">
+            <label class="title">Quantity</label>
+            <input class="form-control quantity" type="text" value="1" name="quantity"/>
+          </div>
+        </div>
+
+          <a class="btn btn-default btn-add-cart">Add to Cart </a>
+    </div>
+
+
+        </div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
