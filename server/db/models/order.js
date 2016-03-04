@@ -15,11 +15,10 @@ var schema = new mongoose.Schema({
       type: String, default: 'pending'
     },
     products: [{
-      product: {type: mongoose.Schema.Types.ObjectId, ref: 'Product', default: null},
-      quantity: {type: Number, min: 0, default: null},
+      product: {type: mongoose.Schema.Types.ObjectId, ref: 'Product', default: null, required: true},
+      quantity: {type: Number, min: 0, default: null, required: true},
       price: {type: Number, min: 0, default: null}
     }],
-    //need to add purchase price field
     creationDate: {
       type: Date, default: Date.now
     },
@@ -28,42 +27,39 @@ var schema = new mongoose.Schema({
     },
     subtotal: {
       type: Number
+    },
+    guestDetails: {
+      firstName: String,
+      lastName: String,
+      streetAddress: String,
+      city: String,
+      state: String,
+      zipcode: String,
+      phone: String
     }
 });
 
-schema.pre('save', function(next) {
-  if (!this.user && !this.sessionId) {
+schema.pre('validate', function(next) {
+  if (this.user || this.sessionId) {
     next();
   } else {
     next(new Error('orders need a sessionId or user'))
   }
 })
 
+
 // schema.pre('save', function(next) {
-//   if(!this.user && !this.sessionId) {
-//     next (new Error('something went wrong'))
+//   var productsInOrder = this.products;
+//   if(productsInOrder.length !== 0) {
+//     productsInOrder.forEach(product => {
+//       if(!product.product || typeof product.quantity !== 'number') {
+//         next(new Error('something went wrong'))
+//       }
+//     })
 //   }
 //   next()
 // })
 
-schema.pre('save', function(next) {
-  var productsInOrder = this.products;
-  if(productsInOrder.length !== 0) {
-    productsInOrder.forEach(product => {
-      if(!product.product || typeof product.quantity !== 'number') {
-        next(new Error('something went wrong'))
-      }
-    })
-  }
-  next()
-})
-
-
-// schema.statics.mergeAnyOrders = function (userId ) {
-//   //merges any orders user may have open on log in
-
-
-// }
 
 
 schema.methods.addOrCreateProduct = function (productUpdateObj) {
@@ -91,6 +87,8 @@ function addPriceToCart () {
     })
   }))
 }
+
+
 
 
 schema.methods.purchaseById = function() {
