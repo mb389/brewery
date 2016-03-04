@@ -2,7 +2,7 @@ app.config(function ($stateProvider){
   $stateProvider
   .state('fullcart', {
     url:'/fullcart/:id',
-    templateUrl: '/js/orders/templates/fullcart.html',
+    templateUrl: '/js/orders/templates/cartview.html',
     controller: 'FullcartController',
     resolve: {
       orders: function ($stateParams, UserFactory) {

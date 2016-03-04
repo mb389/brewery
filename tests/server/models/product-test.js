@@ -7,6 +7,7 @@ var expect = require('chai').expect;
 var chai = require('chai');
 var spies = require('chai-spies');
 var supertest = require('supertest');
+var _ = require('lodash');
 // var app = require('../app');
 // var agent = supertest.agent(app);
 chai.use(spies);
@@ -18,6 +19,7 @@ chai.use(chaiAsPromised);
 require('../../../server/db/models');
 
 var Product = mongoose.model('Product');
+var Category = mongoose.model('Category');
 
 
 describe('Product model', function () {
@@ -59,24 +61,34 @@ describe('Product model', function () {
 
 
   describe('Product info',function(){
+    var IPACategory;
     beforeEach(function(done){
-      Product.create({
-        "name": "Lansoprazole",
-        "description": "Dis mineral metabol NEC",
-        "quantity": 20,
-        "categories": ["IPA"],
-        "price": 23.6,
-        "photo": "http://dummyimage.com/242x118.gif/dddddd/000000"
+        return Category.create({
+          name: 'IPA',
+          description: 'Indian Pale Ale',
+          tags: 'hoppy',
+        }).then(function(category){
+          console.log('CATEGORY', category);
+          IPACategory = category;
+          Product.create({
+            "name": "Lansoprazole",
+            "description": "Dis mineral metabol NEC",
+            "quantity": 20,
+            "categories": IPACategory._id,
+            "price": 23.6,
+            "photo": "http://dummyimage.com/242x118.gif/dddddd/000000"
+          })
       }).then(function(){
         Product.create({
           "name": "Rando",
           "description": "whatever",
           "quantity": 25,
-          "categories": ["IPA","B33R"],
+          "categories": IPACategory._id,
           "price": 99,
           "photo": "http://dummyimage.com/242x118.gif/dddddd/000000"
         });
-      }).then(done,done);
+        done()
+      }).then(null, done);
     })
 
     afterEach(function (done){
@@ -91,9 +103,12 @@ describe('Product model', function () {
     })
 
     it('find by category static finds all matches', function(done) {
-      Product.findByCategory("IPA")
+      Product.find({}).populate('categories').exec()
       .then(function (results) {
-          expect(results.length).to.equal(2);
+          var productsOfCategory = results.filter(function(product){
+            if(_.find(product.categories, {'name': 'IPA' })) return true;
+          })
+          expect(productsOfCategory.length).to.equal(2);
         }).then(done,done)
     })
   })
