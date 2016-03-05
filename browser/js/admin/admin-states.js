@@ -3,11 +3,14 @@ app.config(function ($stateProvider){
   .state('admin', {
     url:'/admin',
     templateUrl: '/js/admin/templates/admin.html',
-    controller: 'AdminController',
     resolve: {
       products: function (ProductFactory) {
-          return ProductFactory.getAllProducts();
-        }
+        return ProductFactory.getAllProducts();
+      },
+      categories: function (ProductFactory) {
+        return ProductFactory.getCategories();
+      }
+
     }
   })
   .state('admin.products', {
