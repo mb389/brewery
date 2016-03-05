@@ -1,7 +1,5 @@
 app.config(function ($stateProvider) {
 
-
-
   $stateProvider.state('allProducts', {
     url: '/products',
       templateUrl: '/js/products/templates/products.html',
@@ -16,14 +14,35 @@ app.config(function ($stateProvider) {
       }
   });
 
-  $stateProvider.state('oneProduct', {
+  $stateProvider.state('prodParent', {
     url: '/product/:id',
-      templateUrl: '/js/products/templates/product.html',
-      controller: 'ProductCtrl',
-      resolve: {
-        theProduct: function (ProductFactory,$stateParams) {
-          return ProductFactory.getOneProduct($stateParams.id);
-        }
+    abstract: true,
+    template: '<ui-view/>',
+    controller: 'ProductCtrl',
+    resolve: {
+      theProduct: function (ProductFactory,$stateParams) {
+        return ProductFactory.getOneProduct($stateParams.id);
+      },
+      productReviews: function($stateParams, ReviewFactory) {
+        return ReviewFactory.getReviewsForProduct($stateParams.id)
       }
+    }
   });
+
+  $stateProvider.state('prodParent.oneProduct', {
+    url: '/display',
+    templateUrl: '/js/products/templates/product.html'
+  });
+
+  $stateProvider.state('prodParent.Review', {
+    url: '/reviews/write',
+    templateUrl: 'js/reviews/templates/reviewWriter.html'
+  });
+
+
+
+
+
+
+
 });

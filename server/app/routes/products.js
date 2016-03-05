@@ -12,6 +12,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   Product.findById(req.params.id)
+  .populate('categories')
   .then(product => res.json(product))
   .then(null,next);
 });

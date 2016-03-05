@@ -7,6 +7,7 @@ var _ = require('lodash');
 
 router.param('id',(req,res,next, id) => {
   Review.findById(id)
+  .populate('user')
   .then(review => {
     req.review = review
     next();
@@ -16,6 +17,7 @@ router.param('id',(req,res,next, id) => {
 
 router.get('/', (req, res, next) => {
   Review.find()
+  .populate('user')
   .then(reviews => res.json(reviews))
   .then(null,next);
 });
