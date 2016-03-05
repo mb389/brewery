@@ -3,8 +3,7 @@
 
   <div class="list-group" ng-repeat="order in orders">
     <h4>Cart</h4>
-    <h5>{{order}}</h5>
-    <li  class="list-group-item" ng-repeat="product in order.products">PRODUCT: {{product}}   x   {{product.quantity}}
+    <li  class="list-group-item" ng-repeat="product in products">PRODUCT: {{product}}   x   {{product.quantity}}
       <a ng-click="removeItem(order._id, product.id)" class="btn-danger badge ">
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
       </a>

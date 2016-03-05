@@ -24,47 +24,21 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="/login">LOGIN</a>
+          <a ui-sref="login">LOGIN</a>
         </li>
         <li id="normal-cart">
-          <a id="normal-carts" href="/order" data-toggle="dropdown">
-            <span class="hidden-xs" id="navbar-totals">CART ( 1 )</span>
+          <a id="normal-carts" ui-sref="fullcart" data-toggle="dropdown">
+            <span class="hidden-xs" id="navbar-totals">CART</span>
           </a>
-          <div id="mini-cart" class="dropdown-menu">
-            <ul class="cart-items list-unstyled hidden-xs">
-              <li class="row cart-item">
-                <div class="product-thumb col-xs-4">
-                  <img class="img-responsive" alt="Layered Desk" src="//dd6vif294zh3b.cloudfront.net/store-tanto-543852ae9b0a6/uploaded/thumbnails/7a_100x100-jpg-keep-ratio.png?1415837239"/>
-                </div>
-
-                <div class="product-info col-xs-8">
-                  <h6 class="product-title">Beerz</h6>
-                  <div class="price">
-                    1 x
-                    <span>$110.00</span>
-                  </div>
-                  <a class="remove-item" href="#" data-ajax-handler="shop:cart" data-ajax-update="#cart-content=shop-cart-content, #mini-cart=shop-minicart, #navbar-totals=shop-minicart-totals" data-ajax-extra-fields="delete_item='56d856b2b286e'">
-                    <i class="fa fa-times"></i>
-                  </a>
-                </div>
-              </li>
-            </ul>
-            <div class="mini-cart-totals">
-              <h4 class="subtotal">Subtotal: $110.00</h4>
-              <a class="btn col-xs-12" href="/order">View Cart</a>
-              <a class="col-xs-12 btn btn-important" href="/checkout-start">Checkout</a>
-            </div>
-
-          </div>
         </li>
         <li id="normal-cart">
-          <a href="/checkout-start">CHECKOUT</a>
+          <a ui-sref="fullcart.checkout" >CHECKOUT</a>
         </li>
         <li id="mobile-cart">
           <a href="/cart">CART</a>
         </li>
         <li id="mobile-cart">
-          <a href="/checkout-start">CHECKOUT</a>
+          <a ui-sref="fullcart.checkout">CHECKOUT</a>
         </li>
 
       </ul>
