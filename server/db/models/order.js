@@ -1,7 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
-
+var _ = require('lodash');
 
 
 var schema = new mongoose.Schema({
@@ -60,18 +60,17 @@ schema.pre('validate', function(next) {
 //   next()
 // })
 
-
-
-schema.methods.addOrCreateProduct = function (productUpdateObj) {
-  console.log('heres the product', productUpdateObj);
-  //updates quantity and price if product in baseket or adds product
-  // var self = this;
-  console.log('heres the order', this);
-  var toUpdate = this.products.filter(productInArray => {
+function findMatchingProduct (productUpdateObj){
+  return this.products.filter(productInArray => {
     return productInArray.product.toString() === productUpdateObj._id.toString();
   })
+}
+
+schema.methods.addOrCreateProduct = function (productUpdateObj) {
+  //updates quantity and price if product in baseket or adds product
+  // var self = this;
+  var toUpdate = findMatchingProduct.call(this, productUpdateObj);
   if(toUpdate.length) {
-    console.log('TEST !!!', toUpdate);
     toUpdate[0].quantity += Number(productUpdateObj.quantity);
   } else {
     this.products.push({
@@ -82,7 +81,25 @@ schema.methods.addOrCreateProduct = function (productUpdateObj) {
   return this.save()
 }
 
+schema.methods.removeProduct = function (idToRemove) {
+  console.log('remove this!', idToRemove)
+  var idx;
+   this.products.forEach((prod, i) => {
+    if(prod.product === idToRemove.toString()) idx = i;
+   })
+   this.products.splice(idx, 1);
+   return this.save();
+}
 
+schema.methods.updateOrder  = function(updatesOrder) {
+  console.log('look for update', this.products, updatesOrder);
+  // _.merge(this.products, updatesOrder.products); this gives me an error doc validat is not a function
+  this.products.forEach(function (prod, i){
+    prod.quantity = updatesOrder.products[i].quantity;
+  })
+  console.log('HERES THIS', this);
+  return this.save();
+}
 
 function addPriceToCart () {
   return Promise.all(this.products.map(productInCart => {
@@ -93,9 +110,6 @@ function addPriceToCart () {
     })
   }))
 }
-
-
-
 
 schema.methods.purchaseById = function() {
   this.status = 'purchased';

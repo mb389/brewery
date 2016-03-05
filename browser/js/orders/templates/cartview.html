@@ -21,8 +21,9 @@
                     <div class="col-xs-12 form-group" id="coupon">
                         <input type="text" class="form-control" id="coupon-code" name="coupon" placeholder="Coupon Code" value="" />
                     </div>
-                    <a class="btn btn-default col-xs-12 btn-lg solid" href="#" data-ajax-handler="shop:cart" data-ajax-update="#cart-content=shop-cart-content, #mini-cart=shop-minicart, #navbar-totals=shop-minicart-totals">Update Cart <i class="fa fa-refresh"></i></a>
-                    <a class="col-xs-12 btn btn-important solid btn-lg" href="//tanto.lemonstand.com/checkout-start">Checkout</a>
+                    <a ng-show="inProgress"> Calculating ...</a>
+                    <a ng-click="updateOrderTotal()" class="btn btn-default col-xs-12 btn-lg solid">Update Cart <i class="fa fa-refresh"></i></a>
+                    <a class="col-xs-12 btn btn-important solid btn-lg">Checkout</a>
                 </div>
             </div>
         </div>
