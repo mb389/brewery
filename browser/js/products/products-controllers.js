@@ -31,7 +31,7 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts) {
 app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct, OrderFactory) {
 
   $scope.product = theProduct;
-  $scope.addToCart = function (productToAdd){
+  $scope.addToOrder = function (productToAdd){
     productToAdd.quantity = Number($scope.quantity);
     OrderFactory.addOrCreate(productToAdd)
   }
