@@ -22,6 +22,7 @@ app.factory('OrderFactory', function ($http, AuthService){
     getOrderBySessionId: function (){
       return $http.get('/api/orders/session/')
         .then( response => {
+          console.log('response.data', response.data);
           return response.data;
         })
     },

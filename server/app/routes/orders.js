@@ -4,17 +4,19 @@ module.exports = router;
 var mongoose = require('mongoose');
 var Promise = require('bluebird');
 var Order = mongoose.model('Order');
+var Product = mongoose.model('Product');
 var User = mongoose.model('User');
+var Category = mongoose.model('Category');
 
 
 //get pending order by user or session
 router.get('/user/session/:userid', (req, res, next) => {
   console.log('do we get here?', req.session);
-  Order.findOne({user: req.params.userid, status: 'pending'})
+  Order.findOne({user: req.params.userid, status: 'pending'}).populate('products.product').exec()
     .then(order => {
       console.log('ORDER', order);
       if(order) res.json(order)
-      else return Order.findOne({sessionId: req.session.id, status: 'pending'})
+      else return Order.findOne({sessionId: req.session.id, status: 'pending'}).populate('products.product').exec()
     })
     .then(sessionOrder => {
       res.json(sessionOrder);
@@ -25,20 +27,30 @@ router.get('/user/session/:userid', (req, res, next) => {
 router.get('/session/', (req, res, next) => {
   //get any current pending orders for the current session Id
   console.log('heres the session', req.session.id)
-  Order.findOne({sessionId: req.session.id , status: 'pending'})
-  .then(order => res.json(order))
+  Order.findOne({sessionId: req.session.id , status: 'pending'}).populate({
+    path: 'products.product',
+    model: 'Product',
+    populate: {
+      path: 'categories',
+      model: 'Category'
+    }
+  }).exec()
+  .then(order => {
+    console.log('did we get the order', order);
+    res.json(order)
+  })
   .then(null, next)
 })
 
 router.get('/', (req, res, next) => {
-  Order.find({})
+  Order.find({}).populate('products.product').exec()
   .then(orders => res.json(orders))
   .catch(next)
 })
 
 router.get('/:id', (req, res, next) => {
   console.log('or  here', req.session);
-  Order.findById(req.params.id)
+  Order.findById(req.params.id).populate('products.product').exec()
   .then(order => res.json(order))
   .then(null, next)
 })
