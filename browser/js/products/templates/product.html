@@ -10,10 +10,10 @@
   <ul class="col-md-12 thumblist">
         <li>
           <!-- TODO: Fix clicks -->
-      <img onclick='changeImage("{{product.picture}}")' src="{{product.picture[0]}}" alt="beer">
+      <img id="small1" ng-click='changeImage("{{product.picture[1]}}")' src="{{product.picture[1]}}" alt="beer">
     </li>
         <li>
-      <img onclick='changeImage("{{product.picture}}")' src="{{product.picture[0]}}" alt="beer">
+      <img id="small2" ng-click='changeImage("{{product.picture[2]}}")' src="{{product.picture[2]}}" alt="beer">
     </li>
       </ul>
 
@@ -37,6 +37,8 @@
           <div class="quantity-selector">
             <label class="title">Quantity</label>
             <input ng-model="quantity" class="form-control quantity" type="text" value="1" name="quantity"/>
+            <br>
+            <div ng-show="wasAdded">Added!</div>
           </div>
         </div>
 
