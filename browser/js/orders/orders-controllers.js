@@ -2,7 +2,16 @@ app.controller('FullcartController', function ($scope, pendingOrder){
   console.log('the pending order',pendingOrder);
   $scope.order = pendingOrder;
   $scope.products = pendingOrder.products;
-  console.log("HERE ARE ORDERS", pendingOrder);
+  $scope.total = 0;
+
+  var calcTotal = function (){
+    pendingOrder.products.forEach(prod => {
+      $scope.total += Number(prod.quantity) * Number(prod.product.price);
+    })
+    $scope.total = Math.round($scope.total * 100) / 100;
+  }
+  calcTotal();
+
   $scope.removeItem = function (productId) {
     console.log('remove', productId);
   }
