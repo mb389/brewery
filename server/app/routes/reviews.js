@@ -53,12 +53,14 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-  Review.findById(req.params.id)
-  .then(review => {
-    review.remove();
-    res.sendStatus(204);
-  })
-  .then(null, next);
+  // Review.findById(req.params.id)
+  // .then(review => {
+  //   review.remove();
+  //   res.sendStatus(204);
+  // })
+  // .then(null, next);
+
+
 });
 
 

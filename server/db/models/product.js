@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var _ = require('lodash');
 
 
 var schema = new mongoose.Schema({
@@ -32,12 +33,16 @@ var schema = new mongoose.Schema({
 });
 
 schema.statics.findByCategory = function(cat) {
-    return this.find({
-        categories: {
-            $in: [cat]
-        }
-    }).exec();
-};
+    return this.find({})
+    .populate('categories')
+    .then(products => {
+      return products.filter(function(el){
+      return el.categories[0].name === cat;
+      });
+    }
+  )};
+
+
 
 
 
