@@ -85,10 +85,26 @@ router.put('/:id', (req, res, next) => {
   .then(null, next)
 })
 
+router.put('/update/:id', (req, res, next) => {
+  Order.findById(req.params.id).populate({
+    path: 'products.product',
+    model: 'Product',
+    populate: {
+      path: 'categories',
+      model: 'Category'
+    }
+  }).exec()
+  .then(function(order) {
+    console.log('order we find', order);
+    return order.updateOrder(req.body);
+  })
+  .then(order => res.json(order))
+  .then(null, next);
+})
 
 router.put('/purchase/:id', (req, res, next) => {
-  Order.findById(req.params.id).
-  then(order => order.purchaseById())
+  Order.findById(req.params.id)
+  .then(order => order.purchaseById())
   .then(order => res.json(order))
   .then(null, next)
 })
@@ -100,6 +116,19 @@ router.put('/status/:id/:status', (req, res, next) => {
   .then(null, next)
 })
 
+router.delete('/product/:orderid/:productid', (req, res, next) => {
+  Order.findById(req.params.orderid).populate({
+    path: 'products.product',
+    model: 'Product',
+    populate: {
+      path: 'categories',
+      model: 'Category'
+    }
+  }).exec()
+  .then(order => order.removeProduct(req.params.productid))
+  .then(updatedOrder => res.json(updatedOrder))
+  .then(null, next)
+})
 
 router.delete('/:id', (req, res, next) => {
   //delete the order and the delete the order within the user
