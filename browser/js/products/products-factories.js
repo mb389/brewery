@@ -30,6 +30,21 @@ app.factory('ProductFactory',function($http) {
     .then(res => res.data);
   }
 
+  obj.createCategory = function(newCat) {
+    return $http.post('/api/categories/', newCat)
+    .then(res => res.data)
+  }
+
+  obj.updateCategory = function(updateCat) {
+    return $http.put('/api/categories/'+updateCat._id, updateCat)
+    .then(res => res.data)
+  }
+
+  obj.deleteCategory = function(catToDelte) {
+    return $http.delete('/api/categories/'+catToDelte._id)
+    .then(res => res.data)
+  }
+
   obj.getCategories = function () {
     return $http.get('/api/categories/')
     .then(res => res.data)
@@ -41,7 +56,7 @@ app.factory('ProductFactory',function($http) {
   }
 
   obj.addProduct = function(newProd) {
-    return $http.post('/api/products/',newProd)
+    return $http.post('/api/products/', newProd)
     .then(res => res.data);
   }
 

@@ -1,0 +1,67 @@
+<div id="container">
+
+
+<div class="row content" id="product-admin">
+
+<div class="col-md-12">
+       <div class="row">
+
+<!-- PRODUCT EDIT FORM -->
+<div class="form-group">
+    <div ng-repeat="category in categories">
+      <button type="button" ng-class="{currentCategory : isBeerCategory(category._id)}" class="btn btn-default btn-lg" ng-click="populateCategory(category)">{{category.name}}, {{category.description}}, {{category.tags}}</button>
+    <!-- <category-button cat={{category}}></category-button> -->
+    </div>
+  </div>
+
+
+<form ng-submit="submitCategory()">
+
+  <div class="form-group">
+    <label class="control-label">New Category Name</label><br>
+    <div class="col-sm-9">
+        <input type="text" class="form-control input-sm" ng-model="categoryToUpdate.name" size="10" autofocus />
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="control-label">Category Description</label><br>
+    <div class="col-sm-9">
+        <input type="text" class="form-control input-sm" ng-model="categoryToUpdate.description" size="10" autofocus />
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="control-label">Tags (Comma Seperated)</label><br>
+    <div class="col-sm-9">
+        <input type="text" class="form-control input-sm" ng-model="categoryToUpdate.tags" size="10" autofocus />
+    </div>
+  </div>
+
+  <div class="form-group">
+      <div class="col-sm-9">
+          <button type="submit" class="btn btn-default">Create</button>
+      </div>
+  </div>
+</form>
+  <div ng-show="categoryToUpdate.name">
+      <div class="col-sm-9">
+          <button ng-click="categoryToUpdate={}" class="btn btn-default">Clear fields</button>
+      </div>
+  </div>
+  <div ng-show="categoryToUpdate.name">
+      <div class="col-sm-9">
+          <button ng-click="deleteCategory()" class="btn btn-default">Delete Category</button>
+      </div>
+  </div>
+
+
+
+<div class="pagination-holder">
+   </div>
+
+
+   </div>
+   </div>
+</div>
+</div>
