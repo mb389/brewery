@@ -401,6 +401,24 @@ a:hover{
 }
 
 /*============================================
+     ADMIN PAGE
+=============================================*/
+#admin-page .fa{
+  padding-top:100px;
+  height:500px;
+}
+
+#product-admin .fa{
+  padding-top:0px;
+  height:500px;
+}
+
+.currentCategory {
+  border-color: blue !important;
+}
+
+
+/*============================================
         SHOP PAGE
 =============================================*/
 #shopp{

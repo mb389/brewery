@@ -30,8 +30,13 @@ app.factory('ProductFactory',function($http) {
     .then(res => res.data);
   }
 
-  obj.editProductDetails = function(id) {
-    return $http.put('/api/products/'+id)
+  obj.getCategories = function () {
+    return $http.get('/api/categories/')
+    .then(res => res.data)
+  }
+
+  obj.editProductDetails = function(id, body) {
+    return $http.put('/api/products/'+id, body)
     .then(res => res.data);
   }
 
