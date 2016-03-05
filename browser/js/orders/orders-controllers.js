@@ -1,4 +1,4 @@
-app.controller('FullcartController', function ($scope, pendingOrder, OrderFactory){
+app.controller('FullcartController', function ($scope, $state, pendingOrder, OrderFactory){
   console.log('the pending order',pendingOrder);
   $scope.order = pendingOrder;
   $scope.products = pendingOrder.products;
@@ -34,15 +34,31 @@ app.controller('FullcartController', function ($scope, pendingOrder, OrderFactor
   }
 
   $scope.checkout = function(){
-    console.log('checkout');
+    console.log('go to checkout');
+    $state.go('fullcart.checkout');
   }
 
 });
 
-app.controller('CheckoutController', function ($scope, user, pendingOrder){
-  $scope.currentUser = user;
-  $scope.order = pendingOrder;
+app.controller('CheckoutController', function ($scope, pendingOrder, AuthService){
+   $scope.order = pendingOrder;
+
+  var calcTotal = function (){
+    $scope.total = 0;
+    $scope.order.products.forEach(prod => {
+      $scope.total += Number(prod.quantity) * Number(prod.product.price);
+    })
+    $scope.total = Math.round($scope.total * 100) / 100;
+  }
+  calcTotal();
+
+  AuthService.getLoggedInUser()
+    .then(user => {
+      if(user) $scope.currentUser = user;
+    })
 })
+
+
 
 app.filter('joinArray', function(){
   return function(arr){

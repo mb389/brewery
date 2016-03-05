@@ -1,7 +1,5 @@
-<div id="container">
-<div class="row content" id="cartt">
-    <form class="custom" method="post" action="/cart">
-        <div id="cart-content">
+    <h4 ng-hide="products.length"> No Products in Your Cart </h4>
+        <div ng-show="products.length" id="cart-content">
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-12">
@@ -23,11 +21,7 @@
                     </div>
                     <a ng-show="inProgress"> Calculating ...</a>
                     <a ng-click="updateOrderTotal()" class="btn btn-default col-xs-12 btn-lg solid">Update Cart <i class="fa fa-refresh"></i></a>
-                    <a class="col-xs-12 btn btn-important solid btn-lg">Checkout</a>
+                    <a ng-click="checkout()" class="col-xs-12 btn btn-important solid btn-lg">Checkout</a>
                 </div>
             </div>
         </div>
-      </div>
-    </form>
-</div>
-</div>
