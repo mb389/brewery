@@ -6,12 +6,12 @@ app.config(function ($stateProvider){
     controller: 'FullcartController',
     resolve: {
       pendingOrder: function (OrderFactory, AuthService){
-        AuthService.getLoggedInUser(true)
-        .then(user => {
-          console.log('heres users', user);
-          if(user) return OrderFactory.getOrderByUserIdOrSessionId(user.id);
-          else return OrderFactory.getOrderBySessionId()
-        })
+        return AuthService.getLoggedInUser(true)
+          .then(user => {
+            console.log('heres users', user);
+            if(user) return OrderFactory.getOrderByUserIdOrSessionId(user.id);
+            else return OrderFactory.getOrderBySessionId()
+          })
       }
     }
   })

@@ -1,16 +1,21 @@
 <div class="row" id="cart-row">
     <div class="col-sm-2" id="cart-img">
-        <img ui-src="{{product.profile}}" alt="Product Photo">
+        <img src="{{product.product.picture[0]}}" alt="Product Photo">
+    </div>
+    <div class="col-sm-4">
+            <a ui-sref="oneProduct({id: product.product._id})" ><strong>{{product.product.name}}</strong></a>
+            <p> Product ID: {{product.product._id}}</p>
+            <p> Product Description: {{product.product.description}}
+            <p> Product Tags: {{product.product.categories[0].tags | joinArray}}
     </div>
     <div class="row" id="align-middle">
-        <div class="col-sm-4">
-            <a href="/product/dark-coffee-table">{{product.name}}</a>
-        </div>
         <div class="col-sm-2">
+            <h4> Quantity </h4>
             <input ng-model="product.quantity" type="text" id="quantity" value="{{product.quantity}}">
         </div>
         <div class="col-sm-3" id="item-middle">
-            <p class="col-sm-9">{{product.price}}</p>
+            <h4>Price</h4>
+            <p class="col-sm-9">{{product.product.price}}</p>
             <a class="col-sm-3" id="item-close" ng-click="removeItem(product.id)"><i class="fa fa-times" id="remove-cart-item"></i></a>
         </div>
     </div>
