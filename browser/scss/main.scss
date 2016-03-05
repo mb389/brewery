@@ -53,6 +53,9 @@ label{
   background:rgb(192, 192, 192);
   color:rgb(108, 122, 137);
 }
+[ng-click] {
+   cursor: pointer;
+}
 #title-p{
   font-size: 0.8em;
   letter-spacing: 0.2em;

@@ -13,6 +13,12 @@ app.factory('OrderFactory', function ($http, AuthService){
           return response.data;
         })
     },
+    updateCurrentOrder: function (orderToUpdate) {
+      return $http.put('/api/orders/update/' + orderToUpdate._id, orderToUpdate)
+        .then( response => {
+           return response.data;
+        })
+    },
     getOrderByUserIdOrSessionId: function (userId) {
       return $http.get('/api/orders/user/session/' + userId)
         .then(response => {
@@ -35,8 +41,8 @@ app.factory('OrderFactory', function ($http, AuthService){
         if(!user) return $http.get('/api/orders/session/') //get order by session
         else return $http.get('/api/orders/user/session/' + user._id) //get order by user
       })
-      .then(function (response){
-        var order = response.data;
+      .then(function (orderResponse){
+        var order = orderResponse.data;
         console.log('do we get orders', order);
         //if theres and order update it with the product & quantity otherwise create
         if(order) {
@@ -52,6 +58,14 @@ app.factory('OrderFactory', function ($http, AuthService){
           })
         }
       })
+    },
+    removeProductFromOrder: function (orderId, productToRemove){
+      console.log('heres product to remove', productToRemove);
+      return $http.delete('/api/orders/product/' + orderId + '/' + productToRemove._id)
+        .then(response => {
+          console.log('did we remove product', response.data);
+          return response.data;
+        })
     },
     updateOrAddProductToOrder: function (orderId, productToAdd){
       return $http.put('/api/orders/' + orderId, productToAdd)
