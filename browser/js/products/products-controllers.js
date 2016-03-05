@@ -2,11 +2,6 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts) {
 
   $scope.products = allProducts;
 
-    $scope.items = [
-      'The first choice!',
-      'And another choice for you.',
-      'but wait! A third!'
-    ];
 
     $scope.status = {
       isopen: false
@@ -35,5 +30,6 @@ app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct
     productToAdd.quantity = Number($scope.quantity);
     OrderFactory.addOrCreate(productToAdd)
   }
+
 
 });

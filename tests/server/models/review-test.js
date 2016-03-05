@@ -43,16 +43,17 @@ describe('Review model', function () {
           expect(Review).to.be.a('function');
       });
 
-      it('should have stars', function() {
+      it('should have stars', function(done) {
         review.validate(function(err){
-            expect(err.errors.stars).to.be.a('number');
+            expect(err.errors.stars).to.be.an('object');
             done();
          })
       })
 
-      it('should have content', function() {
+      it('should have content', function(done) {
         review.validate(function(err){
-            expect(err.errors.content).to.be.a('string');
+            console.log(err)
+            expect(err.errors.content).to.be.an('object');
             done();
          })
        });
@@ -71,9 +72,8 @@ describe('Review model', function () {
           "name": "Lansoprazole",
           "description": "Dis mineral metabol NEC",
           "quantity": 20,
-          "categories": "IPA",
           "price": 23.6,
-          "photo": "http://dummyimage.com/242x118.gif/dddddd/000000"
+          "picture": "http://dummyimage.com/242x118.gif/dddddd/000000"
         });
 
         Promise.all([userPromise,productPromise])
@@ -84,7 +84,8 @@ describe('Review model', function () {
             stars: 3,
             content: "fantastical beerz"
           });
-        }).then(done);
+          done();
+        }).then(null,done);
       });//closes beforeEach
 
         afterEach(function (done){
@@ -100,7 +101,8 @@ describe('Review model', function () {
         .populate("product")
         .then(function (result) {
             expect(result.user.email).to.equal("newuser@gmail.com");
-          }).then(done,done)
+            done();
+          }).then(null,done)
       });
 
       it('find by product static', function(done) {
@@ -112,7 +114,8 @@ describe('Review model', function () {
           .then(result => {
             //console.log("found reviews:",result)
               expect(result[0].stars).to.equal(3);
-            }).then(done,done);
+              done();
+            }).then(null,done);
       })
     });
 
@@ -123,7 +126,8 @@ describe('Review model', function () {
         Review.findByUser(user._id)
         .then(function (result) {
             expect(result[0].stars).to.equal(3);
-          }).then(done,done)
+            done();
+          }).then(null,done)
     })
   });
 

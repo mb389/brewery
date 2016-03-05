@@ -4,6 +4,16 @@ var mongoose = require('mongoose');
 var Review = mongoose.model('Review');
 var _ = require('lodash');
 
+
+router.param('id',(req,res,next, id) => {
+  Review.findById(id)
+  .then(review => {
+    req.review = review
+    next();
+  })
+  .then(null,next);
+})
+
 router.get('/', (req, res, next) => {
   Review.find()
   .then(reviews => res.json(reviews))
@@ -11,9 +21,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  Review.findById(req.params.id)
-  .then(review => res.json(review))
-  .then(null,next);
+  res.json(req.review)
 });
 
 router.get('/product/:productId', (req, res, next) => {
@@ -36,13 +44,12 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  Review.findById(req.params.id)
-  .then(review => {
-    review=_.merge(review,req.body);
-    review.save();
-    res.json(review);
-  })
-  .then(null, next);
+  _.merge(req.review,req.body);
+  req.review.save()
+  .then(function() {
+    res.json(req.review);
+    next();
+  });
 });
 
 router.delete('/:id', (req, res, next) => {

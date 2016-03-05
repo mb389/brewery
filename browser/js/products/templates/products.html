@@ -22,7 +22,10 @@
 <!-- PRODUCT REPEATER      -->
  <div class="col-md-3 shop-item" ng-repeat="product in products">
  <a href="/product/{{product._id}}">
-<img src="{{product[0].picture}}" alt="{{product.name}}">
+
+<img src="{{product.picture[0]}}" alt="{{product.name}}">
+
+
 <div>
  <h5>{{product.name}}</h5>
 

@@ -32,11 +32,15 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   Product.findById(req.params.id)
   .then(product => {
-    product=_.merge(product,req.body);
-    product.save();
-    res.json(product);
+    _.merge(product,req.body);
+    return product.save();
   })
-  .then(null, next);
+  .then(function(updatedProd) {
+    res.json(updatedProd);
+    next();
+  })
+  .then(null,next)
+
 });
 
 router.delete('/:id', (req, res, next) => {
