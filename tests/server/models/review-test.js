@@ -52,7 +52,6 @@ describe('Review model', function () {
 
       it('should have content', function(done) {
         review.validate(function(err){
-            console.log(err)
             expect(err.errors.content).to.be.an('object');
             done();
          })
