@@ -28,10 +28,12 @@ app.factory('OrderFactory', function ($http, AuthFactory){
     addOrCreate: function(productToAdd) {
       AuthService.getLoggedInUser()
       .then(function (user){
+        //check for order from user or session
         if(!user) return $http.get('/api/orders/session/') //get order by session
         else return $http.get('/api/orders/user/session/' + user.id) //get order by user
       })
       .then(function (order){
+        //if theres and order update it with the product & quantity otherwise create
         if(order) this.updateOrAddProductToOrder (order.id, productToAdd);
         else this.createOrderAndAddProduct (productToAdd);
       })
