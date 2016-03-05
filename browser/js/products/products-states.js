@@ -9,6 +9,9 @@ app.config(function ($stateProvider) {
       resolve: {
         allProducts: function (ProductFactory) {
           return ProductFactory.getAllProducts();
+        },
+        allCategories: function(ProductFactory) {
+          return ProductFactory.getCategoryNames();
         }
       }
   });
