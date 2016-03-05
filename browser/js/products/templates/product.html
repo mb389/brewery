@@ -36,11 +36,11 @@
         <div class="add-cart-holder form-group">
           <div class="quantity-selector">
             <label class="title">Quantity</label>
-            <input class="form-control quantity" type="text" value="1" name="quantity"/>
+            <input ng-model="quantity" class="form-control quantity" type="text" value="1" name="quantity"/>
           </div>
         </div>
 
-          <a class="btn btn-default btn-add-cart">Add to Cart </a>
+          <a ng-click="addToCart(product)" class="btn btn-default btn-add-cart">Add to Cart </a>
     </div>
 
 

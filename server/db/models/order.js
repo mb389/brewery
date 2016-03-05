@@ -63,15 +63,21 @@ schema.pre('validate', function(next) {
 
 
 schema.methods.addOrCreateProduct = function (productUpdateObj) {
+  console.log('heres the product', productUpdateObj);
   //updates quantity and price if product in baseket or adds product
   // var self = this;
+  console.log('heres the order', this);
   var toUpdate = this.products.filter(productInArray => {
-    return productInArray.product.toString() === productUpdateObj.product.toString()
+    return productInArray.product.toString() === productUpdateObj._id.toString();
   })
   if(toUpdate.length) {
-    toUpdate[0].quantity += productUpdateObj.quantity
+    console.log('TEST !!!', toUpdate);
+    toUpdate[0].quantity += Number(productUpdateObj.quantity);
   } else {
-    this.products.push(productUpdateObj)
+    this.products.push({
+      product: productUpdateObj._id,
+      quantity: Number(productUpdateObj.quantity)
+    })
   }
   return this.save()
 }

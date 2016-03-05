@@ -7,27 +7,9 @@ var Order = mongoose.model('Order');
 var User = mongoose.model('User');
 
 
-router.get('/', (req, res, next) => {
-  Order.find({})
-  .then(orders => res.json(orders))
-  .catch(next)
-})
-
-router.get('/:id', (req, res, next) => {
-  Order.findById(req.params.id)
-  .then(order => res.json(order))
-  .then(null, next)
-})
-
-router.get('/session/', (req, res, next) => {
-  //get any current pending orders for the current session Id
-  Order.findOne({sessionId: req.session.id , status: 'pending'})
-  .then(order => res.json(order))
-  .then(null, next)
-})
-
 //get pending order by user or session
 router.get('/user/session/:userid', (req, res, next) => {
+  console.log('do we get here?', req.session);
   Order.findOne({user: req.params.userid, status: 'pending'})
     .then(order => {
       console.log('ORDER', order);
@@ -38,6 +20,27 @@ router.get('/user/session/:userid', (req, res, next) => {
       res.json(sessionOrder);
     })
     .then(null, next);
+})
+
+router.get('/session/', (req, res, next) => {
+  //get any current pending orders for the current session Id
+  console.log('heres the session', req.session.id)
+  Order.findOne({sessionId: req.session.id , status: 'pending'})
+  .then(order => res.json(order))
+  .then(null, next)
+})
+
+router.get('/', (req, res, next) => {
+  Order.find({})
+  .then(orders => res.json(orders))
+  .catch(next)
+})
+
+router.get('/:id', (req, res, next) => {
+  console.log('or  here', req.session);
+  Order.findById(req.params.id)
+  .then(order => res.json(order))
+  .then(null, next)
 })
 
 router.post('/', (req, res, next) => {
@@ -58,11 +61,14 @@ router.post('/', (req, res, next) => {
     .then(null, next)
 })
 
-
 router.put('/:id', (req, res, next) => {
   //req.body will be the product, new quantity
+  console.log('id', req.params.id);
   Order.findById(req.params.id)
-  .then(order => order.addOrCreateProduct(req.body))
+  .then(order => {
+    console.log('got here?');
+    return order.addOrCreateProduct(req.body)
+  })
   .then(updatedOrder => res.status(202).json(updatedOrder))
   .then(null, next)
 })

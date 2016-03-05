@@ -28,8 +28,12 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts) {
 });
 
 
-app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct) {
+app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct, OrderFactory) {
 
   $scope.product = theProduct;
+  $scope.addToCart = function (productToAdd){
+    productToAdd.quantity = Number($scope.quantity);
+    OrderFactory.addOrCreate(productToAdd)
+  }
 
 });

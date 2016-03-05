@@ -1,4 +1,4 @@
-app.factory('OrderFactory', function ($http, AuthFactory){
+app.factory('OrderFactory', function ($http, AuthService){
 
   return {
     getAllOrders: function (){
@@ -26,16 +26,30 @@ app.factory('OrderFactory', function ($http, AuthFactory){
         })
     },
     addOrCreate: function(productToAdd) {
+      console.log('runs addOrCreate');
       AuthService.getLoggedInUser()
       .then(function (user){
         //check for order from user or session
+        console.log('do we get user', user);
         if(!user) return $http.get('/api/orders/session/') //get order by session
-        else return $http.get('/api/orders/user/session/' + user.id) //get order by user
+        else return $http.get('/api/orders/user/session/' + user._id) //get order by user
       })
-      .then(function (order){
+      .then(function (response){
+        var order = response.data;
+        console.log('do we get orders', order);
         //if theres and order update it with the product & quantity otherwise create
-        if(order) this.updateOrAddProductToOrder (order.id, productToAdd);
-        else this.createOrderAndAddProduct (productToAdd);
+        if(order) {
+          return $http.put('/api/orders/' + order._id, productToAdd)
+          .then( response => {
+            return response.data;
+          })
+        } else {
+          return $http.post('/api/orders/', productToAdd)
+          .then( response => {
+            console.log(response.data);
+            return response.data;
+          })
+        }
       })
     },
     updateOrAddProductToOrder: function (orderId, productToAdd){
