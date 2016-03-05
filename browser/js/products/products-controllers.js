@@ -2,11 +2,6 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts) {
 
   $scope.products = allProducts;
 
-    $scope.items = [
-      'The first choice!',
-      'And another choice for you.',
-      'but wait! A third!'
-    ];
 
     $scope.status = {
       isopen: false
@@ -28,8 +23,9 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts) {
 });
 
 
-app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct) {
+app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct, OrderFactory) {
 
   $scope.product = theProduct;
+
 
 });

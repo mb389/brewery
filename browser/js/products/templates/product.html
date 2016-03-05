@@ -10,15 +10,15 @@
   <ul class="col-md-12 thumblist">
         <li>
           <!-- TODO: Fix clicks -->
-      <img onclick='changeImage("{{product.picture}}")' src="{{product.picture}}" alt="beer">
+      <img onclick='changeImage("{{product.picture}}")' src="{{product.picture[0]}}" alt="beer">
     </li>
         <li>
-      <img onclick='changeImage("{{product.picture}}")' src="{{product.picture}}" alt="beer">
+      <img onclick='changeImage("{{product.picture}}")' src="{{product.picture[0]}}" alt="beer">
     </li>
       </ul>
 
   <div class="col-md-12" id="main-img">
-    <img id="big-thumb" src="{{product.picture}}" alt="beer">
+    <img id="big-thumb" src="{{product.picture[0]}}" alt="beer">
   </div>
 </div>
 
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-          <a class="btn btn-default btn-add-cart">Add to Cart </a>
+          <a class="btn btn-default btn-add-cart" ng-click="addToOrder(product)">Add to Cart </a>
     </div>
 
 
