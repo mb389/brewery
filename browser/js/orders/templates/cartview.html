@@ -1,27 +1,30 @@
-    <h4 ng-hide="products.length"> No Products in Your Cart </h4>
-        <div ng-show="products.length" id="cart-content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-12">
-                        <h1>SHOPPING CART</h1>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div ng-repeat="product in order.products" class="items-holder">
-                        <product></product>
-                    </div>
-                </div>
-                <div class="row col-md-3">
-                    <p>Order Summary</p>
-                    <ul class="price-list list-group">
-                        <strong><li class="list-group-item important">Total: $ {{total}}</li></strong>
-                    </ul>
-                    <div class="col-xs-12 form-group" id="coupon">
-                        <input type="text" class="form-control" id="coupon-code" name="coupon" placeholder="Coupon Code" value="" />
-                    </div>
-                    <a ng-show="inProgress"> Calculating ...</a>
-                    <a ng-click="updateOrderTotal()" class="btn btn-default col-xs-12 btn-lg solid">Update Cart <i class="fa fa-refresh"></i></a>
-                    <a ng-click="checkout()" class="col-xs-12 btn btn-important solid btn-lg">Checkout</a>
-                </div>
-            </div>
-        </div>
+    <div ng-hide="order.products.length">
+      <h3 class="text-center" >Nothing in Your Cart at the Moment</h3>
+      <button class="col-xs-12 btn btn-important solid btn-lg" ng-click="" ui-sref="allProducts" >Go To Our Products</button>
+  </div>
+  <div ng-show="products.length" id="cart-content">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="col-md-12">
+                  <h1>SHOPPING CART</h1>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div ng-repeat="product in order.products" class="items-holder">
+                  <product></product>
+              </div>
+          </div>
+          <div class="row col-md-3">
+              <p>Order Summary</p>
+              <ul class="price-list list-group">
+                  <strong><li class="list-group-item important">Total: $ {{total}}</li></strong>
+              </ul>
+              <div class="col-xs-12 form-group" id="coupon">
+                  <input type="text" class="form-control" id="coupon-code" name="coupon" placeholder="Coupon Code" value="" />
+              </div>
+              <a ng-show="inProgress"> Calculating ...</a>
+              <a ng-click="updateOrderTotal()" class="btn btn-default col-xs-12 btn-lg solid">Update Cart <i class="fa fa-refresh"></i></a>
+              <a ng-click="checkout()" class="col-xs-12 btn btn-important solid btn-lg">Checkout</a>
+          </div>
+      </div>
+  </div>

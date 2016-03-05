@@ -1,56 +1,79 @@
-<div id="cart-content">
-            <div class="row">
-              <div class="col-md-12">
-                    <h1>CHECKOUT</h1>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                   <h3> Order Summary </h3>
-                   <div class="col-md-10">
-                      <ul class="price-list list-group">
-                         <div ng-repeat="product in order.products" class="items-holder">
+<div ng-hide="order.products.length">
+    <h3 class="text-center">Nothing to Check Out at the Moment</h3>
+    <button class="col-xs-12 btn btn-important solid btn-lg" ng-click="" ui-sref="allProducts">Go To Our Products</button>
+</div>
+<div ng-show="order.products.length" id="cart-content">
+    <form novalidate ng-submit="completePurchase()" novalidate name="purchaseForm">
+        <h1 class="text-center">CHECKOUT</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="col-md-offset-1"> Order Summary </h3>
+                <div class="col-md-10">
+                    <ul class="price-list list-group">
+                        <div ng-repeat="product in order.products" class="items-holder">
                             <a><strong>{{product.quantity}}</strong> {{product.product.name}}  X  $ {{product.product.price }}</a>
                         </div>
                         <strong><li class="list-group-item important">Total: $ {{total}}</li></strong>
-                      </ul>
-                    </div>
+                    </ul>
                 </div>
-                <div ng-hide="currentUser" class="col-md-6">
-                  <h3>Please Add Credentials</h3>
-                  <form novalidate name="credentials">
-                    <h6> Guest Info </h6>
+                <div class="col-md-12">
+                    <h3> Credit Cart Info </h3>
                     <div class="col-xs-12 form-group" id="coupon">
-                        <label> First Name </label>
-                        <input required ng-model="credentials.firstName" type="text" class="form-control" name="firstname" placeholder="First Name"/>
-                        <label> Last Name </label>
-                        <input required ng-model="credentials.lastName" type="text" class="form-control" name="lastname" placeholder="Last Name"/>
-                        <label> Email </label>
-                        <input required ng-model="credentials.email" type="email" class="form-control"  name="email" placeholder="Email Address"/>
-                        <label> Phone Number </label>
-                        <input required ng-model="credentials.phone" type="text" class="form-control"  name="phone" placeholder="Phone Number"/>
-                        <label> Shipping Address </label>
-                        <input required ng-model="credentials.streetAddress" type="text" class="form-control"  name="address" placeholder="Street Address"/>
+                        <label> Full Name on Card (if different from credentials) </label>
+                        <input ng-model="credentials.creditcard.fullname" type="text" class="form-control" name="cardname" placeholder="Name on Card" />
                     </div>
-                    <div class="col-xs-6 form-group">
-                      <label> City Name </label>
-                      <input required ng-model="credentials.city" type="text" class="form-control"  name="city" placeholder="City"/>
+                    <div class="col-xs-9 form-group" id="coupon">
+                        <label> Card Number </label>
+                        <input required max-length="19" ng-model="credentials.creditcard.number" type="text" class="form-control" name="cardnumber" placeholder="Card Number" />
                     </div>
-                    <div class="col-xs-2 form-group">
-                      <label> State </label>
-                      <input required ng-model="credentials.state" type="text" class="form-control"  name="state" placeholder="State"/>
+                    <div class="col-xs-3 form-group" id="coupon">
+                        <label> CCV </label>
+                        <input required max-length="4" ng-model="credentials.creditcard.ccv" type="text" class="form-control" name="ccv" placeholder="CCV" />
                     </div>
-                    <div class="col-xs-4 form-group">
-                      <label> Zipcode </label>
-                      <input required ng-model="credentials.zipcode" type="text" class="form-control"  name="zipcode" placeholder="Zipcode"/>
+                    <div class="col-xs-6 form-group" id="coupon">
+                        <label> Month </label>
+                        <input required max-length="1" ng-model="credentials.creditcard.month" type="text" class="form-control" name="month" placeholder="Month" />
                     </div>
-                    <div class
-                  </form>
-                </div>
-              </div>
-              <div class="row col-md-12">
-                    <a ng-show="credentials.$invalid"> Invalid Credentials </a>
-                    <a ng-show="inProgress"> Calculating ...</a>
-                    <a ng-disabled="credentials.$invalid" ng-click="submit()" class="col-xs-12 btn btn-important solid btn-lg">Complete Purchase</a>
+                    <div class="col-xs-6 form-group" id="coupon">
+                        <label> Year </label>
+                        <input required max-length="4" ng-model="credentials.creditcard.year" type="text" class="form-control" name="year" placeholder="Year" />
+                    </div>
                 </div>
             </div>
+            <div ng-hide="currentUser" class="col-md-6">
+                <h3 class="text-center">Please Add Credentials</h3>
+                <h4> Guest Info </h4>
+                <div class="col-xs-12 form-group" id="coupon">
+                    <label> First Name </label>
+                    <input required ng-model="credentials.firstName" type="text" class="form-control" name="firstname" placeholder="First Name" />
+                    <label> Last Name </label>
+                    <input required ng-model="credentials.lastName" type="text" class="form-control" name="lastname" placeholder="Last Name" />
+                    <label> Email </label>
+                    <input required ng-model="credentials.email" type="email" class="form-control" name="email" placeholder="Email Address" />
+                    <label> Phone Number </label>
+                    <input required ng-model="credentials.phone" type="text" class="form-control" name="phone" placeholder="Phone Number" />
+                    <label> Shipping Address </label>
+                    <input required ng-model="credentials.streetAddress" type="text" class="form-control" name="address" placeholder="Street Address" />
+                </div>
+                <div class="col-xs-6 form-group">
+                    <label> City Name </label>
+                    <input required ng-model="credentials.city" type="text" class="form-control" name="city" placeholder="City" />
+                </div>
+                <div class="col-xs-2 form-group">
+                    <label> State </label>
+                    <input required ng-model="credentials.state" type="text" class="form-control" name="state" placeholder="State" />
+                </div>
+                <div class="col-xs-4 form-group">
+                    <label> Zipcode </label>
+                    <input required ng-model="credentials.zipcode" type="text" class="form-control" name="zipcode" placeholder="Zipcode" />
+                </div>
+                <button class="col-xs-12 btn btn-important solid btn-lg" ui-sref="login">Or Login</button>
+            </div>
         </div>
+        <div class="row col-md-12">
+            <a ng-show="credentials.$invalid"> Invalid Credentials </a>
+            <a ng-show="inProgress"> Processing...</a>
+            <input ng-disabled="purchaseForm.$invalid" value="Complete Purchase" type="submit" class="col-xs-12 btn btn-important solid btn-lg"/>
+        </div>
+    </form>
+</div>

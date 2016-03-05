@@ -42,6 +42,8 @@ app.controller('FullcartController', function ($scope, $state, pendingOrder, Ord
 
 app.controller('CheckoutController', function ($scope, pendingOrder, AuthService){
    $scope.order = pendingOrder;
+   $scope.credentials;
+   $scope.creditcard;
 
   var calcTotal = function (){
     $scope.total = 0;
@@ -56,6 +58,13 @@ app.controller('CheckoutController', function ($scope, pendingOrder, AuthService
     .then(user => {
       if(user) $scope.currentUser = user;
     })
+
+  $scope.completePurchase = function (){
+    $scope.inProgress = true;
+    console.log('credentials', $scope.credentials);
+    $scope.inProgress = false;
+
+  }
 })
 
 
