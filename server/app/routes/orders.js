@@ -15,11 +15,15 @@ router.get('/user/session/:userid', (req, res, next) => {
   Order.findOne({user: req.params.userid, status: 'pending'}).populate('products.product').exec()
     .then(order => {
       console.log('ORDER', order);
-      if(order) res.json(order)
-      else return Order.findOne({sessionId: req.session.id, status: 'pending'}).populate('products.product').exec()
-    })
-    .then(sessionOrder => {
-      res.json(sessionOrder);
+      if(order){
+        res.json(order);
+      }
+      else{
+        return Order.findOne({sessionId: req.session.id, status: 'pending'}).populate('products.product').exec()
+            .then(sessionOrder => {
+          res.json(sessionOrder);
+        })
+      }
     })
     .then(null, next);
 })
