@@ -11,6 +11,9 @@ app.controller('SignupCtrl', function ($scope, AuthService, $state) {
     $scope.login = {};
     $scope.error = null;
     $scope.storeOwner = false;
+    $scope.regex = '/\S\w*/';
+
+    //ng-pattern="regex"
 
     $scope.toggleStoreOwner = function (){
       $scope.storeOwner = !$scope.storeOwner;
@@ -21,7 +24,7 @@ app.controller('SignupCtrl', function ($scope, AuthService, $state) {
 
         $scope.error = null;
 
-        AuthService.signup(loginInfo).then(function () {
+        AuthService.signup(signupInfo).then(function () {
             $state.go('home');
         }).catch(function () {
             $scope.error = 'Invalid signup credentials.';
@@ -30,3 +33,9 @@ app.controller('SignupCtrl', function ($scope, AuthService, $state) {
     };
 
 });
+
+app.filter('removeSpaces', function(){
+  return function(name){
+    return name.replace("\\s+/gi","");
+  }
+})
