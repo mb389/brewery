@@ -4,6 +4,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Order = mongoose.model('Order');
+var Promise = require('bluebird');
+var _ = require('lodash');
 
 module.exports = function (app) {
 
@@ -17,6 +19,7 @@ module.exports = function (app) {
                     done(null, false);
                 } else {
                     // Properly authenticated.
+                    console.log('proper auth', user);
                     done(null, user);
                 }
             }, function (err) {
@@ -51,7 +54,7 @@ module.exports = function (app) {
 
     // A POST /login route is created to handle login.
     app.post('/login', function (req, res, next) {
-
+        console.log('gets to login route');
         var authCb = function (err, user) {
 
             if (err) return next(err);
@@ -65,29 +68,43 @@ module.exports = function (app) {
             var currentUser;
             Order.findOne({sessionId: req.session.id})
               .then(order => {
+                console.log('found order', order);
                 orderToAdd = order;
                 return User.findById(user._id)
               })
               .then(userToEdit => {
+                  console.log('found userToEdit', userToEdit);
                   currentUser = userToEdit;
-                  return Order.findOne({user: userToEdit, status: 'pending'})
+                  return Order.findOne({user: userToEdit._id, status: 'pending'})
               })
               .then(currentOrder => {
-                if(currentOrder){
+                //REFACTOR THIS LATER
+                if(currentOrder.products.length){
                   var productsToAdd = orderToAdd.products;
-                    _.merge(currentOrder, orderToAdd); //will these keep all products?
-                    currentOrder.products.push.apply(null, productsToAdd);
+                    productsToAdd.forEach((product) => {
+                      var idx =  -1;
+                      currentOrder.products.forEach((prod, i) => {
+                        if (prod.product.toString() === product.product.toString()) idx = i;
+                      })
+                      if(idx > -1) currentOrder.products[idx].quantity += product.quantity;
+                      else currentOrder.products.push(product);
+                    })
+                    return Promise.all([currentOrder.save(), orderToAdd.remove()])
                 }
-                else orderToAdd.user = currentUser;
-                return user
+                else{
+                  orderToAdd.sessionId = null;
+                  orderToAdd.user = currentUser;
+                  return orderToAdd.save();
+                }
               })
-              .then(function (updatedUser){
+              .then(function (){
+                  console.log('gets to bottom', currentUser);
                   // req.login will establish our session
-                  req.login(updatedUser, function (loginErr) {
+                  req.login(currentUser, function (loginErr) {
                     if (loginErr) return next(loginErr);
                     // We respond with a response object that has user with _id and email.
                     res.status(200).send({
-                        user: updatedUser.sanitize()
+                        user: currentUser.sanitize()
                     });
                 });
               })

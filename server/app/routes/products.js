@@ -30,11 +30,7 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  Product.findById(req.params.id)
-  .then(product => {
-    _.merge(product,req.body);
-    return product.save();
-  })
+  Product.findByIdAndUpdate(req.params.id, req.body, {new: true})
   .then(function(updatedProd) {
     res.json(updatedProd);
     next();

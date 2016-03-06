@@ -7,7 +7,7 @@
     <alert type="danger" ng-show="error">
         {{ error }}
     </alert>
-
+<div class="col-md-8 col-md-offset-2">
     <div id="login" class="form-group">
         <label for="email">Email address</label>
         <input type="text" ng-model="login.email" class="form-control" id="email" placeholder="Enter email">
@@ -17,6 +17,8 @@
         <input type="password" ng-model="login.password" class="form-control" id="login-password" placeholder="Password">
     </div>
     <button type="submit" class="form-control btn btn-default">Submit</button>
+    <button ui-sref="signup" class="form-control btn btn-default"> Or Signup </button>
+  </div>
 </form>
 </div>
 </div>

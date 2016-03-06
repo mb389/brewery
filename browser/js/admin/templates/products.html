@@ -8,7 +8,7 @@
 
 <!-- PRODUCT EDIT FORM -->
 <!-- change id back to ng-show -->
-<form id="productToUpdate.name" ng-submit="updateProduct()">
+<form ng-show="productToUpdate.name" ng-submit="updateProduct()">
 
   <div class="form-group">
       <label class="control-label">Product name</label><br>
@@ -58,6 +58,11 @@
       </div>
   </div>
 </form>
+  <div ng-show="productToUpdate.name">
+      <div class="col-sm-9">
+          <button ng-click="productToUpdate={}" class="btn btn-default">Clear</button>
+      </div>
+  </div>
 
 
 <!-- END PRODUCT EDIT FORM -->
