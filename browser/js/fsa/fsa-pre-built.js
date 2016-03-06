@@ -87,6 +87,7 @@
         };
 
         this.login = function (credentials) {
+          console.log('get to login factory');
             return $http.post('/login', credentials)
                 .then(onSuccessfulLogin)
                 .catch(function () {
@@ -97,6 +98,7 @@
         this.logout = function () {
             return $http.get('/logout').then(function () {
                 Session.destroy();
+                console.log('were out');
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
             });
         };

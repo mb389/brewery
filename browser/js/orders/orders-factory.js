@@ -20,6 +20,7 @@ app.factory('OrderFactory', function ($http, AuthService){
         })
     },
     getOrderByUserIdOrSessionId: function (userId) {
+      console.log('running the right route', userId);
       return $http.get('/api/orders/user/session/' + userId)
         .then(response => {
             return response.data;

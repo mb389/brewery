@@ -8,7 +8,7 @@ app.config(function ($stateProvider){
         return AuthService.getLoggedInUser(true)
           .then(user => {
             console.log('heres users', user);
-            if(user) return OrderFactory.getOrderByUserIdOrSessionId(user.id);
+            if(user) return OrderFactory.getOrderByUserIdOrSessionId(user._id);
             else return OrderFactory.getOrderBySessionId()
           })
       }
