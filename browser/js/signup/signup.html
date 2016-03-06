@@ -1,0 +1,56 @@
+<div id="container">
+
+<div class="row content">
+
+<form name="signupForm" ng-submit="loginForm.$valid && sendSignup(signup)">
+
+    <alert type="danger" ng-show="error">
+        {{ error }}
+    </alert>
+    <div class="col-md-8 col-md-offset-2">
+     <div id="login">
+         <button ng-hide="storeOwner" class="col-md-offset-3 col-md-6" class="form-control btn btn-info" ng-click="toggleStoreOwner()"> Create a Shop? </button>
+         <div ng-show="storeOwner">
+             <div class="form-group">
+                <h3 class="text-center"> Add Info to Setup Shop</h3>
+                <strong ng-show="signup.store.name"> Your Store will be: www.brewerybros.com/stores/{{signup.store.name}} </strong>
+                <label ng-hide="signup.store.name" for="storename">Store Name</label>
+                <input type="text" ng-model="signup.store.name" class="form-control" id="storename" placeholder="Store Name">
+            </div>
+            <div class="form-group">
+                <label for="storedesc">Store Description</label>
+                <textarea type="text" ng-model="signup.store.desc" class="form-control" id="storedesc" placeholder="Describe Your Store"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="storecontact">Contact Info</label>
+                <input type="text" ng-model="signup.store.contact" class="form-control" id="storecontact" placeholder="Store Contact">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <h3 class="text-center col-md-12"> Add User Info </h3>
+        <div id="login" class="form-group">
+            <label for="email">Email address</label>
+            <input type="text" ng-model="signup.email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" ng-model="signup.password" class="form-control" id="login-password" placeholder="Password">
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="login-password">First Name</label>
+            <input type="password" ng-model="signup.firstName" class="form-control" id="login-password" placeholder="Password">
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="login-password">Last Name</label>
+            <input type="password" ng-model="signup.lastName" class="form-control" id="login-password" placeholder="Password">
+        </div>
+
+        <button type="submit" class="form-control btn btn-default">Submit</button>
+        <button ui-sref="login" class="form-control btn btn-default"> Or Login </button>
+    </div>
+    </div>
+    </div>
+</form>
+</div>
+</div>

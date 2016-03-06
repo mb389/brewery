@@ -1,8 +1,8 @@
-    <div ng-hide="order.products.length">
+    <div ng-hide="order">
       <h3 class="text-center" >Nothing in Your Cart at the Moment</h3>
       <button class="col-xs-12 btn btn-important solid btn-lg" ng-click="" ui-sref="allProducts" >Go To Our Products</button>
   </div>
-  <div ng-show="products.length" id="cart-content">
+  <div ng-show="order" id="cart-content">
       <div class="row">
           <div class="col-md-12">
               <div class="col-md-12">

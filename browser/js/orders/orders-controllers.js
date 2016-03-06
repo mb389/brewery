@@ -1,16 +1,19 @@
 app.controller('FullcartController', function ($scope, $state, pendingOrder, OrderFactory){
   console.log('the pending order',pendingOrder);
   $scope.order = pendingOrder;
-  $scope.products = pendingOrder.products;
+  if(pendingOrder){
+    $scope.products = pendingOrder.products;
+    calcTotal();
+  };
 
-  var calcTotal = function (){
+  function calcTotal(){
     $scope.total = 0;
     $scope.order.products.forEach(prod => {
       $scope.total += Number(prod.quantity) * Number(prod.product.price);
     })
     $scope.total = Math.round($scope.total * 100) / 100;
   }
-  calcTotal();
+
 
   $scope.removeItem = function (productToRemove) {
     console.log('heres product', productToRemove);
@@ -42,17 +45,18 @@ app.controller('FullcartController', function ($scope, $state, pendingOrder, Ord
 
 app.controller('CheckoutController', function ($scope, pendingOrder, AuthService){
    $scope.order = pendingOrder;
+   if(pendingOrder) calcTotal();
+
    $scope.credentials;
    $scope.creditcard;
 
-  var calcTotal = function (){
+  function calcTotal (){
     $scope.total = 0;
     $scope.order.products.forEach(prod => {
       $scope.total += Number(prod.quantity) * Number(prod.product.price);
     })
     $scope.total = Math.round($scope.total * 100) / 100;
   }
-  calcTotal();
 
   AuthService.getLoggedInUser()
     .then(user => {
