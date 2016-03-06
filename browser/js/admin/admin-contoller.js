@@ -23,12 +23,26 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
   };
 
   $scope.toggleCategory =function(categoryId) {
-    if ($scope.productToUpdate.name && $scope.productToUpdate.categories.indexOf(categoryId) !== -1) {
-      $scope.productToUpdate.categories = $scope.productToUpdate.categories.filter(cat => {
-        if(cat !== categoryId) return cat;
-      })
+    if($scope.productToUpdate._id) {
+      if ($scope.productToUpdate.categories.indexOf(categoryId) !== -1) {
+        $scope.productToUpdate.categories = $scope.productToUpdate.categories.filter(cat => {
+          if(cat !== categoryId) return cat;
+        })
+      } else {
+        $scope.productToUpdate.categories.push(categoryId);
+      }
     } else {
-      $scope.productToUpdate.categories.push(categoryId);
+      //new product
+      if (!$scope.productToUpdate.categories) {
+        $scope.productToUpdate.categories = []
+      }
+      if ($scope.productToUpdate.categories.indexOf(categoryId) !== -1) {
+        $scope.productToUpdate.categories = $scope.productToUpdate.categories.filter(cat => {
+          if(cat !== categoryId) return cat;
+        })
+      } else {
+        $scope.productToUpdate.categories.push(categoryId);
+      }
     }
   }
 
@@ -45,10 +59,20 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
       } else {
       ProductFactory.addProduct($scope.productToUpdate)
       .then(createdProd => {
-        $scope.products = $scope.products.concat(createdCat)
+        $scope.products = $scope.products.concat(createdProd)
         $scope.productToUpdate = {};
       })
     }
+  }
+
+  $scope.deleteProduct = function () {
+    ProductFactory.removeProduct($scope.productToUpdate._id)
+    .then(() => {
+      $scope.products = $scope.products.filter(prod => {
+        if (prod._id !== $scope.productToUpdate._id) return prod;
+      })
+      $scope.productToUpdate = {};
+    })
   }
 
   $scope.submitCategory = function(categoryObj) {
