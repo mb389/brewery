@@ -3,7 +3,8 @@ app.config(function ($stateProvider){
   .state('admin', {
     url:'/admin',
     templateUrl: '/js/admin/templates/admin.html',
-    controller: function($scope, user, $state) {
+    controller: function($scope, user, $state, store) {
+      console.log(store)
       $scope.user = user
       if(!user) $state.go('home')
     },

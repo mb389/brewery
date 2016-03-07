@@ -3,7 +3,7 @@ app.controller('AdminOrderController', function($scope, ProductFactory, OrderFac
     $scope.orders = orders;
   } else {
     $scope.orders = orders.filter(ord => {
-      if(store && ord.products[0].store === store._id) return ord;
+      if(store && ord.products[0].product.store === store._id) return ord;
     })
   }
 

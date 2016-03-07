@@ -1,10 +1,10 @@
-app.controller('AdminProdController', function($scope, ProductFactory, OrderFactory, AdminFactory, UserFactory, products) {
+app.controller('AdminProdController', function($scope, ProductFactory, OrderFactory, AdminFactory, UserFactory, products, store) {
 
   if($scope.user.isAdmin) {
      $scope.products = products;
   } else {
-    $scope.products = products.filter(ord => {
-      if(store && products.store === store._id) return ord;
+    $scope.products = products.filter(prod => {
+      if(store && prod.store === store._id) return prod;
     })
   }
 
@@ -66,7 +66,8 @@ app.controller('AdminProdController', function($scope, ProductFactory, OrderFact
         $scope.productToUpdate = {};
       })
       } else {
-        if(store) $scope.productToUpdate.store = store._id
+        if(store) $scope.productToUpdate.store = store._id;
+        console.log($scope.productToUpdate);
         ProductFactory.addProduct($scope.productToUpdate)
         .then(createdProd => {
           $scope.products = $scope.products.concat(createdProd)
