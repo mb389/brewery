@@ -14,7 +14,7 @@
              <div class="form-group">
                 <h3 class="text-center"> Add Info to Setup Shop</h3>
                 <div class="alert-danger" ng-show="signupForm.storename.$invalid">No Spaces Allowed</div>
-                <strong ng-show="signup.store.name"> Your Store will be: www.brewerybros.com/stores/{{signup.store.name}} </strong>
+                <strong ng-show="signup.store.name"> Your Store will be: www.brewerybros.com/stores/{{signup.store.nameOfStore}} </strong>
                 <label ng-hide="signup.store.nameOfStore" for="storename">Store Name</label>
                 <input name="storename"  type="text" ng-model="signup.store.nameOfStore" class="form-control" id="storename" placeholder="Store Name">
             </div>
@@ -44,14 +44,14 @@
         </div>
         <div class="col-md-6 form-group">
             <label for="login-password">First Name</label>
-            <input type="password" ng-model="signup.firstName" class="form-control" id="login-password" placeholder="Password">
+            <input type="text" ng-model="signup.firstName" class="form-control" id="login-password" placeholder="First name">
         </div>
         <div class="col-md-6 form-group">
             <label for="login-password">Last Name</label>
-            <input type="password" ng-model="signup.lastName" class="form-control" id="login-password" placeholder="Password">
+            <input type="text" ng-model="signup.lastName" class="form-control" id="login-password" placeholder="Last Name">
         </div>
 
-        <button type="submit" class="form-control btn btn-default">Submit</button>
+        <button type="submit" class="form-control btn btn-default">Sign Up!</button>
         <button ui-sref="login" class="form-control btn btn-default"> Or Login </button>
     </div>
     </div>
