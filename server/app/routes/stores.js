@@ -14,4 +14,12 @@ router.get('/:id', (req, res, next) => {
   .then(null, next)
 })
 
+router.get('/name/:name', (req, res, next) => {
+  Store.findOne({name: req.params.name}).populate('owner')
+  .then( store => {
+    res.json(store);
+  })
+  .then(null, next)
+})
+
 module.exports = router;

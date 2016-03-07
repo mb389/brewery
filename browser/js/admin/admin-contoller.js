@@ -51,13 +51,31 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
         break;
     }
     UserFactory.editExistingUser(user._id, user)
-         .then(updatedUser => {
-          $scope.users = $scope.users.map(usr => {
-            if(usr._id === updatedUser) return updatedUser;
-            return usr
-          })
-         })
+     .then(updatedUser => {
+      $scope.users = $scope.users.map(usr => {
+        if(usr._id === updatedUser._id) return updatedUser;
+        return usr
+      })
+     })
   }
+
+  $scope.checkOrderStatus = function (order, status) {
+    if(order.status === status) return true;
+    return false;
+  }
+
+  $scope.changeStatus = function(order, status) {
+    OrderFactory.updatedStatusForOrder(order._id, status)
+    .then(updatedOrder => {
+      $scope.orders = $scope.orders.map(ord => {
+        if (ord._id === order._id)  {
+          ord.status = updatedOrder.status
+        }
+        return ord;
+      })
+    })
+  }
+
 
 
   $scope.isBeerCategory = function(categoryId) {
@@ -91,6 +109,7 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
       }
     }
   }
+
 
   $scope.updateProduct = function() {
      if($scope.productToUpdate._id) {
