@@ -3,6 +3,20 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts, allCategorie
   $scope.products = allProducts;
   $scope.categories = allCategories;
 
+
+});
+
+app.controller('StoreListCtrl', function ($scope, $log, shopList) {
+  $scope.shoplist=shopList;
+});
+
+
+app.controller('StoreCtrl', function ($scope, $log, theStore, storeProducts) {
+
+  $scope.store=theStore;
+  $scope.products=storeProducts;
+  console.log(theStore);
+
 });
 
 
