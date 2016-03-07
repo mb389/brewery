@@ -38,7 +38,7 @@ app.controller('FullcartController', function ($scope, $state, pendingOrder, Ord
 
   $scope.checkout = function(){
     console.log('go to checkout');
-    $state.go('fullcart.checkout');
+    $state.go('fullcart.checkout', null, {reload: 'fullcart'});
   }
 
 });
