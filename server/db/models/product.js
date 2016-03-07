@@ -29,7 +29,9 @@ var schema = new mongoose.Schema({
       type: String,
       default: "http://lorempixel.com/300/300/food"
     }],
-    store: String
+    store: {
+      type: mongoose.Schema.Types.ObjectId, ref: 'Store',
+    }
 });
 
 schema.statics.findByCategory = function(cat) {
