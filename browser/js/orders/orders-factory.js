@@ -95,7 +95,7 @@ app.factory('OrderFactory', function ($http, AuthService){
         })
     },
     updatedStatusForOrder: function (orderId, status){
-      return $http.put('/api/orders/' + orderId + '/' + status)
+      return $http.put('/api/orders/status/' + orderId + '/' + status)
         .then( response => {
           return response.data;
         })

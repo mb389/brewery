@@ -108,47 +108,53 @@ function addPriceToCart () {
   }))
 }
 
-schema.methods.purchaseById = function() {
-  console.log('heres the og this', this);
-  var self = this;
-  this.status = 'purchased';
-  this.purchaseDate = Date.now();
-  addPriceToCart.call(this)
+function purchase(order) {
+  order.purchaseDate = Date.now();
+  addPriceToCart.call(order)
   .then(function(){
-    console.log('is this still this', self);
-    return self.save();
+    return order.save();
   })
-  //add price to car returns an array of products in cart - should just be then'd off of
+  //add price to cart returns an array of products in cart - should just be then'd off of
 }
 
 
-// schema.methods.updateStatus = function(status) {
-//   //notifications on post purchase status, incl. shipping, delivery
-//   this.status = status;
-//   switch(this.status) {;
-//     case "processing":
-//       processing(this);
-//     case "cancelled":
-//       cancelled(this);
-//     case "completed":
-//       completed(this);
-//     default:
+schema.methods.updateStatus = function(status) {
+  //notifications on post purchase status, incl. shipping, delivery
+  this.status = status;
+  switch(this.status) {
+    case "purchased":
+      return purchase(this)
+      break;
+    case "processing":
+      return processing(this);
+      break;
+    case "cancelled":
+      return cancelled(this);
+      break;
+    case "completed":
+      return completed(this);
+      break;
+  }
+}
 
-//   }
-// }
+function processing (order) {
+  return order.save()
+  // .then(ord => {
+  //   return ord.populate({
+  //     path: 'products.product',
+  //     model: 'Product'
+  //   });
+  // })
+}
 
-// function processing (order) {
 
-// }
+function cancelled (order) {
+  return order.save()
+}
 
-
-// function cancelled (order) {
-
-// }
-
-// function completed (order) {
-
-// }
+function completed (order) {
+  return order.save()
+}
 
 
 
