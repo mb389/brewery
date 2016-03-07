@@ -83,7 +83,7 @@ module.exports = function (app) {
                 //REFACTOR THIS LATER
                 if(!orderToAdd) return; //handle when theres nothing to add to cart
                 console.log('finds order', currentOrder);
-                if(currentOrder.products.length){
+                if(currentOrder){
                   console.log('inside if', orderToAdd);
                   var productsToAdd = orderToAdd.products;
                     productsToAdd.forEach((product) => {

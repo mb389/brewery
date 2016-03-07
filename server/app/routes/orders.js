@@ -35,6 +35,23 @@ router.get('/user/session/:userid', (req, res, next) => {
     .then(null, next);
 })
 
+router.get('/user/:userid', (req, res, next) => {
+  console.log('right route');
+  Order.find({user: req.params.userid, status: { $ne: 'pending'}}).populate({
+      path: 'products.product',
+      model: 'Product',
+      populate: {
+        path: 'categories',
+        model: 'Category'
+      }
+    }).exec()
+    .then(orders => {
+      console.log('we got orders', orders);
+      res.json(orders)
+    })
+    .then(null, next)
+})
+
 router.get('/session/', (req, res, next) => {
   //get any current pending orders for the current session Id
   console.log('heres the session', req.session.id)
@@ -116,7 +133,9 @@ router.put('/update/:id', (req, res, next) => {
 router.put('/purchase/:id', (req, res, next) => {
   Order.findById(req.params.id)
   .then(order => order.purchaseById())
-  .then(order => res.json(order))
+  .then(() => {
+    res.sendStatus(200);
+  })
   .then(null, next)
 })
 

@@ -109,8 +109,15 @@ function addPriceToCart () {
 }
 
 schema.methods.purchaseById = function() {
+  console.log('heres the og this', this);
+  var self = this;
   this.status = 'purchased';
-  addPriceToCart.call(this);
+  this.purchaseDate = Date.now();
+  addPriceToCart.call(this)
+  .then(function(){
+    console.log('is this still this', self);
+    return self.save();
+  })
   //add price to car returns an array of products in cart - should just be then'd off of
 }
 

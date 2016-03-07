@@ -31,8 +31,28 @@ app.config(function ($stateProvider){
     //   }
     // }
   })
-  .state('fullcart.checkout.completed', {
+  .state('fullcart.completed', {
     url:'/completed',
-    templateUrl:'/js/orders/templates/completed.html'
+    templateUrl:'/js/orders/templates/completed.html',
+  })
+  .state('orderhistory', {
+    url: '/orderhistory',
+    templateUrl: '/js/orders/templates/orderhistory.html',
+    controller: 'OrderHistoryController',
+    resolve: {
+      user: function(AuthService) {
+        return AuthService.getLoggedInUser()
+      },
+      pastOrders: function(AuthService, OrderFactory){
+        return AuthService.getLoggedInUser()
+          .then(user => {
+            return OrderFactory.getPastOrdersForLoggedInUser(user._id)
+          })
+          .then(orders => {
+            console.log('we got orders in state', orders);
+            return orders;
+          })
+      }
+    }
   })
 })

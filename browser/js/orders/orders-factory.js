@@ -26,6 +26,13 @@ app.factory('OrderFactory', function ($http, AuthService){
             return response.data;
         })
     },
+    getPastOrdersForLoggedInUser: function (userId){
+      return $http.get('/api/orders/user/' + userId)
+        .then(response => {
+          console.log('orders in frontend?', response.data);
+          return response.data;
+        })
+    },
     getOrderBySessionId: function (){
       return $http.get('/api/orders/session/')
         .then( response => {
@@ -80,9 +87,10 @@ app.factory('OrderFactory', function ($http, AuthService){
           return response.data;
         })
     },
-    editProductForOrder: function (orderId){
+    purchaseOrder: function (orderId){
       return $http.put('/api/orders/purchase/' + orderId)
         .then( response => {
+          console.log('weve gotten here', response.data);
           return response.data;
         })
     },
