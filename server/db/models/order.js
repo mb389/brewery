@@ -82,22 +82,19 @@ schema.methods.addOrCreateProduct = function (productUpdateObj) {
 }
 
 schema.methods.removeProduct = function (idToRemove) {
-  console.log('remove this!', idToRemove)
   var idx;
    this.products.forEach((prod, i) => {
-    if(prod.product === idToRemove.toString()) idx = i;
+    if(prod.product.id === idToRemove.toString()) idx = i;
    })
    this.products.splice(idx, 1);
    return this.save();
 }
 
 schema.methods.updateOrder  = function(updatesOrder) {
-  console.log('look for update', this.products, updatesOrder);
   // _.merge(this.products, updatesOrder.products); this gives me an error doc validat is not a function
   this.products.forEach(function (prod, i){
     prod.quantity = updatesOrder.products[i].quantity;
   })
-  console.log('HERES THIS', this);
   return this.save();
 }
 
@@ -112,8 +109,15 @@ function addPriceToCart () {
 }
 
 schema.methods.purchaseById = function() {
+  console.log('heres the og this', this);
+  var self = this;
   this.status = 'purchased';
-  addPriceToCart.call(this);
+  this.purchaseDate = Date.now();
+  addPriceToCart.call(this)
+  .then(function(){
+    console.log('is this still this', self);
+    return self.save();
+  })
   //add price to car returns an array of products in cart - should just be then'd off of
 }
 

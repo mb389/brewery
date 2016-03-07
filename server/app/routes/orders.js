@@ -12,20 +12,51 @@ var Category = mongoose.model('Category');
 //get pending order by user or session
 router.get('/user/session/:userid', (req, res, next) => {
   console.log('do we get here?', req.session);
-  Order.findOne({user: req.params.userid, status: 'pending'}).populate('products.product').exec()
+  Order.findOne({user: req.params.userid, status: 'pending'}).populate({
+      path: 'products.product',
+      model: 'Product',
+      populate: {
+        path: 'categories',
+        model: 'Category'
+      }
+    }).exec()
     .then(order => {
       console.log('ORDER', order);
       if(order){
         res.json(order);
       }
       else{
-        return Order.findOne({sessionId: req.session.id, status: 'pending'}).populate('products.product').exec()
-            .then(sessionOrder => {
+        return Order.findOne({sessionId: req.session.id, status: 'pending'}).populate({
+        path: 'products.product',
+        model: 'Product',
+        populate: {
+          path: 'categories',
+          model: 'Category'
+        }
+      }).exec()
+        .then(sessionOrder => {
           res.json(sessionOrder);
         })
       }
     })
     .then(null, next);
+})
+
+router.get('/user/:userid', (req, res, next) => {
+  console.log('right route');
+  Order.find({user: req.params.userid, status: { $ne: 'pending'}}).populate({
+      path: 'products.product',
+      model: 'Product',
+      populate: {
+        path: 'categories',
+        model: 'Category'
+      }
+    }).exec()
+    .then(orders => {
+      console.log('we got orders', orders);
+      res.json(orders)
+    })
+    .then(null, next)
 })
 
 router.get('/session/', (req, res, next) => {
@@ -97,7 +128,7 @@ router.put('/update/:id', (req, res, next) => {
       path: 'categories',
       model: 'Category'
     }
-  }).exec()
+  })
   .then(function(order) {
     console.log('order we find', order);
     return order.updateOrder(req.body);
@@ -109,7 +140,9 @@ router.put('/update/:id', (req, res, next) => {
 router.put('/purchase/:id', (req, res, next) => {
   Order.findById(req.params.id)
   .then(order => order.purchaseById())
-  .then(order => res.json(order))
+  .then(() => {
+    res.sendStatus(200);
+  })
   .then(null, next)
 })
 

@@ -12,10 +12,6 @@ app.factory('ProductFactory',function($http) {
     return $http.get('/api/products/')
     .then(res => {
       angular.copy(res.data, cachedProducts);
-      cachedProducts.forEach(function(el) {
-        while (el.picture.length<3)
-          el.picture.push("http://lorempixel.com/300/300/food/");
-      });
       return cachedProducts;
     });
   }

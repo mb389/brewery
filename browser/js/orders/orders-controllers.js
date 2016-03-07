@@ -38,12 +38,12 @@ app.controller('FullcartController', function ($scope, $state, pendingOrder, Ord
 
   $scope.checkout = function(){
     console.log('go to checkout');
-    $state.go('fullcart.checkout');
+    $state.go('fullcart.checkout', null, {reload: 'fullcart'});
   }
 
 });
 
-app.controller('CheckoutController', function ($scope, pendingOrder, AuthService){
+app.controller('CheckoutController', function ($scope, $state, pendingOrder, AuthService, OrderFactory){
    $scope.order = pendingOrder;
    if(pendingOrder) calcTotal();
 
@@ -66,11 +66,20 @@ app.controller('CheckoutController', function ($scope, pendingOrder, AuthService
   $scope.completePurchase = function (){
     $scope.inProgress = true;
     console.log('credentials', $scope.credentials);
-    $scope.inProgress = false;
-
+    OrderFactory.purchaseOrder($scope.order._id)
+    .then(function(){
+      $scope.inProgress = false;
+      console.log('lets go');
+      $state.go('fullcart.completed');
+    })
   }
 })
 
+app.controller('OrderHistoryController', function ($scope, user, pastOrders){
+  console.log('orderhistory info', user, pastOrders);
+  $scope.currentUser = user;
+  $scope.orders = pastOrders;
+})
 
 
 app.filter('joinArray', function(){

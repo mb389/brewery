@@ -27,7 +27,7 @@ var schema = new mongoose.Schema({
     },
     picture: [{
       type: String,
-      default: "http://lorempixel.com/400/200/"
+      default: "http://lorempixel.com/300/300/food"
     }]
 
 });
@@ -42,6 +42,12 @@ schema.statics.findByCategory = function(cat) {
     }
   )};
 
+  schema.pre('save', function (next) {
+      while (this.picture.length<3) {
+          this.picture.push("http://lorempixel.com/300/300/food");
+      }
+      next();
+  });
 
 
 

@@ -1,58 +1,60 @@
 <div id="container">
 
   <div class="jumbotron">
-<!-- <form  class="custom" onsubmit="return false" method="post" action="/product/dark-coffee-table"> -->
-        <div class="row" id="product" >
+    <!-- <form  class="custom" onsubmit="return false" method="post" action="/product/dark-coffee-table"> -->
+    <div class="row" id="product">
       <div id="product-page">
         <div class="row content">
 
-<div class="col-md-6">
-  <ul class="col-md-12 thumblist">
-        <li>
-          <!-- TODO: Fix clicks -->
-      <img id="small1" ng-click='changeImage("{{product.picture[1]}}")' src="{{product.picture[1]}}" alt="beer">
-    </li>
-        <li>
-      <img id="small2" ng-click='changeImage("{{product.picture[2]}}")' src="{{product.picture[2]}}" alt="beer">
-    </li>
-      </ul>
+          <div class="col-md-6">
+            <ul class="col-md-12 thumblist">
+              <li>
+                <!-- TODO: Fix clicks -->
+                <img id="small1" ng-click='changeImage(defaultImg,1)' ng-src="{{defaultImg}}" alt="beer">
+              </li>
+              <li>
+                <img id="small2" ng-click='changeImage(defaultImg,2)' ng-src="{{defaultImg}}" alt="beer">
+              </li>
+            </ul>
 
-  <div class="col-md-12" id="main-img">
-    <img id="big-thumb" src="{{product.picture[0]}}" alt="beer">
-  </div>
-</div>
+            <div class="col-md-12" id="main-img">
+              <img id="big-thumb" src="{{product.picture[0]}}" alt="beer">
+            </div>
+          </div>
 
-<div id="product-detail" class="col-md-6">
+          <div id="product-detail" class="col-md-6">
 
-  <div class="col-md-12">
-    <h2>{{product.name}}</h2>
+            <div class="col-md-12">
+              <h2>{{product.name}}</h2>
+              <h3>Category:<span ng-repeat="category in product.categories">
+                  {{category.name}}
+                </span>
+              </h3>
 
-    <h3>${{product.price}}</h3>
+              <h3>${{product.price}}</h3>
 
-    <p><p>{{product.description}} </p></p>
+              <p>{{product.description}}</p>
 
+              <input type="hidden" name="productId" value="7"/>
+              <div class="add-cart-holder form-group">
+                <div class="quantity-selector">
+                  <label class="title">Quantity</label>
+                  <input ng-model="quantity" class="form-control quantity" type="text" value="1" name="quantity"/>
+                  <span ng-show="wasAdded"><br>Added!</span>
+                </div>
+              </div>
+              <br>
+              <a class="btn btn-default btn-add-cart" ng-click="addToOrder(product)">Add to Cart
+              </a>
 
-            <input type="hidden" name="productId" value="7"/>
-        <div class="add-cart-holder form-group">
-          <div class="quantity-selector">
-            <label class="title">Quantity</label>
-            <input ng-model="quantity" class="form-control quantity" type="text" value="1" name="quantity"/>
-            <br>
-            <div ng-show="wasAdded">Added!</div>
+            </div>
+
           </div>
         </div>
 
-
-          <a class="btn btn-default btn-add-cart" ng-click="addToOrder(product)">Add to Cart </a>
-
+      </div>
+      <product-reviews></product-reviews>
     </div>
 
-
-        </div>
-</div>
-
-
-</div>
-</div>
-</div>
+  </div>
 </div>

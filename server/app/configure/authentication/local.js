@@ -42,7 +42,9 @@ module.exports = function (app) {
         //if order associated with session id, add user to order and order to user
         if(order) {
           order.user = userToUpdate._id;
+          order.sessionId = null;
         }
+        return order.save()
       })
       .then(() => {
         req.login(userToUpdate, function(){
@@ -79,19 +81,26 @@ module.exports = function (app) {
               })
               .then(currentOrder => {
                 //REFACTOR THIS LATER
-                if(currentOrder.products.length){
+                if(!orderToAdd) return; //handle when theres nothing to add to cart
+                console.log('finds order', currentOrder);
+                if(currentOrder){
+                  console.log('inside if', orderToAdd);
                   var productsToAdd = orderToAdd.products;
                     productsToAdd.forEach((product) => {
+                      console.log('test', product);
                       var idx =  -1;
                       currentOrder.products.forEach((prod, i) => {
                         if (prod.product.toString() === product.product.toString()) idx = i;
                       })
+                      console.log(idx, product);
                       if(idx > -1) currentOrder.products[idx].quantity += product.quantity;
                       else currentOrder.products.push(product);
                     })
+                    console.log ('got here', currentOrder);
                     return Promise.all([currentOrder.save(), orderToAdd.remove()])
                 }
                 else{
+                  console.log('in the else');
                   orderToAdd.sessionId = null;
                   orderToAdd.user = currentUser;
                   return orderToAdd.save();
