@@ -7,17 +7,16 @@ app.directive('productReviews', function(){
 });
 
 
-app.directive('starRating', function(ReviewFactory) {
+app.directive('starRating', function() {
   return {
     restrict: 'E',
     templateUrl: 'js/products/templates/ratingStars.html',
-    controller: 'ProductCtrl',
     scope: {
         ratingValue: '=',
-        onRatingSelect: '&',
+        //onRatingSelect: '&',
         read: '='
       },
-    link: function(scope, element, attributes) {
+    link: function(scope) {
       function updateStars() {
         scope.stars = [];
         for (var i = 0; i < 5; i++) {
@@ -29,17 +28,21 @@ app.directive('starRating', function(ReviewFactory) {
       scope.toggle = function(index) {
         if(!scope.read) {
           scope.ratingValue = index + 1;
-          scope.onRatingSelect({
-            rating: index + 1
-          });
         }
       };
       scope.$watch('ratingValue', function(oldValue, newValue) {
         if (newValue) {
           updateStars();
-          console.log(oldValue);
         }
       });
     }
+  }
+})
+
+app.directive('reviewWriter', function() {
+  return {
+    restrict: 'E',
+    controller: 'ProductCtrl',
+    templateUrl: 'js/products/templates/reviewWriter.html'
   }
 })

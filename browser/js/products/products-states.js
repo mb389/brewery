@@ -30,13 +30,13 @@ app.config(function ($stateProvider) {
   });
 
   $stateProvider.state('prodParent.oneProduct', {
-    url: '/display',
+    url: '/display/',
     templateUrl: '/js/products/templates/product.html'
   });
 
   $stateProvider.state('prodParent.Review', {
     url: '/reviews/write',
-    templateUrl: 'js/reviews/templates/reviewWriter.html'
+    templateUrl: 'js/products/templates/reviewWriter.html'
   });
 
 

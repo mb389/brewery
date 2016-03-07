@@ -2,27 +2,19 @@
 <div id="container">
 
 <div class="row content" id="shopp">
-<!-- <div class="dropdown" uib-dropdown is-open="status.isopen">
-<button class="btn btn-drop" uib-dropdown-toggle type="button" id="single-button" ng-disabled="disabled">
- Categories
- <span class="caret"></span>
-</button>
-<ul uib-dropdown-menu class="dropdown-menu" role="menu" aria-labelledby="single-button" > -->
+
 <div class="col-md-12">
 <label><b>Select Category</b></label><br>
 <select class="col-sm-3 cat-list" ng-model="categorySearch" ng-options="category as category for category in categories"><option value="">ALL</option></select>
 </div>
-<!-- <div class="col-md-6"><label>Category Search: </label>
-<input ng-model="categorySearch">
-</div> -->
-
-
 
 <div class="col-md-12">
        <div class="row">
 
  <div class="col-md-3 shop-item" ng-repeat="product in products | filter: categorySearch || undefined">
- <a href="/product/{{product._id}}/display">
+ <!-- <a href="/product/{{product._id}}/display"> -->
+ <a ui-sref="prodParent.oneProduct({id: product._id})">
+
 <img src="{{product.picture[0]}}" alt="{{product.name}}">
 
 

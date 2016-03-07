@@ -6,7 +6,7 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts, allCategorie
 });
 
 
-app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct, OrderFactory, $timeout, productReviews, $state, ReviewFactory) {
+app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct, OrderFactory, $timeout, productReviews, $state, ReviewFactory, $rootScope) {
 
   $scope.product = theProduct;
   $scope.productReviews=productReviews;
@@ -39,13 +39,15 @@ app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct
 
   $scope.reviewIsReadonly = false;
 
-  $scope.saveReview = function (productId) {
-    ReviewFactory.saveReview({
-      product: productId,
-      stars: $scope.rating,
-      content: $scope.reviewContent
-    })
-    $state.go('prodParent.oneProduct', {id: productId})
+  $scope.saveReview = function (reviewContent,rating) {
+    var newRevObj = {
+      product: $scope.product._id,
+      stars: rating,
+      content: reviewContent
+    };
+    ReviewFactory.saveReview(newRevObj);
+
+    $state.go('prodParent.oneProduct',$scope.product._id,{reload: 'prodParent'});
   }
 
 
