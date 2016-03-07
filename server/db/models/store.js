@@ -16,8 +16,7 @@ var schema = new mongoose.Schema({
     },
     urlSlug: {
       type: String,
-      unique: true,
-      set: convertSlug
+      unique: true
     },
     photo: {
       type: String,
@@ -33,8 +32,9 @@ var schema = new mongoose.Schema({
     }
 });
 
-function convertSlug(){
-  return 'stores/' + this.name.replace("\\s+/gi","");
-}
+schema.pre('save', function (next){
+  this.urlSlug = 'stores/' + this.nameOfStore.replace("\\s+/gi","");
+  next();
+})
 
 mongoose.model('Store', schema);
