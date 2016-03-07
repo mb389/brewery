@@ -19,7 +19,7 @@ app.factory('AdminFactory', function ($http, AuthService) {
   AF.getStore = function() {
     AuthService.getLoggedInUser()
     .then(user => {
-      return $http.get('api/store/owner/user._id')
+      return $http.get('api/stores/owner/'+user._id)
     })
     .then(null, console.err)
   }
