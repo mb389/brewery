@@ -1,0 +1,21 @@
+<div id="container">
+
+  <br>
+  <div class="col-md-6 col-md-offset-3">
+    <p id="title-p-d">{{product.name}}</p>
+      <div class="form">
+        <div class="field-row" id="contact-form">
+
+          <div ng-init="rating = 3"></div>
+
+          <star-rating class="star-rating" rating-value="rating"></star-rating>
+
+          <textarea rows="10" ng-model="reviewContent" class="required md-input form-control" placeholder="Write your review here" value="" name="review_text" id="review_text"></textarea>
+          <span class="error"></span>
+        </div>
+        <!-- <pre>reviewContent = <span ng-bind="reviewContent"></span></pre> -->
+        <input type="submit" class="btn-default btn" value="Submit" ng-click="saveReview(reviewContent,rating)"/>
+        <input type="submit" class="btn-default btn" value="Back to Product" ui-sref="prodParent.oneProduct"/>
+      </div>
+  </div>
+</div>
