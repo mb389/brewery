@@ -87,6 +87,7 @@
         };
 
         this.login = function (credentials) {
+          console.log('get to login factory');
             return $http.post('/login', credentials)
                 .then(onSuccessfulLogin)
                 .catch(function () {
@@ -94,9 +95,19 @@
                 });
         };
 
+        this.signup = function (credentials) {
+          console.log('get to signup factory');
+            return $http.post('/signup', credentials)
+                .then(onSuccessfulLogin)
+                .catch(function () {
+                    return $q.reject({ message: 'Invalid signup credentials.' });
+                });
+        };
+
         this.logout = function () {
             return $http.get('/logout').then(function () {
                 Session.destroy();
+                console.log('were out');
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
             });
         };

@@ -53,6 +53,9 @@ label{
   background:rgb(192, 192, 192);
   color:rgb(108, 122, 137);
 }
+[ng-click] {
+   cursor: pointer;
+}
 #title-p{
   font-size: 0.8em;
   letter-spacing: 0.2em;
@@ -399,6 +402,24 @@ a:hover{
   line-height:1;
   color:#595959;
 }
+
+/*============================================
+     ADMIN PAGE
+=============================================*/
+#admin-page .fa{
+  padding-top:100px;
+  height:500px;
+}
+
+#product-admin .fa{
+  padding-top:0px;
+  height:500px;
+}
+
+.currentCategory {
+  border-color: blue !important;
+}
+
 
 /*============================================
         SHOP PAGE

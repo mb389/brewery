@@ -1,0 +1,98 @@
+<div id="container">
+
+
+<div class="row content" id="product-admin">
+
+<div class="col-md-12">
+       <div class="row">
+
+<!-- PRODUCT EDIT FORM -->
+<!-- change id back to ng-show -->
+<form ng-submit="updateProduct()">
+
+  <div class="form-group">
+      <label class="control-label">Product name</label><br>
+      <div class="col-sm-9">
+          <input type="text" class="form-control input-sm" ng-model="productToUpdate.name" size="10" autofocus />
+      </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="control-label">Description</label><br>
+    <div class="col-sm-9">
+        <input type="text" class="form-control input-sm" ng-model="productToUpdate.description" size="10" autofocus />
+    </div>
+  </div>
+  <br>
+    <div class="form-group">
+    <div ng-repeat="category in categories">
+      <button type="button" ng-class="{currentCategory : isBeerCategory(category._id)}" class="btn btn-default btn-lg" ng-click="toggleCategory(category._id)">{{category.name}}</button>
+    <!-- <category-button cat={{category}}></category-button> -->
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="control-label">Inventory Quantity</label><br>
+    <div class="col-sm-9">
+        <input type="number" class="form-control input-sm" ng-model="productToUpdate.quantity" size="10" autofocus />
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="control-label">Price</label><br>
+    <div class="col-sm-9">
+        <input type="number" step="any" class="form-control input-sm" ng-model="productToUpdate.price" size="10" autofocus />
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <label class="control-label">Picture</label><br>
+    <div class="col-sm-9">
+        <input type="text" class="form-control input-sm" ng-model="productToUpdate.picture" size="10" autofocus />
+    </div>
+  </div>
+
+  <div class="form-group">
+      <div class="col-sm-9">
+          <button type="submit" class="btn btn-default">Update/Create</button>
+      </div>
+  </div>
+</form>
+  <div ng-show="productToUpdate.name">
+      <div class="col-sm-9">
+          <button ng-click="productToUpdate={}" class="btn btn-default">Clear form</button>
+      </div>
+  </div>
+  <div ng-show="productToUpdate._id">
+      <div class="col-sm-9">
+          <button ng-click="deleteProduct()" class="btn btn-default">Delete Product</button>
+      </div>
+  </div>
+
+
+<!-- END PRODUCT EDIT FORM -->
+</div>
+<div class="row">
+<!-- PRODUCT REPEATER      -->
+ <div class="col-md-3 shop-item" ng-repeat="product in products">
+
+<img src="{{product.picture[0]}}" alt="{{product.name}}">
+
+
+<div ng-click="populateProductForm(product)">
+ <h5>{{product.name}}</h5>
+
+ <p>${{product.price}}</p>
+</div>
+</div>
+<!-- end PRODUCT REPEATER      -->
+</div>
+
+<div class="pagination-holder">
+   </div>
+
+
+   </div>
+   </div>
+</div>
+</div>

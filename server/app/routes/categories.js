@@ -17,3 +17,23 @@ router.get('/names', (req, res, next) => {
   .then(cats => res.json(cats))
   .catch(next)
 })
+
+
+router.post('/', (req, res, next) => {
+  Category.create(req.body)
+  .then(cat => res.json(cat))
+  .catch(next)
+})
+
+
+router.put('/:id', (req, res, next) => {
+  Category.findByIdAndUpdate(req.params.id, req.body, {new: true})
+  .then(cat => res.json(cat))
+  .catch(next)
+})
+
+router.delete('/:id', (req, res, next) => {
+  Category.remove({_id:req.params.id})
+  .then(cat => res.json(cat))
+  .catch(next)
+})

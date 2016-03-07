@@ -61,6 +61,7 @@ module.exports = function (app) {
 
     // Simple /logout route.
     app.get('/logout', function (req, res) {
+      console.log('did we make it to logout');
         req.logout();
         res.status(200).end();
     });
