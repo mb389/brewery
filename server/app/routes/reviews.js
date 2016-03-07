@@ -3,10 +3,11 @@ var router = require('express').Router();
 var mongoose = require('mongoose');
 var Review = mongoose.model('Review');
 var _ = require('lodash');
-
+var User = mongoose.model('User');
 
 router.param('id',(req,res,next, id) => {
   Review.findById(id)
+  .populate('user')
   .then(review => {
     req.review = review
     next();
@@ -16,6 +17,7 @@ router.param('id',(req,res,next, id) => {
 
 router.get('/', (req, res, next) => {
   Review.find()
+  .populate('user')
   .then(reviews => res.json(reviews))
   .then(null,next);
 });
@@ -26,7 +28,17 @@ router.get('/:id', (req, res, next) => {
 
 router.get('/product/:productId', (req, res, next) => {
   Review.findByProduct(req.params.productId)
-  .then(reviews => res.json(reviews))
+  .then(reviews => {
+    Promise.all(reviews.map(function(el) {
+      return User.findById(el.user)
+      .then(result => {
+        el.user=result;
+        console.log(el)
+        return el;
+      })
+    }))
+    .then(updatedReviews => res.json(updatedReviews))
+  })
   .then(null,next);
 });
 
@@ -39,7 +51,11 @@ router.get('/user/:userId', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   Review.create(req.body)
-  .then(review => res.json(review))
+  .then(review => {
+    review.user=req.user._id;
+    return review.save();
+  })
+  .then(savedRev => res.json(savedRev))
   .then(null,next);
 });
 

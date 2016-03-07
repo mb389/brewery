@@ -1,0 +1,15 @@
+<div id="container">
+  <br>
+  <h4>Reviews</h4>
+
+  <div ng-repeat="review in productReviews">
+    <div>
+      <ul>
+      <li><h4>{{review.user.email}} gave the item {{review.stars}} stars and said "{{review.content}}"</h4></li>
+      <star-rating class="star-rating" rating-value="review.stars" read="true"></star-rating>
+    </ul>
+    </div>
+  </div>
+  <a class="btn btn-default" ui-sref="prodParent.Review">Add A Review</a>
+  <br>
+</div>
