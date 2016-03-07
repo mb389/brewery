@@ -1,20 +1,26 @@
 
 <div id="container">
-
 <div class="row content" id="shopp">
-
+  <div class="jumbotron">
+    <h3>{{store.nameOfStore}}</h3>
+    <h4>{{store.description}}</h4>
+    <img src="{{store.photo}}">
+    <h5>Owner Info</h5>
+    <h5>Name: {{store.owner.firstName}} {{store.owner.lastName}}</h5>
+    <h5>Email: {{store.owner.email}}</h5>
+    <hr>
+  </div>
 <div class="col-md-12">
 <label><b>Select Category</b></label><br>
 <select class="col-sm-3 cat-list" ng-model="categorySearch" ng-options="category as category for category in categories"><option value="">ALL</option></select>
 </div>
 
 <div class="col-md-12">
-       <div class="row">
+<div class="row">
 
  <div class="col-md-3 shop-item" ng-repeat="product in products | filter: categorySearch || undefined">
  <!-- <a href="/product/{{product._id}}/display"> -->
  <a ui-sref="prodParent.oneProduct({id: product._id})">
-
 <img src="{{product.picture[0]}}" alt="{{product.name}}">
 
 

@@ -14,6 +14,34 @@ app.config(function ($stateProvider) {
       }
   });
 
+  $stateProvider.state('shoplist', {
+    url: '/stores/',
+    templateUrl: '/js/products/templates/shoplist.html',
+    controller: 'StoreListCtrl',
+    resolve: {
+      shopList: function(StoreFactory) {
+        return StoreFactory.getAllStores();
+      }
+    }
+  });
+
+  $stateProvider.state('shopdisplay', {
+    url: '/stores/:name',
+    templateUrl: '/js/products/templates/shopdisplay.html',
+    controller: 'StoreCtrl',
+    resolve: {
+      storeProducts: function($stateParams, ProductFactory) {
+        return ProductFactory.getAllProducts();
+      },
+      storeCategories: function(ProductFactory) {
+        return ProductFactory.getCategoryNames();
+      },
+      theStore: function($stateParams, StoreFactory) {
+       return StoreFactory.getStoreByName($stateParams.name);
+      }
+    }
+  });
+
   $stateProvider.state('prodParent', {
     url: '/product/:id',
     abstract: true,
@@ -25,6 +53,9 @@ app.config(function ($stateProvider) {
       },
       productReviews: function($stateParams, ReviewFactory) {
         return ReviewFactory.getReviewsForProduct($stateParams.id)
+      },
+      loggedInUser: function(AuthService) {
+        return AuthService.getLoggedInUser();
       }
     }
   });
@@ -38,11 +69,5 @@ app.config(function ($stateProvider) {
     url: '/reviews/write',
     templateUrl: 'js/products/templates/reviewWriter.html'
   });
-
-
-
-
-
-
 
 });

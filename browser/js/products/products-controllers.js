@@ -3,17 +3,33 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts, allCategorie
   $scope.products = allProducts;
   $scope.categories = allCategories;
 
+
+});
+
+app.controller('StoreListCtrl', function ($scope, $log, shopList, StoreFactory) {
+  $scope.shoplist=shopList;
 });
 
 
-app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct, OrderFactory, $timeout, productReviews, $state, ReviewFactory, $rootScope) {
+app.controller('StoreCtrl', function ($scope, $log, theStore, storeProducts, storeCategories) {
+
+  $scope.store=theStore;
+  $scope.products=storeProducts;
+  $scope.categories=storeCategories;
+
+});
+
+
+app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct, OrderFactory, $timeout, productReviews, $state, ReviewFactory, $rootScope, loggedInUser) {
 
   $scope.product = theProduct;
   $scope.productReviews=productReviews;
   $scope.quantity=1;
+  $scope.loggedInUser=loggedInUser;
+  console.log(loggedInUser)
 
-  $scope.addToOrder = function (productToAdd){
-    productToAdd.quantity = Number($scope.quantity);
+  $scope.addToOrder = function (productToAdd, quantity){
+    productToAdd.quantity = Number(quantity);
     OrderFactory.addOrCreate(productToAdd);
     $scope.wasAdded=true;
     $timeout(function(){
