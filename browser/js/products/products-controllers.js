@@ -3,6 +3,20 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts, allCategorie
   $scope.products = allProducts;
   $scope.categories = allCategories;
 
+
+});
+
+app.controller('StoreListCtrl', function ($scope, $log, shopList) {
+  $scope.shoplist=shopList;
+});
+
+
+app.controller('StoreCtrl', function ($scope, $log, theStore, storeProducts) {
+
+  $scope.store=theStore;
+  $scope.products=storeProducts;
+  console.log(theStore);
+
 });
 
 
@@ -12,8 +26,8 @@ app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct
   $scope.productReviews=productReviews;
   $scope.quantity=1;
 
-  $scope.addToOrder = function (productToAdd){
-    productToAdd.quantity = Number($scope.quantity);
+  $scope.addToOrder = function (productToAdd, quantity){
+    productToAdd.quantity = Number(quantity);
     OrderFactory.addOrCreate(productToAdd);
     $scope.wasAdded=true;
     $timeout(function(){
