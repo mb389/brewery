@@ -1,4 +1,4 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, OrderFactory) {
 
     return {
         restrict: 'E',
@@ -36,6 +36,27 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             };
 
             setUser();
+
+            var checkCartQuantity = function (){
+               AuthService.getLoggedInUser()
+               .then(function(user){
+                   return OrderFactory.getOrderByUserIdOrSessionId(user._id)
+               })
+               .then(function(order){
+                var sum = 0;
+                order.products.forEach(prod =>{
+                  sum += Number(prod.quantity)
+                })
+                scope.number = sum;
+              })
+            }
+
+            $rootScope.$watch('totalQuantity', function(){
+              console.log('here we are rootscope', $rootScope.totalQuantity);
+              if(!scope.number) checkCartQuantity();
+              if($rootScope.totalQuantity === 0) checkCartQuantity();
+              else scope.number += $rootScope.totalQuantity;
+            })
 
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);

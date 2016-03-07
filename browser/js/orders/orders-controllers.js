@@ -1,4 +1,4 @@
-app.controller('FullcartController', function ($scope, $state, pendingOrder, OrderFactory){
+app.controller('FullcartController', function ($scope, $rootScope, $state, pendingOrder, OrderFactory){
   console.log('the pending order',pendingOrder);
   $scope.order = pendingOrder;
   if(pendingOrder){
@@ -21,6 +21,8 @@ app.controller('FullcartController', function ($scope, $state, pendingOrder, Ord
     .then(updatedOrder => {
       $scope.order = updatedOrder;
       calcTotal();
+      $rootScope.totalQuantity = -Number(productToRemove.quantity);
+      console.log('dont fool me rootscope', $rootScope.totalQuantity);
     })
   }
 
@@ -32,6 +34,7 @@ app.controller('FullcartController', function ($scope, $state, pendingOrder, Ord
       console.log('heres the updated order we get back', updatedOrder);
       $scope.order = updatedOrder;
       calcTotal();
+      $rootScope.totalQuantity = 0;
       $scope.inProgress = false;
     })
   }
