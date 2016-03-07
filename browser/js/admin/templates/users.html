@@ -10,7 +10,11 @@
 <table class="table table-striped">
   <th><td>First Name</td><td>Last Name</td><td>Email</td><td>Role</td><td>Delete</td></th>
 
-  <tr ng-repeat="user in users"><td></td><td>{{user.firstName}}</td><td>{{user.lastName}}</td><td>{{user.email}}</td><td>ROLE DROPDOWN</td><td><button ng-click="deleteUser(user._id)" class="btn btn-default btn-sm">Delete User</button></td>
+  <tr ng-repeat="user in users"><td></td><td>{{user.firstName}}</td><td>{{user.lastName}}</td><td>{{user.email}}</td><td>
+    <button ng-click="changeRole(user, 'admin')" ng-class="{currentStatus : checkUserStatus(user, 'admin')}" class="btn btn-default btn-xs">Admin</button>
+    <button ng-click="changeRole(user, 'owner')" ng-class="{currentStatus : checkUserStatus(user, 'owner')}" class="btn btn-default btn-xs">Owner</button>
+    <button ng-click="changeRole(user, 'regular')" ng-class="{currentStatus : checkUserStatus(user, 'regular')}" class="btn btn-default btn-xs">Regular</button>
+    </td><td><button ng-click="deleteUser(user._id)" class="btn btn-default btn-sm">Delete User</button></td>
   </tr>
 </table>
 

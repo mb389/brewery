@@ -6,6 +6,9 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
   $scope.productToUpdate = {};
   $scope.categoryToUpdate = {};
 
+  console.log(users)
+
+
   $scope.populateProductForm = function(productObj) {
     $scope.productToUpdate = productObj;
   };
@@ -21,6 +24,34 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
         if (user._id !== userId) return true;
       })
     })
+  }
+
+  $scope.checkUserStatus = function (user, type) {
+    switch(type) {
+      case 'admin':
+        return user.isAdmin ? true : false;
+      case 'owner':
+        return user.isOwner ? true : false;
+      case 'regular':
+        return user.isOwner || user.isAdmin ? false : true;
+      default:
+        true;
+    }
+  }
+
+  $scope.changeRole = function(user, type) {
+    switch(type){
+      case 'admin':
+         user.isAdmin = true;
+         break;
+      case 'owner':
+        return user.isOwner = true;
+        break;
+      case 'regular':
+        user.isAdmin = false;
+        user.isOwner = false;
+        break;
+    }
   }
 
 
