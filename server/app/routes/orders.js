@@ -10,7 +10,7 @@ var Category = mongoose.model('Category');
 
 
 function checkAdmin (req, res, next) {
-  if (req.user.isAdmin) {
+  if (req.user.isAdmin || req.user.isOwner) {
     next()
   } else {
     res.sendStatus(403)
