@@ -139,12 +139,7 @@ schema.methods.updateStatus = function(status) {
 
 function processing (order) {
   return order.save()
-  // .then(ord => {
-  //   return ord.populate({
-  //     path: 'products.product',
-  //     model: 'Product'
-  //   });
-  // })
+
 }
 
 

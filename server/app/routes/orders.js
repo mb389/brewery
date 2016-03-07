@@ -137,15 +137,6 @@ router.put('/update/:id', (req, res, next) => {
   .then(null, next);
 })
 
-// router.put('/purchase/:id', (req, res, next) => {
-//   Order.findById(req.params.id)
-//   .then(order => order.purchaseById())
-//   .then(() => {
-//     res.sendStatus(200);
-//   })
-//   .then(null, next)
-// })
-
 router.put('/status/:id/:status', (req, res, next) => {
   Order.findById(req.params.id)
   .then(order => order.updateStatus(req.params.status))
