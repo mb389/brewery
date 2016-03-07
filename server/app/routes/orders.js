@@ -26,8 +26,15 @@ router.get('/user/session/:userid', (req, res, next) => {
         res.json(order);
       }
       else{
-        return Order.findOne({sessionId: req.session.id, status: 'pending'}).populate('products.product').exec()
-            .then(sessionOrder => {
+        return Order.findOne({sessionId: req.session.id, status: 'pending'}).populate({
+        path: 'products.product',
+        model: 'Product',
+        populate: {
+          path: 'categories',
+          model: 'Category'
+        }
+      }).exec()
+        .then(sessionOrder => {
           res.json(sessionOrder);
         })
       }
@@ -121,7 +128,7 @@ router.put('/update/:id', (req, res, next) => {
       path: 'categories',
       model: 'Category'
     }
-  }).exec()
+  })
   .then(function(order) {
     console.log('order we find', order);
     return order.updateOrder(req.body);
