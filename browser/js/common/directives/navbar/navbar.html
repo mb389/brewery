@@ -19,10 +19,16 @@
           <a class="navbar-brand" id="logo" href="/"><img src="/resources/img/brewery2.png" alt=""/></a>
         </li>
         <li>
-          <a href="/products">SHOP</a>
+          <a ui-sref="allProducts">SHOP</a>
+        </li>
+        <li>
+          <a ui-sref="allProducts.guestShops">GUEST SHOPS</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a ui-sref="admin">ADMIN</a>
+        </li>
         <li>
           <a ng-hide="user" ui-sref="login">LOGIN</a>
           <a ng-show="user" ng-click="logout()">LOGOUT</a>
@@ -33,15 +39,15 @@
 
           </a>
         </li>
-        <li id="normal-cart">
+        <!-- <li id="normal-cart">
           <a ui-sref="fullcart.checkout" >CHECKOUT</a>
-        </li>
+        </li> -->
         <li id="mobile-cart">
           <a href="/cart">CART</a>
         </li>
-        <li id="mobile-cart">
+        <!-- <li id="mobile-cart">
           <a ui-sref="fullcart.checkout">CHECKOUT</a>
-        </li>
+        </li> -->
 
       </ul>
 

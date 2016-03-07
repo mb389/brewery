@@ -14,6 +14,16 @@ app.config(function ($stateProvider) {
       }
   });
 
+  $stateProvider.state('allProducts.guestShops', {
+    url: '/stores/:name',
+    templateUrl: '/js/products/templates/guestshops.html',
+    resolve: {
+      theStore: function($stateParams) {
+        // return
+      }
+    }
+  });
+
   $stateProvider.state('prodParent', {
     url: '/product/:id',
     abstract: true,

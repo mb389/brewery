@@ -28,8 +28,8 @@ var schema = new mongoose.Schema({
     picture: [{
       type: String,
       default: "http://lorempixel.com/300/300/food"
-    }]
-
+    }],
+    store: String
 });
 
 schema.statics.findByCategory = function(cat) {

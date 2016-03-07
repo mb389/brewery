@@ -12,8 +12,8 @@ app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct
   $scope.productReviews=productReviews;
   $scope.quantity=1;
 
-  $scope.addToOrder = function (productToAdd){
-    productToAdd.quantity = Number($scope.quantity);
+  $scope.addToOrder = function (productToAdd, quantity){
+    productToAdd.quantity = Number(quantity);
     OrderFactory.addOrCreate(productToAdd);
     $scope.wasAdded=true;
     $timeout(function(){
