@@ -40,16 +40,16 @@
                     </div>
                 </div>
             </div>
-            <div ng-hide="currentUser" class="col-md-6">
+            <div class="col-md-6">
                 <h3 class="text-center">Please Add Credentials</h3>
-                <h4> Guest Info </h4>
+                <h4>{{currentUser.firstName || currentUser.email || 'Guest'}} please fill out this Info </h4>
                 <div class="col-xs-12 form-group" id="coupon">
                     <label> First Name </label>
-                    <input ng-model="credentials.firstName" type="text" class="form-control" name="firstname" placeholder="First Name" />
+                    <input ng-model="credentials.firstName" type="text" class="form-control" name="firstname" ng-value="currentUser.firstName || 'First Name'" />
                     <label> Last Name </label>
-                    <input ng-model="credentials.lastName" type="text" class="form-control" name="lastname" placeholder="Last Name" />
+                    <input ng-model="credentials.lastName" type="text" class="form-control" name="lastname" ng-value="currentUser.lastName || 'Last Name'" />
                     <label> Email </label>
-                    <input ng-model="credentials.email" type="email" class="form-control" name="email" placeholder="Email Address" />
+                    <input ng-model="credentials.email" type="email" class="form-control" name="email" ng-value="currentUser.email || 'Email'" />
                     <label> Phone Number </label>
                     <input ng-model="credentials.phone" type="text" class="form-control" name="phone" placeholder="Phone Number" />
                     <label> Shipping Address </label>
