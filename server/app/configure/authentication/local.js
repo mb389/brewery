@@ -4,6 +4,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Order = mongoose.model('Order');
+var Store = mongoose.model('Store');
 var Promise = require('bluebird');
 var _ = require('lodash');
 
@@ -43,8 +44,18 @@ module.exports = function (app) {
         if(order) {
           order.user = userToUpdate._id;
           order.sessionId = null;
+          return order.save()
         }
-        return order.save()
+        else return;
+      })
+      .then(() => {
+        //create store
+        if(!req.body.store) return;
+        else{
+          req.body.store.owner = userToUpdate._id; //add owner to store
+          console.log('heres store', req.body.store);
+          return Store.create(req.body.store)
+        }
       })
       .then(() => {
         req.login(userToUpdate, function(){

@@ -2,6 +2,7 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
+var Store = mongoose.model('Store');
 var _ = require('lodash');
 
 router.get('/', (req, res, next) => {
@@ -9,6 +10,13 @@ router.get('/', (req, res, next) => {
   .then(products => res.json(products))
   .then(null,next);
 });
+
+router.get('/store/:id', (req, res, next) => {
+  Products.find({store: req.params.id})
+  .populate('categories')
+  .then(products => res.json(products))
+  .then(null, next);
+})
 
 router.get('/:id', (req, res, next) => {
   Product.findById(req.params.id)
