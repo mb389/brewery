@@ -41,6 +41,10 @@ var schema = new mongoose.Schema({
       type: Boolean,
       default: false
     },
+    isOwner: {
+      type: Boolean,
+      default: false
+    },
     salt: {
         type: String
     },
