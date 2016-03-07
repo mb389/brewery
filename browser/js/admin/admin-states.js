@@ -3,7 +3,10 @@ app.config(function ($stateProvider){
   .state('admin', {
     url:'/admin',
     templateUrl: '/js/admin/templates/admin.html',
-    controller: 'AdminController',
+    controller: function($scope, user, $state) {
+      $scope.user = user
+      if(!user) $state.go('home')
+    },
     resolve: {
       user: function (AuthService) {
         return AuthService.getLoggedInUser()
