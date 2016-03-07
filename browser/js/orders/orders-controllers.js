@@ -66,7 +66,7 @@ app.controller('CheckoutController', function ($scope, $state, pendingOrder, Aut
   $scope.completePurchase = function (){
     $scope.inProgress = true;
     console.log('credentials', $scope.credentials);
-    OrderFactory.purchaseOrder($scope.order._id)
+    OrderFactory.updatedStatusForOrder($scope.order._id, 'purchased')
     .then(function(){
       $scope.inProgress = false;
       console.log('lets go');
