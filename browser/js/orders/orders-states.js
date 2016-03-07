@@ -23,13 +23,6 @@ app.config(function ($stateProvider){
     url: '/checkout',
     templateUrl:'/js/orders/templates/checkout.html',
     controller: 'CheckoutController',
-    // resolve: {
-    //   user: function (AuthService){
-    //     return AuthService.getLoggedInUser().then(user => {
-    //       return user;
-    //     })
-    //   }
-    // }
   })
   .state('fullcart.completed', {
     url:'/completed',
