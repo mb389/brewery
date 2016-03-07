@@ -9,6 +9,14 @@ var User = mongoose.model('User');
 var Category = mongoose.model('Category');
 
 
+function checkAdmin (req, res, next) {
+  if (req.user.isAdmin) {
+    next()
+  } else {
+    res.sendStatus(403)
+  }
+}
+
 //get pending order by user or session
 router.get('/user/session/:userid', (req, res, next) => {
   console.log('do we get here?', req.session);
@@ -77,7 +85,7 @@ router.get('/session/', (req, res, next) => {
   .then(null, next)
 })
 
-router.get('/', (req, res, next) => {
+router.get('/', checkAdmin, (req, res, next) => {
   Order.find({}).populate('products.product').populate('user').exec()
   .then(orders => res.json(orders))
   .catch(next)

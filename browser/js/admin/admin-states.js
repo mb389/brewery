@@ -2,7 +2,16 @@ app.config(function ($stateProvider){
   $stateProvider
   .state('admin', {
     url:'/admin',
-    templateUrl: '/js/admin/templates/admin.html'
+    templateUrl: '/js/admin/templates/admin.html',
+    controller: 'AdminController',
+    resolve: {
+      user: function (AuthService) {
+        return AuthService.getLoggedInUser()
+      },
+      isAllowed: function (AdminFactory) {
+        return AdminFactory.checkAdminOwner()
+      }
+    }
   })
   .state('admin.products', {
     url: '/products',

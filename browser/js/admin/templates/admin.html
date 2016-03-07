@@ -6,17 +6,17 @@
   <div class="row">
      <h3>Manage Brews</h3>
       <ul id="admin-task-list">
-        <div class="adminTabs">
+        <div ng-show="user" class="adminTabs">
           <a href="/admin/products" class="btn btn-default btn-sm">Products</a>
           <a href="/admin/categories" class="btn btn-default btn-sm">Categories</a>
           <a href="/admin/orders" class="btn btn-default btn-sm">Orders</a>
-          <a href="/admin/users" class="btn btn-default btn-sm">Users</a>
+          <a ng-show="user.isAdmin" href="/admin/users" class="btn btn-default btn-sm">Users</a>
         </div>
 
 
       </ul>
 
-<ui-view></ui-view>
+<ui-view ng-show="user"></ui-view>
 
 
 </div>
