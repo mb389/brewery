@@ -16,6 +16,11 @@ app.factory('ProductFactory',function($http) {
     });
   }
 
+  obj.getProductsForStore = function (storeId){
+    return $http.get('/api/products/store/' + storeId)
+      .then(response => response.data);
+  }
+
   obj.getByCategory = function(category) {
     return $http.get('/api/products/category/'+category)
     .then(res => res.data);
