@@ -4,12 +4,16 @@
 <div class="row content" id="admin-page">
 <div class="col-md-12">
   <div class="row">
-     <h2>Hello Admin, manage:</h2>
+     <h3>Manage Brews</h3>
       <ul id="admin-task-list">
-        <li><a href="/admin/products">Products</a></li>
-        <li><a href="/admin/categories">Categories</a></li>
-        <li><a href="/admin/orders">Orders</a></li>
-        <li ng-show="true"><a href="/admin/users">Users</a></li>
+        <div class="adminTabs">
+          <a href="/admin/products" class="btn btn-default btn-sm">Products</a>
+          <a href="/admin/categories" class="btn btn-default btn-sm">Categories</a>
+          <a href="/admin/orders" class="btn btn-default btn-sm">Orders</a>
+          <a href="/admin/users" class="btn btn-default btn-sm">Users</a>
+        </div>
+
+
       </ul>
 
 <ui-view></ui-view>
