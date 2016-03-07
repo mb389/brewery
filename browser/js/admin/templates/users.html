@@ -1,0 +1,28 @@
+<div id="container">
+
+
+<div class="row content" id="user-admin">
+
+<div class="col-md-12">
+       <div class="row">
+
+
+<table class="table table-striped">
+  <th><td>First Name</td><td>Last Name</td><td>Email</td><td>Role</td><td>Delete</td><td>Reset PW</td></th>
+
+  <tr ng-repeat="user in users"><td></td><td>{{user.firstName}}</td><td>{{user.lastName}}</td><td>{{user.email}}</td><td>
+    <button ng-click="changeRole(user, 'admin')" ng-class="{currentStatus : checkUserStatus(user, 'admin')}" class="btn btn-default btn-xs">Admin</button>
+    <button ng-click="changeRole(user, 'owner')" ng-class="{currentStatus : checkUserStatus(user, 'owner')}" class="btn btn-default btn-xs">Owner</button>
+    <button ng-click="changeRole(user, 'regular')" ng-class="{currentStatus : checkUserStatus(user, 'regular')}" class="btn btn-default btn-xs">Regular</button>
+    </td><td><button ng-click="deleteUser(user._id)" class="btn btn-default btn-sm">Delete User</button></td><td><button ng-click="" class="btn btn-default btn-sm">Reset PW</button></td>
+  </tr>
+</table>
+
+<div class="pagination-holder">
+   </div>
+
+
+   </div>
+   </div>
+</div>
+</div>

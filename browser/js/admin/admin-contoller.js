@@ -1,9 +1,11 @@
-app.controller('AdminController', function($scope, ProductFactory, OrderFactory, AdminFactory, products, categories, orders) {
+app.controller('AdminController', function($scope, ProductFactory, OrderFactory, AdminFactory, UserFactory, products, categories, orders, users) {
   $scope.products = products;
-  $scope.categories = categories
-  $scope.orders = orders
+  $scope.categories = categories;
+  $scope.orders = orders;
+  $scope.users = users;
   $scope.productToUpdate = {};
   $scope.categoryToUpdate = {};
+
 
   $scope.populateProductForm = function(productObj) {
     $scope.productToUpdate = productObj;
@@ -12,6 +14,50 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
   $scope.populateCategory = function(categoryObj) {
     $scope.categoryToUpdate = categoryObj;
   };
+
+  $scope.deleteUser = function(userId) {
+    UserFactory.deleteUser(userId)
+    .then(() => {
+      $scope.users = $scope.users.filter(user => {
+        if (user._id !== userId) return true;
+      })
+    })
+  }
+
+  $scope.checkUserStatus = function (user, type) {
+    switch(type) {
+      case 'admin':
+        return user.isAdmin ? true : false;
+      case 'owner':
+        return user.isOwner ? true : false;
+      case 'regular':
+        return user.isOwner || user.isAdmin ? false : true;
+      default:
+        true;
+    }
+  }
+
+  $scope.changeRole = function(user, type) {
+    switch(type){
+      case 'admin':
+         user.isAdmin = true;
+         break;
+      case 'owner':
+        user.isOwner = true;
+        break;
+      case 'regular':
+        user.isAdmin = false;
+        user.isOwner = false;
+        break;
+    }
+    UserFactory.editExistingUser(user._id, user)
+         .then(updatedUser => {
+          $scope.users = $scope.users.map(usr => {
+            if(usr._id === updatedUser) return updatedUser;
+            return usr
+          })
+         })
+  }
 
 
   $scope.isBeerCategory = function(categoryId) {
