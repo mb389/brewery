@@ -19,8 +19,8 @@ app.config(function ($stateProvider) {
     templateUrl: '/js/products/templates/shoplist.html',
     controller: 'StoreListCtrl',
     resolve: {
-      shopList: function() {
-        return ["shop1","shop2","shop3"];
+      shopList: function(StoreFactory) {
+        return StoreFactory.getAllStores();
       }
     }
   });
@@ -33,8 +33,11 @@ app.config(function ($stateProvider) {
       storeProducts: function($stateParams, ProductFactory) {
         return ProductFactory.getAllProducts();
       },
-      theStore: function($stateParams) {
-       return $stateParams.name;
+      storeCategories: function(ProductFactory) {
+        return ProductFactory.getCategoryNames();
+      },
+      theStore: function($stateParams, StoreFactory) {
+       return StoreFactory.getStoreByName($stateParams.name);
       }
     }
   });
@@ -50,6 +53,9 @@ app.config(function ($stateProvider) {
       },
       productReviews: function($stateParams, ReviewFactory) {
         return ReviewFactory.getReviewsForProduct($stateParams.id)
+      },
+      loggedInUser: function(AuthService) {
+        return AuthService.getLoggedInUser();
       }
     }
   });
