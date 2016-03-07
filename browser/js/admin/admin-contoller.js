@@ -6,8 +6,6 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
   $scope.productToUpdate = {};
   $scope.categoryToUpdate = {};
 
-  console.log(users)
-
 
   $scope.populateProductForm = function(productObj) {
     $scope.productToUpdate = productObj;
@@ -43,13 +41,34 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
     switch(type){
       case 'admin':
          user.isAdmin = true;
+         UserFactory.editExistingUser(user._id, user)
+         .then(updatedUser => {
+          $scope.users = $scope.users.map(usr => {
+            if(usr._id === updatedUser) return updatedUser;
+            return usr
+          })
+         })
          break;
       case 'owner':
-        return user.isOwner = true;
+        user.isOwner = true;
+        UserFactory.editExistingUser(user._id, user)
+         .then(updatedUser => {
+          $scope.users = $scope.users.map(usr => {
+            if(usr._id === updatedUser) return updatedUser;
+            return usr
+          })
+         })
         break;
       case 'regular':
         user.isAdmin = false;
         user.isOwner = false;
+        UserFactory.editExistingUser(user._id, user)
+         .then(updatedUser => {
+          $scope.users = $scope.users.map(usr => {
+            if(usr._id === updatedUser) return updatedUser;
+            return usr
+          })
+         })
         break;
     }
   }
