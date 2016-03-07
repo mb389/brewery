@@ -1,7 +1,8 @@
-app.controller('AdminController', function($scope, ProductFactory, OrderFactory, AdminFactory, products, categories, orders) {
+app.controller('AdminController', function($scope, ProductFactory, OrderFactory, AdminFactory, UserFactory, products, categories, orders, users) {
   $scope.products = products;
-  $scope.categories = categories
-  $scope.orders = orders
+  $scope.categories = categories;
+  $scope.orders = orders;
+  $scope.users = users;
   $scope.productToUpdate = {};
   $scope.categoryToUpdate = {};
 
@@ -12,6 +13,15 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
   $scope.populateCategory = function(categoryObj) {
     $scope.categoryToUpdate = categoryObj;
   };
+
+  $scope.deleteUser = function(userId) {
+    UserFactory.deleteUser(userId)
+    .then(() => {
+      $scope.users = $scope.users.filter(user => {
+        if (user._id !== userId) return true;
+      })
+    })
+  }
 
 
   $scope.isBeerCategory = function(categoryId) {
