@@ -12,7 +12,14 @@ var Category = mongoose.model('Category');
 //get pending order by user or session
 router.get('/user/session/:userid', (req, res, next) => {
   console.log('do we get here?', req.session);
-  Order.findOne({user: req.params.userid, status: 'pending'}).populate('products.product').exec()
+  Order.findOne({user: req.params.userid, status: 'pending'}).populate({
+      path: 'products.product',
+      model: 'Product',
+      populate: {
+        path: 'categories',
+        model: 'Category'
+      }
+    }).exec()
     .then(order => {
       console.log('ORDER', order);
       if(order){
