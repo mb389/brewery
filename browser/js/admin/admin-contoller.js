@@ -51,12 +51,12 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
         break;
     }
     UserFactory.editExistingUser(user._id, user)
-         .then(updatedUser => {
-          $scope.users = $scope.users.map(usr => {
-            if(usr._id === updatedUser._id) return updatedUser;
-            return usr
-          })
-         })
+     .then(updatedUser => {
+      $scope.users = $scope.users.map(usr => {
+        if(usr._id === updatedUser._id) return updatedUser;
+        return usr
+      })
+     })
   }
 
   $scope.checkOrderStatus = function (order, status) {
@@ -109,6 +109,7 @@ app.controller('AdminController', function($scope, ProductFactory, OrderFactory,
       }
     }
   }
+
 
   $scope.updateProduct = function() {
      if($scope.productToUpdate._id) {
