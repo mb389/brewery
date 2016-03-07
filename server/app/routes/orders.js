@@ -78,7 +78,7 @@ router.get('/session/', (req, res, next) => {
 })
 
 router.get('/', (req, res, next) => {
-  Order.find({}).populate('products.product').exec()
+  Order.find({}).populate('products.product').populate('user').exec()
   .then(orders => res.json(orders))
   .catch(next)
 })

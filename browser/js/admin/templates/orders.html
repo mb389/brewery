@@ -9,13 +9,13 @@
 
 <div class="col-md-10">
   <div>
-    <input type='text' ng-model=orderStatusFilter placeholder="Status to Filter By" id="statusSearchFilter">
+    <input type='text' ng-model=orderStatusFilter placeholder="Search orders, incl. by Status" id="statusSearchFilter">
   </div>
   <br>
   <ul class="price-list list-group">
       <div class="list-group-item" ng-repeat="order in orders | filter:orderStatusFilter" class="items-holder">
           <h4>Order Number: {{order._id}} </h4>
-          <h5>Customer: {{order.user}} </h5>
+          <h5>Customer: Name: {{order.user.firstName}} {{order.user.lastName}},  Email:{{order.user.email}}</h5>
           <strong class="importnat">{{order.status}}</strong>
           <h5>Purchase Date: {{order.purchaseDate}}</h5>
           <div ng-repeat="product in order.products" class="items-holder">
