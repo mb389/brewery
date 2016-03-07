@@ -1,5 +1,11 @@
-app.controller('AdminOrderController', function($scope, ProductFactory, OrderFactory, AdminFactory, UserFactory, orders) {
-  $scope.orders = orders;
+app.controller('AdminOrderController', function($scope, ProductFactory, OrderFactory, AdminFactory, UserFactory, orders, store) {
+  if($scope.user.isAdmin) {
+    $scope.orders = orders;
+  } else {
+    $scope.orders = orders.filter(ord => {
+      if(ord.store === store._id) return ord;
+    })
+  }
 
   $scope.checkOrderStatus = function (order, status) {
     if(order.status === status) return true;

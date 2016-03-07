@@ -13,6 +13,9 @@ app.config(function ($stateProvider){
       },
       isAllowed: function (AdminFactory) {
         return AdminFactory.checkAdminOwner()
+      },
+      store: function(AdminFactory) {
+        return AdminFactory.getStore()
       }
     }
   })
