@@ -4,7 +4,16 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var _ = require('lodash');
 
-router.get('/', (req, res, next) => {
+
+function checkAdmin (req, res, next) {
+  if (req.user.isAdmin) {
+    next()
+  } else {
+    res.sendStatus(403)
+  }
+}
+
+router.get('/', checkAdmin, (req, res, next) => {
   User.find()
   .then(users => {
     res.json(users);
