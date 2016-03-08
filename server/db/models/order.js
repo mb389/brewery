@@ -48,18 +48,6 @@ schema.pre('validate', function(next) {
 })
 
 
-// schema.pre('save', function(next) {
-//   var productsInOrder = this.products;
-//   if(productsInOrder.length !== 0) {
-//     productsInOrder.forEach(product => {
-//       if(!product.product || typeof product.quantity !== 'number') {
-//         next(new Error('something went wrong'))
-//       }
-//     })
-//   }
-//   next()
-// })
-
 function findMatchingProduct (productUpdateObj){
   return this.products.filter(productInArray => {
     return productInArray.product.toString() === productUpdateObj._id.toString();
@@ -68,7 +56,6 @@ function findMatchingProduct (productUpdateObj){
 
 schema.methods.addOrCreateProduct = function (productUpdateObj) {
   //updates quantity and price if product in baseket or adds product
-  // var self = this;
   var toUpdate = findMatchingProduct.call(this, productUpdateObj);
   if(toUpdate.length) {
     toUpdate[0].quantity += Number(productUpdateObj.quantity);
@@ -108,13 +95,20 @@ function addPriceToCart () {
   }))
 }
 
+function removeInventory (order) {
+  return Promise.map(order.products, eachProduct => {
+    return Product.findByIdAndUpdate(eachProduct.product, {quantity: {$subtract: ["$quantity", eachProduct.quantity]}}, {new: true})
+    })
+}
+
+
 function purchase(order) {
   order.purchaseDate = Date.now();
   addPriceToCart.call(order)
-  .then(function(){
-    return order.save();
+  .then(() => order.save())
+  .then(returnedOrder => {
+    return removeInventory(returnedOrder)
   })
-  //add price to cart returns an array of products in cart - should just be then'd off of
 }
 
 

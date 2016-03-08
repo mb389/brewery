@@ -1,6 +1,9 @@
 app.controller('ProductsCtrl', function ($scope, $log, allProducts, allCategories, ProductFactory) {
 
   $scope.products = allProducts;
+  $scope.ourProducts = allProducts.filter(product => {
+    return !product.store
+  })
   $scope.categories = allCategories;
 
 
