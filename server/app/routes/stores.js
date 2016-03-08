@@ -32,4 +32,13 @@ router.get('/name/:name', (req, res, next) => {
   .then(null, next)
 })
 
+
+router.get('/owner/:ownerId', (req, res, next) => {
+  Store.findOne({owner: req.params.ownerId})
+  .then(store => {
+    res.json(store)
+  })
+  .then(null, next)
+})
+
 module.exports = router;
