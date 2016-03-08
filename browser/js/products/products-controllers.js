@@ -17,6 +17,7 @@ app.controller('StoreCtrl', function ($scope, $log, theStore, storeProducts, sto
   $scope.products=storeProducts;
   $scope.categories=storeCategories;
 
+
 });
 
 
