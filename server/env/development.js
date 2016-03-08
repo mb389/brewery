@@ -14,8 +14,8 @@ module.exports = {
     "callbackURL": process.env.FB_URL
   },
   "GOOGLE": {
-    "clientID": process.env.GOOG_KEY,
-    "clientSecret": process.env.GOOG_SECRET,
-    "callbackURL": process.env.GOOG_URL
+    "clientID": '189101154195-ajedf8tmgtiui05g6rjea2o4hu7ikftf.apps.googleusercontent.com',
+    "clientSecret": 'QYRkNVqgt9weXZnvCkLwajJW',
+    "callbackURL": 'http://127.0.0.1:1337/auth/google/callback'
   }
 };

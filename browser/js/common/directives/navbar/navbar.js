@@ -40,6 +40,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             var checkCartQuantity = function (){
                AuthService.getLoggedInUser()
                .then(function(user){
+                    if(!user) return OrderFactory.getOrderBySessionId()
                    return OrderFactory.getOrderByUserIdOrSessionId(user._id)
                })
                .then(function(order){

@@ -67,7 +67,7 @@
                     <label> Zipcode </label>
                     <input ng-model="credentials.zipcode" type="text" class="form-control" name="zipcode" placeholder="Zipcode" />
                 </div>
-                <button class="col-xs-12 btn btn-important solid btn-lg" ui-sref="login">Or Login</button>
+                <button ng-hide="currentUser" class="col-xs-12 btn btn-important solid btn-lg" ui-sref="login">Or Login</button>
             </div>
         </div>
         <div class="row col-md-12">

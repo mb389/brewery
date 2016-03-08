@@ -58,7 +58,10 @@ var schema = new mongoose.Schema({
         id: String
     },
     google: {
-        id: String
+        id: String,
+        name: String,
+        email: String,
+        token: String
     }
 });
 
