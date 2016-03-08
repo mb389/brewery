@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 var _ = require('lodash');
+var Promise = require('bluebird')
 
 
 var schema = new mongoose.Schema({
@@ -97,18 +98,25 @@ function addPriceToCart () {
 
 function removeInventory (order) {
   return Promise.map(order.products, eachProduct => {
-    return Product.findByIdAndUpdate(eachProduct.product, {quantity: {$subtract: ["$quantity", eachProduct.quantity]}}, {new: true})
+    return Product.findById(eachProduct.product)
+    .then(product => {
+      product.quantity -= eachProduct.quantity
+      product.save();
+    })
     })
 }
 
 
 function purchase(order) {
+  let orderSaved;
   order.purchaseDate = Date.now();
   addPriceToCart.call(order)
   .then(() => order.save())
   .then(returnedOrder => {
-    return removeInventory(returnedOrder)
+    orderSaved = returnedOrder;
+    removeInventory(returnedOrder)
   })
+  .then(() => orderSaved)
 }
 
 
