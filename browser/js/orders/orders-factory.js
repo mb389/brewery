@@ -42,7 +42,7 @@ app.factory('OrderFactory', function ($http, AuthService){
     },
     addOrCreate: function(productToAdd) {
       console.log('runs addOrCreate');
-      AuthService.getLoggedInUser()
+      return AuthService.getLoggedInUser()
       .then(function (user){
         //check for order from user or session
         console.log('do we get user', user);
