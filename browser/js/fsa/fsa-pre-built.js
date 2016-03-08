@@ -53,6 +53,7 @@
         function onSuccessfulLogin(response) {
             var data = response.data;
             Session.create(data.id, data.user);
+            $rootScope.totalQuantity = 0;
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             return data.user;
         }
@@ -109,7 +110,9 @@
                 Session.destroy();
                 console.log('were out');
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
-            });
+            }).then(() => {
+              $rootScope.totalQuantity = null;
+            })
         };
 
     });

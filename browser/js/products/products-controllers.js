@@ -31,9 +31,11 @@ app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct
 
   $scope.addToOrder = function (productToAdd, quantity){
     productToAdd.quantity = Number(quantity);
-    OrderFactory.addOrCreate(productToAdd);
     $scope.wasAdded=true;
-    $rootScope.totalQuantity = Number(quantity);
+    OrderFactory.addOrCreate(productToAdd)
+    .then(() => {
+       $rootScope.totalQuantity = Number(quantity);
+    })
     $timeout(function(){
       $scope.wasAdded=false;
     },500);
