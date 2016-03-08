@@ -30,11 +30,57 @@ module.exports = function (app) {
 
     passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, strategyFn));
 
-    //A POST /signup route to handle new users
-    app.post('/signup', function (req, res, next) {
-      //need to send a obj with email password
+    //merges cart for login
+    function cartMergeLogin (req, user){
+      var orderToAdd;
+      var currentUser;
+      return Order.findOne({sessionId: req.session.id})
+        .then(order => {
+          console.log('found order', order);
+          orderToAdd = order;
+          return User.findById(user._id)
+        })
+        .then(userToEdit => {
+            console.log('found userToEdit', userToEdit);
+            currentUser = userToEdit;
+            return Order.findOne({user: userToEdit._id, status: 'pending'})
+        })
+        .then(currentOrder => {
+          console.log('we get here?');
+          if(!orderToAdd) return; //handle when theres nothing to add to cart
+          console.log('finds order', currentOrder);
+          if(currentOrder){
+            console.log('inside if', orderToAdd);
+            var productsToAdd = orderToAdd.products;
+              productsToAdd.forEach((product) => {
+                console.log('test', product);
+                var idx =  -1;
+                currentOrder.products.forEach((prod, i) => {
+                  if (prod.product.toString() === product.product.toString()) idx = i;
+                })
+                console.log(idx, product);
+                if(idx > -1) currentOrder.products[idx].quantity += product.quantity;
+                else currentOrder.products.push(product);
+              })
+              console.log ('got here', currentOrder);
+              return Promise.all([currentOrder.save(), orderToAdd.remove()])
+          }
+          else{
+            console.log('in the else');
+            orderToAdd.sessionId = null;
+            orderToAdd.user = currentUser;
+            return orderToAdd.save();
+          }
+        })
+        .then(() => {
+          console.log(currentUser);
+          return currentUser;
+        })
+    }
+
+    function cartMergeSignup (req){
       var userToUpdate;
-      User.create(req.body)
+     return User.create(req.body)
       .then(user => {
         userToUpdate = user;
         return Order.findOne({sessionId: req.session.id})
@@ -50,17 +96,24 @@ module.exports = function (app) {
       })
       .then(() => {
         //create store
-        if(!req.body.store) return;
+        if(!req.body.store) return [userToUpdate]
         else{
           req.body.store.owner = userToUpdate._id;//add owner to store
           console.log('heres store', req.body.store);
           userToUpdate.isOwner = true;
-          return Promise.all([Store.create(req.body.store), userToUpdate.save()])
+          return Promise.all([userToUpdate.save(), Store.create(req.body.store)])
         }
       })
-      .then(() => {
-        req.login(userToUpdate, function(){
-          res.status(201).json(userToUpdate);
+    }
+
+
+    //A POST /signup route to handle new users
+    app.post('/signup', function (req, res, next) {
+      //need to send a obj with email password
+      cartMergeSignup(req)
+      .then( UserwithStore => {
+        req.login(UserwithStore[0], function(){
+          res.status(201).json(UserwithStore[0]);
         })
       })
       .then(null, next);
@@ -78,47 +131,8 @@ module.exports = function (app) {
                 error.status = 401;
                 return next(error);
             }
-            var orderToAdd;
-            var currentUser;
-            Order.findOne({sessionId: req.session.id})
-              .then(order => {
-                console.log('found order', order);
-                orderToAdd = order;
-                return User.findById(user._id)
-              })
-              .then(userToEdit => {
-                  console.log('found userToEdit', userToEdit);
-                  currentUser = userToEdit;
-                  return Order.findOne({user: userToEdit._id, status: 'pending'})
-              })
-              .then(currentOrder => {
-                //REFACTOR THIS LATER
-                if(!orderToAdd) return; //handle when theres nothing to add to cart
-                console.log('finds order', currentOrder);
-                if(currentOrder){
-                  console.log('inside if', orderToAdd);
-                  var productsToAdd = orderToAdd.products;
-                    productsToAdd.forEach((product) => {
-                      console.log('test', product);
-                      var idx =  -1;
-                      currentOrder.products.forEach((prod, i) => {
-                        if (prod.product.toString() === product.product.toString()) idx = i;
-                      })
-                      console.log(idx, product);
-                      if(idx > -1) currentOrder.products[idx].quantity += product.quantity;
-                      else currentOrder.products.push(product);
-                    })
-                    console.log ('got here', currentOrder);
-                    return Promise.all([currentOrder.save(), orderToAdd.remove()])
-                }
-                else{
-                  console.log('in the else');
-                  orderToAdd.sessionId = null;
-                  orderToAdd.user = currentUser;
-                  return orderToAdd.save();
-                }
-              })
-              .then(function (){
+            cartMergeLogin(req, user)
+              .then((currentUser) => {
                   console.log('gets to bottom', currentUser);
                   // req.login will establish our session
                   req.login(currentUser, function (loginErr) {

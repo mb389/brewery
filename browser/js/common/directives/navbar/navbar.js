@@ -40,6 +40,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             var checkCartQuantity = function (){
                AuthService.getLoggedInUser()
                .then(function(user){
+                    if(!user) return OrderFactory.getOrderBySessionId()
                    return OrderFactory.getOrderByUserIdOrSessionId(user._id)
                })
                .then(function(order){
@@ -54,6 +55,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             $rootScope.$watch('totalQuantity', function(){
               console.log('here we are rootscope', $rootScope.totalQuantity);
               if(!scope.number) checkCartQuantity();
+              if($rootScope.totalQuantity === null) scope.number = null; //logout, cart will always be back to 0
               if($rootScope.totalQuantity === 0) checkCartQuantity();
               else scope.number += $rootScope.totalQuantity;
             })
