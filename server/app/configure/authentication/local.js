@@ -96,12 +96,12 @@ module.exports = function (app) {
       })
       .then(() => {
         //create store
-        if(!req.body.store) return;
+        if(!req.body.store) return [userToUpdate]
         else{
           req.body.store.owner = userToUpdate._id;//add owner to store
           console.log('heres store', req.body.store);
           userToUpdate.isOwner = true;
-          return Promise.all([Store.create(req.body.store), userToUpdate.save()])
+          return Promise.all([userToUpdate.save(), Store.create(req.body.store)])
         }
       })
     }
@@ -111,9 +111,9 @@ module.exports = function (app) {
     app.post('/signup', function (req, res, next) {
       //need to send a obj with email password
       cartMergeSignup(req)
-      .then((storeAndUser) => {
-        req.login(storeAndUser[1], function(){
-          res.status(201).json(storeAndUser[1]);
+      .then( UserwithStore => {
+        req.login(UserwithStore[0], function(){
+          res.status(201).json(UserwithStore[0]);
         })
       })
       .then(null, next);
