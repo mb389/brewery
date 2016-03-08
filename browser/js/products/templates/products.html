@@ -25,7 +25,7 @@
 
   </div>
   </a>
-  <button ng-click="addToOrder(product)" ng-disabled="product.quantity === 0" class="btn btn-default btn-xs">Add to Cart</button>
+  <button ng-click="addToOrder(product)" ng-disabled="product.quantity < 1" class="btn btn-default btn-xs">Add to Cart</button>
 </div>
 <!-- end PRODUCT REPEATER      -->
 
