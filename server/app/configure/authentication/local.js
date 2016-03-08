@@ -52,9 +52,10 @@ module.exports = function (app) {
         //create store
         if(!req.body.store) return;
         else{
-          req.body.store.owner = userToUpdate._id; //add owner to store
+          req.body.store.owner = userToUpdate._id;//add owner to store
           console.log('heres store', req.body.store);
-          return Store.create(req.body.store)
+          userToUpdate.isOwner = true;
+          return Promise.all([Store.create(req.body.store), userToUpdate.save()])
         }
       })
       .then(() => {

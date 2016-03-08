@@ -32,8 +32,8 @@ var schema = new mongoose.Schema({
     }
 });
 
-schema.pre('save', function (next){
-  this.urlSlug = 'stores/' + this.nameOfStore.replace("\\s+/gi","");
+schema.pre('validate', function (next){
+  this.urlSlug = 'stores/' + this.nameOfStore.replace(/\s/g, '');
   next();
 })
 

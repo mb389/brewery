@@ -34,7 +34,7 @@ var schema = new mongoose.Schema({
     }
 });
 
-schema.statics.findByCategory = function(cat) {
+schema.statics.findByCategory = function(cat) {gul
     return this.find({})
     .populate('categories')
     .then(products => {

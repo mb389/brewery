@@ -3,46 +3,61 @@ app.config(function ($stateProvider){
   .state('admin', {
     url:'/admin',
     templateUrl: '/js/admin/templates/admin.html',
+    controller: function($scope, user, $state, store) {
+      console.log(store)
+      $scope.user = user
+      if(!user) $state.go('home')
+    },
     resolve: {
-      products: function (ProductFactory) {
-        return ProductFactory.getAllProducts();
+      user: function (AuthService) {
+        return AuthService.getLoggedInUser()
       },
-      categories: function (ProductFactory) {
-        return ProductFactory.getCategories();
+      isAllowed: function (AdminFactory) {
+        return AdminFactory.checkAdminOwner()
       },
-      orders: function (OrderFactory) {
-        return OrderFactory.getAllOrders()
-      },
-      users: function(UserFactory) {
-        return UserFactory.getAllUsers();
+      store: function(AdminFactory) {
+        return AdminFactory.getStore()
       }
-
     }
   })
   .state('admin.products', {
     url: '/products',
     templateUrl:'/js/admin/templates/products.html',
-    controller: 'AdminController'
+    controller: 'AdminProdController',
+    resolve: {
+      products: function (ProductFactory) {
+        return ProductFactory.getAllProducts();
+      }
+    }
   })
   .state('admin.categories', {
     url: '/categories',
     templateUrl:'/js/admin/templates/categories.html',
-    controller: 'AdminController'
+    controller: 'AdminCatController',
+    resolve: {
+      categories: function (ProductFactory) {
+        return ProductFactory.getCategories();
+      }
+    }
   })
   .state('admin.orders', {
     url:'/orders',
     templateUrl:'/js/admin/templates/orders.html',
-    controller: 'AdminController',
+    controller: 'AdminOrderController',
     resolve: {
-
+      orders: function (OrderFactory) {
+        return OrderFactory.getAllOrders()
+      },
     }
   })
   .state('admin.users', {
     url:'/users',
     templateUrl:'/js/admin/templates/users.html',
-    controller: 'AdminController',
+    controller: 'AdminUserController',
     resolve: {
-
+      users: function(UserFactory) {
+        return UserFactory.getAllUsers();
+      }
     }
   })
 })
