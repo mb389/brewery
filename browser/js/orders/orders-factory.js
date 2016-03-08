@@ -54,6 +54,7 @@ app.factory('OrderFactory', function ($http, AuthService){
         console.log('do we get orders', order);
         //if theres and order update it with the product & quantity otherwise create
         if(order) {
+          console.log(productToAdd)
           return $http.put('/api/orders/' + order._id, productToAdd)
           .then( response => {
             return response.data;

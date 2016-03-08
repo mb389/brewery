@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 var _ = require('lodash');
+var Promise = require('bluebird')
 
 
 var schema = new mongoose.Schema({
@@ -48,18 +49,6 @@ schema.pre('validate', function(next) {
 })
 
 
-// schema.pre('save', function(next) {
-//   var productsInOrder = this.products;
-//   if(productsInOrder.length !== 0) {
-//     productsInOrder.forEach(product => {
-//       if(!product.product || typeof product.quantity !== 'number') {
-//         next(new Error('something went wrong'))
-//       }
-//     })
-//   }
-//   next()
-// })
-
 function findMatchingProduct (productUpdateObj){
   return this.products.filter(productInArray => {
     return productInArray.product.toString() === productUpdateObj._id.toString();
@@ -68,7 +57,6 @@ function findMatchingProduct (productUpdateObj){
 
 schema.methods.addOrCreateProduct = function (productUpdateObj) {
   //updates quantity and price if product in baseket or adds product
-  // var self = this;
   var toUpdate = findMatchingProduct.call(this, productUpdateObj);
   if(toUpdate.length) {
     toUpdate[0].quantity += Number(productUpdateObj.quantity);
@@ -108,13 +96,27 @@ function addPriceToCart () {
   }))
 }
 
+function removeInventory (order) {
+  return Promise.map(order.products, eachProduct => {
+    return Product.findById(eachProduct.product)
+    .then(product => {
+      product.quantity -= eachProduct.quantity
+      product.save();
+    })
+    })
+}
+
+
 function purchase(order) {
+  let orderSaved;
   order.purchaseDate = Date.now();
   addPriceToCart.call(order)
-  .then(function(){
-    return order.save();
+  .then(() => order.save())
+  .then(returnedOrder => {
+    orderSaved = returnedOrder;
+    removeInventory(returnedOrder)
   })
-  //add price to cart returns an array of products in cart - should just be then'd off of
+  .then(() => orderSaved)
 }
 
 

@@ -35,6 +35,8 @@
 
               <p>{{product.description}}</p>
 
+              <h5 ng-show="product.quantity === 0" style="color: red">Out of Stock</h5>
+
               <input type="hidden" name="productId" value="7"/>
               <div class="add-cart-holder form-group">
                 <div class="quantity-selector">
@@ -44,7 +46,7 @@
                 </div>
               </div>
               <br>
-              <a class="btn btn-default btn-add-cart" ng-click="addToOrder(product,quantity)">Add to Cart
+              <a class="btn btn-default btn-add-cart" ng-disabled="product.quantity === 0" ng-click="addToOrder(product,quantity)">Add to Cart
               </a>
 
             </div>

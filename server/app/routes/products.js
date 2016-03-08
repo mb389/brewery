@@ -26,6 +26,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 
+
 router.get('/category/:cat', (req, res, next) => {
   Product.findByCategory(req.params.cat)
   .then(products => res.json(products))
