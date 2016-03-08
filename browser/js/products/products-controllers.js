@@ -2,7 +2,7 @@ app.controller('ProductsCtrl', function ($scope, $log, allProducts, allCategorie
 
   $scope.products = allProducts;
   $scope.ourProducts = allProducts.filter(product => {
-    return !product.store
+    return !product.store && product.quantity > 0
   })
   $scope.categories = allCategories;
 
