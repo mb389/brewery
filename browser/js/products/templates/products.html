@@ -22,8 +22,10 @@
  <h5>{{product.name}}</h5>
 
  <p>${{product.price}}</p>
-</div>
-</a>
+
+  </div>
+  </a>
+  <button ng-click="addToOrder(product)" ng-disabled="product.quantity === 0" class="btn btn-default btn-xs">Add to Cart</button>
 </div>
 <!-- end PRODUCT REPEATER      -->
 
