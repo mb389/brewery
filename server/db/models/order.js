@@ -6,25 +6,10 @@ var Promise = require('bluebird')
 var dotenv = require('dotenv').config()
 var User = mongoose.model('User');
 
-//MAILGUN setup
-// var mailgunConfig = process.env
-
-// var mailgunCredentials = {
-//     api_key: '5cf4b5cb6ca67f7923bb108925ee8b84',
-//     domain: 'postmaster@sandbox01182eceb3ed4af1aca8b93c4b8a9cd5.mailgun.org'
-// // };
-
-// var mailgun = require('mailgun-js')({
-//     api_key: '5cf4b5cb6ca67f7923bb108925ee8b84',
-//     domain: 'sandbox01182eceb3ed4af1aca8b93c4b8a9cd5.mailgun.org'
-// });
 
 var api_key = process.env.MAILGUN.api_key;
 var domain = process.env.MAILGUN.domain;
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
-
-
-
 
 
 var schema = new mongoose.Schema({
