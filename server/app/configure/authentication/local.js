@@ -20,7 +20,6 @@ module.exports = function (app) {
                     done(null, false);
                 } else {
                     // Properly authenticated.
-                    console.log('proper auth', user);
                     done(null, user);
                 }
             }, function (err) {
@@ -36,44 +35,34 @@ module.exports = function (app) {
       var currentUser;
       return Order.findOne({sessionId: req.session.id})
         .then(order => {
-          console.log('found order', order);
           orderToAdd = order;
           return User.findById(user._id)
         })
         .then(userToEdit => {
-            console.log('found userToEdit', userToEdit);
             currentUser = userToEdit;
             return Order.findOne({user: userToEdit._id, status: 'pending'})
         })
         .then(currentOrder => {
-          console.log('we get here?');
           if(!orderToAdd) return; //handle when theres nothing to add to cart
-          console.log('finds order', currentOrder);
           if(currentOrder){
-            console.log('inside if', orderToAdd);
             var productsToAdd = orderToAdd.products;
               productsToAdd.forEach((product) => {
-                console.log('test', product);
                 var idx =  -1;
                 currentOrder.products.forEach((prod, i) => {
                   if (prod.product.toString() === product.product.toString()) idx = i;
                 })
-                console.log(idx, product);
                 if(idx > -1) currentOrder.products[idx].quantity += product.quantity;
                 else currentOrder.products.push(product);
               })
-              console.log ('got here', currentOrder);
               return Promise.all([currentOrder.save(), orderToAdd.remove()])
           }
           else{
-            console.log('in the else');
             orderToAdd.sessionId = null;
             orderToAdd.user = currentUser;
             return orderToAdd.save();
           }
         })
         .then(() => {
-          console.log(currentUser);
           return currentUser;
         })
     }
@@ -99,7 +88,6 @@ module.exports = function (app) {
         if(!req.body.store) return [userToUpdate]
         else{
           req.body.store.owner = userToUpdate._id;//add owner to store
-          console.log('heres store', req.body.store);
           userToUpdate.isOwner = true;
           return Promise.all([userToUpdate.save(), Store.create(req.body.store)])
         }
@@ -121,7 +109,6 @@ module.exports = function (app) {
 
     // A POST /login route is created to handle login.
     app.post('/login', function (req, res, next) {
-        console.log('gets to login route');
         var authCb = function (err, user) {
 
             if (err) return next(err);
@@ -133,7 +120,6 @@ module.exports = function (app) {
             }
             cartMergeLogin(req, user)
               .then((currentUser) => {
-                  console.log('gets to bottom', currentUser);
                   // req.login will establish our session
                   req.login(currentUser, function (loginErr) {
                     if (loginErr) return next(loginErr);

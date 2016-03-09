@@ -4,6 +4,7 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var mongoose = require('mongoose');
 var UserModel = mongoose.model('User');
+var Order = mongoose.model('Order');
 
 module.exports = function (app) {
 
@@ -19,8 +20,6 @@ module.exports = function (app) {
 
         UserModel.findOne({ 'google.id': profile.id }).exec()
             .then(function (user) {
-                console.log('heres the user', user);
-                console.log('heres the profile', profile);
                 if (user) {
                     return user;
                 } else {
@@ -38,7 +37,6 @@ module.exports = function (app) {
                 }
 
             }).then(function (userToLogin) {
-                console.log('userToLogin', userToLogin);
                 done(null, userToLogin);
             }, function (err) {
                 console.error('Error creating user from Google authentication', err);
@@ -46,6 +44,44 @@ module.exports = function (app) {
             });
 
     };
+
+     //merges cart for login
+    function cartMergeLogin (req, user){
+      var orderToAdd;
+      var currentUser;
+      return Order.findOne({sessionId: req.session.id})
+        .then(order => {
+          orderToAdd = order;
+          return UserModel.findById(user._id)
+        })
+        .then(userToEdit => {
+            currentUser = userToEdit;
+            return Order.findOne({user: userToEdit._id, status: 'pending'})
+        })
+        .then(currentOrder => {
+          if(!orderToAdd) return; //handle when theres nothing to add to cart
+          if(currentOrder){
+            var productsToAdd = orderToAdd.products;
+              productsToAdd.forEach((product) => {
+                var idx =  -1;
+                currentOrder.products.forEach((prod, i) => {
+                  if (prod.product.toString() === product.product.toString()) idx = i;
+                })
+                if(idx > -1) currentOrder.products[idx].quantity += product.quantity;
+                else currentOrder.products.push(product);
+              })
+              return Promise.all([currentOrder.save(), orderToAdd.remove()])
+          }
+          else{
+            orderToAdd.sessionId = null;
+            orderToAdd.user = currentUser;
+            return orderToAdd.save();
+          }
+        })
+        .then(() => {
+          return currentUser;
+        })
+    }
 
     passport.use(new GoogleStrategy(googleCredentials, verifyCallback));
 
@@ -59,7 +95,10 @@ module.exports = function (app) {
     app.get('/auth/google/callback',
         passport.authenticate('google', { failureRedirect: '/login' }),
         function (req, res) {
-            res.redirect('/');
+            cartMergeLogin(req, req.user)
+            .then(function(currentUser){
+                res.redirect('/');
+            })
         });
 
 };
