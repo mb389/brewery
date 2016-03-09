@@ -7,8 +7,8 @@ var dotenv = require('dotenv').config()
 var User = mongoose.model('User');
 
 
-var api_key = process.env.MAILGUN.api_key;
-var domain = process.env.MAILGUN.domain;
+var api_key = process.env.MAILGUN_KEY;
+var domain = process.env.MAILGUN_DOMAIN;
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 
