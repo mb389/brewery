@@ -17,5 +17,9 @@ module.exports = {
     "clientID": process.env.GOOG_KEY,
     "clientSecret": process.env.GOOG_SECRET,
     "callbackURL": process.env.GOOG_URL
+  },
+  "MAILGUN": {
+      "api_key": process.env.MAILGUN_KEY,
+      "domain": process.env.MAILGUN_DOMAIN
   }
 };

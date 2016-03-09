@@ -1,5 +1,4 @@
 app.controller('FullcartController', function ($scope, $rootScope, $state, pendingOrder, OrderFactory){
-  console.log('the pending order',pendingOrder);
   $scope.order = pendingOrder;
   if(pendingOrder){
     $scope.products = pendingOrder.products;
@@ -16,22 +15,18 @@ app.controller('FullcartController', function ($scope, $rootScope, $state, pendi
 
 
   $scope.removeItem = function (productToRemove) {
-    console.log('heres product', productToRemove);
     OrderFactory.removeProductFromOrder($scope.order._id, productToRemove)
     .then(updatedOrder => {
       $scope.order = updatedOrder;
       calcTotal();
       $rootScope.totalQuantity = -Number(productToRemove.quantity);
-      console.log('dont fool me rootscope', $rootScope.totalQuantity);
     })
   }
 
   $scope.updateOrderTotal = function(){
     $scope.inProgress = true;
-    console.log('updating')
     OrderFactory.updateCurrentOrder($scope.order)
     .then(updatedOrder => {
-      console.log('heres the updated order we get back', updatedOrder);
       $scope.order = updatedOrder;
       calcTotal();
       $rootScope.totalQuantity = 0;
@@ -40,15 +35,15 @@ app.controller('FullcartController', function ($scope, $rootScope, $state, pendi
   }
 
   $scope.checkout = function(){
-    console.log('go to checkout');
     $state.go('fullcart.checkout', null, {reload: 'fullcart'});
   }
 
 });
 
-app.controller('CheckoutController', function ($scope, $state, pendingOrder, AuthService, OrderFactory){
+app.controller('CheckoutController', function ($scope, $rootScope, $state, pendingOrder, AuthService, OrderFactory){
    $scope.order = pendingOrder;
    if(pendingOrder) calcTotal();
+   $scope.products = pendingOrder.products;
 
    $scope.credentials;
    $scope.creditcard;
@@ -61,6 +56,7 @@ app.controller('CheckoutController', function ($scope, $state, pendingOrder, Aut
     $scope.total = Math.round($scope.total * 100) / 100;
   }
 
+
   AuthService.getLoggedInUser()
     .then(user => {
       if(user) $scope.currentUser = user;
@@ -68,18 +64,17 @@ app.controller('CheckoutController', function ($scope, $state, pendingOrder, Aut
 
   $scope.completePurchase = function (){
     $scope.inProgress = true;
-    console.log('credentials', $scope.credentials);
     OrderFactory.updatedStatusForOrder($scope.order._id, 'purchased')
     .then(function(){
+      calcTotal()
+      $rootScope.totalQuantity = null;
       $scope.inProgress = false;
-      console.log('lets go');
-      $state.go('fullcart.completed');
+      $state.go('fullcart.completed', null, {reload: 'fullcart'});
     })
   }
 })
 
 app.controller('OrderHistoryController', function ($scope, user, pastOrders){
-  console.log('orderhistory info', user, pastOrders);
   $scope.currentUser = user;
   $scope.orders = pastOrders;
 })
