@@ -25,6 +25,16 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
                 });
             };
 
+            var adminCheck = function(){
+              // if($rootScope.adminStatus) scope.isAdmin = $rootScope.adminStatus;
+              return AuthService.getLoggedInUser()
+              .then(user => {
+                console.log('admin check', user)
+                if(!user) scope.isAdmin = false;
+                else scope.isAdmin = user.isAdmin;
+              })
+            }
+
             var setUser = function () {
                 AuthService.getLoggedInUser().then(function (user) {
                     scope.user = user;
@@ -36,6 +46,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             };
 
             setUser();
+            adminCheck();
 
             var checkCartQuantity = function (){
                AuthService.getLoggedInUser()
@@ -58,6 +69,11 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
               if($rootScope.totalQuantity === null) scope.number = null; //logout, cart will always be back to 0
               if($rootScope.totalQuantity === 0) checkCartQuantity();
               else scope.number += $rootScope.totalQuantity;
+            })
+
+            $rootScope.$watch('adminStatus', function(){
+              if($rootScope.adminStatus === null) scope.isAdmin = false;
+              else adminCheck();
             })
 
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
