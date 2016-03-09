@@ -18,14 +18,18 @@
 <img src="{{product.picture[0]}}" alt="{{product.name}}">
 
 
-<div>
- <h5>{{product.name}}</h5>
-
- <p>${{product.price}}</p>
-
+<div class="productBlurb row">
+  <!-- <div class="row"> -->
+  <div class="col-md-9">
+ <p><strong>{{product.name.slice(0,35)}}</strong><br>${{product.price}}</p></a>
   </div>
-  </a>
-  <button ng-click="addToOrder(product)" ng-disabled="product.quantity === 0" class="btn btn-default btn-xs">Add to Cart</button>
+<div class="col-md-3">
+  <button type="button" ng-click="addToOrder(product)" ng-disabled="product.quantity < 1" class="btn btn-default btn-sm cartAddButton"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></button>
+</div>
+<!-- </div> -->
+</div>
+
+
 </div>
 <!-- end PRODUCT REPEATER      -->
 
