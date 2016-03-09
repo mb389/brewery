@@ -437,7 +437,6 @@ a:hover{
   padding-top:80px;
   text-align: center;
   background: white;
-  width: 400px;
 }
 #shopp h4{
   font-size:1em;
@@ -470,6 +469,21 @@ a:hover{
   background:black;
   color:white;
   border-color:black;
+}
+
+.productBlurb {
+  height: 60px;
+  text-align: left;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.productBlurb p {
+  margin-bottom: 0px;
+}
+
+.cartAddButton {
+
 }
 /*============================================
         CATEGORIES PAGE
