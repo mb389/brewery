@@ -74,23 +74,11 @@ router.post('/', (req, res, next) => {
   .then(null, next);
 });
 
-router.post('/password_reset',(req,res,next) => {
-  User.findOne({email: req.body.email})
+router.post('/password_reset/:id',(req,res,next) => {
+  User.findById(id)
   .then(user => {
-    UserToken.new(user._id, function (err, token) {
-          // build the reset url:
-          // http://localhost:3000/password_reset/12345TOKEN
-          var resetUrl = req.protocol + '://' + req.host + '/password_reset/' + token.token;
-          // Create the template vars
-          var locals = {
-            resetUrl: resetUrl,
-            email: user.emails[0].value
-          };
-          mailer.sendOne('password_reset', locals, function (err) {
-            console.log("mail sent!");
-            return req.redirect('/');
-          });
-        });
+    user.password="";
+    user.save();
   });
 })
 
