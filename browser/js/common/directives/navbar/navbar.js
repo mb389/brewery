@@ -30,8 +30,13 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
               return AuthService.getLoggedInUser()
               .then(user => {
                 console.log('admin check', user)
-                if(!user) scope.isAdmin = false;
-                else scope.isAdmin = user.isAdmin;
+                if(!user){
+                  scope.isAdmin = false;
+                  scope.isOwner = false;
+                } else{
+                  scope.isAdmin = user.isAdmin;
+                  scope.isOwner = user.isOwner;
+                }
               })
             }
 
@@ -72,7 +77,10 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             })
 
             $rootScope.$watch('adminStatus', function(){
-              if($rootScope.adminStatus === null) scope.isAdmin = false;
+              if($rootScope.adminStatus === null){
+                scope.isAdmin = false;
+                scope.isOwner = false;
+              }
               else adminCheck();
             })
 
