@@ -3,29 +3,37 @@
 
 <div class="row content" id="shopp">
 
-<div class="col-md-12">
+<div class="col-md-4">
 <label><b>Select Category</b></label><br>
-<select class="col-sm-3 cat-list" ng-model="categorySearch" ng-options="category as category for category in categories"><option value="">ALL</option></select>
+<select class="col-md-4 cat-list" ng-model="categorySearch" ng-options="category as category for category in categories"><option value="">ALL</option></select>
+</div>
+
+<div class="col-md-4">
+<label><b>Enter Product to Search</b></label><br>
+<input class="col-sm-4" ng-model="nameSearch"></input></select>
 </div>
 
 <div class="col-md-12">
        <div class="row">
 
- <div class="col-md-3 shop-item" ng-repeat="product in ourProducts | filter: categorySearch || undefined ">
- <!-- <a href="/product/{{product._id}}/display"> -->
+ <div class="col-md-3 shop-item" ng-repeat="product in ourProducts | filter: categorySearch || undefined | filter: nameSearch">
  <a ui-sref="prodParent.oneProduct({id: product._id})">
 
 <img src="{{product.picture[0]}}" alt="{{product.name}}">
 
 
-<div>
- <h5>{{product.name}}</h5>
-
- <p>${{product.price}}</p>
-
+<div class="productBlurb row">
+  <!-- <div class="row"> -->
+  <div class="col-md-9">
+ <p><strong>{{product.name.slice(0,35)}}</strong><br>${{product.price}}</p></a>
   </div>
-  </a>
-  <button ng-click="addToOrder(product)" ng-disabled="product.quantity === 0" class="btn btn-default btn-xs">Add to Cart</button>
+<div class="col-md-3">
+  <button type="button" ng-click="addToOrder(product)" ng-disabled="product.quantity < 1" class="btn btn-default btn-sm cartAddButton"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></button>
+</div>
+<!-- </div> -->
+</div>
+
+
 </div>
 <!-- end PRODUCT REPEATER      -->
 

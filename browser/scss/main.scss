@@ -427,6 +427,7 @@ a:hover{
 #statusSearchFilter {
   font-size: 16px;
   margin-right: 0px;
+  width: 250px;
 }
 
 /*============================================
@@ -434,9 +435,15 @@ a:hover{
 =============================================*/
 #shopp{
   padding-top:80px;
-  text-align: left;
   background: white;
 }
+
+#shoppShop{
+  padding-top:80px;
+  background: white;
+  text-align: center;
+}
+
 #shopp h4{
   font-size:1em;
   padding-bottom:10px;
@@ -468,6 +475,21 @@ a:hover{
   background:black;
   color:white;
   border-color:black;
+}
+
+.productBlurb {
+  height: 60px;
+  text-align: left;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.productBlurb p {
+  margin-bottom: 0px;
+}
+
+.cartAddButton {
+
 }
 /*============================================
         CATEGORIES PAGE
@@ -633,7 +655,26 @@ ul.rating {
 }
 
 .rating-star {
-  font-size: 30px
+  font-size: 20px
+}
+
+.reviewContainer {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reviewRepeater {
+  border-top: 1px solid #adadad;
+  height: 100px;
+}
+
+.repeatText {
+  margin-left: 5px;
+}
+
+#reviewTitle {
+  margin-left: 5px;
 }
 
 /*============================================
@@ -715,6 +756,12 @@ ul.rating {
 .Stylish {
   background-color: pink !important;
 }
+
+.storeListItem {
+  border: 1px solid black;
+  margin-bottom: 10px
+}
+
 
 /*============================================
      CART STYLES

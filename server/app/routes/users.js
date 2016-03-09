@@ -55,6 +55,17 @@ router.get('/:id/isAdmin', (req, res, next) => {
   .then(null, next);
 })
 
+router.get('/password_reset/:token',(req,res,next) => {
+  UserToken({token: req.params.token})
+  .then(token => {
+    return User.findOne({_id: token.userId})
+  })
+  .then(user => {
+    req.logIn=user;
+    res.redirect('/account/password')
+  });
+});
+
 router.post('/', (req, res, next) => {
   User.create(req.body)
   .then(user => {
@@ -62,6 +73,14 @@ router.post('/', (req, res, next) => {
   })
   .then(null, next);
 });
+
+router.post('/password_reset/:id',(req,res,next) => {
+  User.findById(id)
+  .then(user => {
+    user.password="";
+    user.save();
+  });
+})
 
 router.put('/:id', (req, res, next) => {
   User.findById(req.params.id)

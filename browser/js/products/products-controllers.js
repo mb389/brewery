@@ -1,5 +1,5 @@
 app.controller('ProductsCtrl', function ($scope, $log, $rootScope, $timeout, allProducts, allCategories, ProductFactory, OrderFactory) {
-
+  $rootScope.totalQuantity = $rootScope.totalQuantity || 0;
   $scope.products = allProducts;
   $scope.ourProducts = allProducts.filter(product => {
     return !product.store && product.quantity > 0
@@ -10,11 +10,7 @@ app.controller('ProductsCtrl', function ($scope, $log, $rootScope, $timeout, all
   $scope.addToOrder = function (productToAdd){
     productToAdd.quantity = 1;
     OrderFactory.addOrCreate(productToAdd);
-    $scope.wasAdded=true;
-    $rootScope.totalQuantity = 1;
-    $timeout(function(){
-      $scope.wasAdded=false;
-    },500);
+    $rootScope.totalQuantity=1;
   }
 
 });

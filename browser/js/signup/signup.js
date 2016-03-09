@@ -12,6 +12,7 @@ app.controller('SignupCtrl', function ($scope, AuthService, $state) {
     $scope.error = null;
     $scope.storeOwner = false;
     $scope.regex = '/\S\w*/';
+    $scope.styles = ['Happy', 'Welcoming', 'Stylish'];
 
     //ng-pattern="regex"
 
