@@ -74,12 +74,12 @@
 </div>
 <div class="row">
 <!-- PRODUCT REPEATER      -->
- <div class="col-md-3 shop-item" ng-repeat="product in products">
+ <div class="col-md-3 shop-item" ng-repeat="product in products" ng-click="populateProductForm(product)">
 
 <img src="{{product.picture[0]}}" alt="{{product.name}}">
 
 
-<div ng-click="populateProductForm(product)">
+<div>
  <h5>{{product.name}}</h5>
 
  <p>${{product.price}}</p>

@@ -1,13 +1,13 @@
 
 <div id="container">
 
+
 <div class="row content" id="shopp">
-  <ul>
+<h2>Local Craft Breweries</h2>
+  <div class="storeListItem" ng-repeat="shop in shoplist"> <a href="/stores/{{shop.nameOfStore}}"> <h3>{{shop.nameOfStore}}</h3>
+  </a><h5>{{shop.description}}</h5>
+   <div>
 
-  <li ng-repeat="shop in shoplist"> <a href="/stores/{{shop.nameOfStore}}"> <h3>{{shop.nameOfStore}}</h3>
-   </a> </li>
-
-</ul>
 </div>
 </div>
   <!-- <a ui-sref="shopdisplay({theStore: {name: shop}})"> </li> -->
