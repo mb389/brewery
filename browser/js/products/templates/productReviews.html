@@ -1,15 +1,13 @@
 <div id="container">
   <br>
-  <h3>Reviews</h3>
+  <h2 id="reviewTitle">Reviews</h2>
 
-  <div ng-repeat="review in productReviews">
-    <table class="table">
-      <tr>
-      <h4>{{review.user.firstName ? review.user.firstName : review.user.email}}</h4>
-      <h5>{{review.content}}</h5>
-      <star-rating class="star-rating" rating-value="review.stars" read="true"></star-rating>
-      </tr>
-    </table>
+  <div ng-repeat="review in productReviews" class="reviewRepeater">
+  <div class="repeatText">
+    <h5><strong>{{review.user.firstName ? review.user.firstName : review.user.email}}</strong></h5>
+    <h5>{{review.content}}</h5>
+    <star-rating class="star-rating" rating-value="review.stars" read="true"></star-rating>
+  </div>
   </div>
   <a class="btn btn-default" ui-sref="prodParent.Review">Add A Review</a>
   <br>

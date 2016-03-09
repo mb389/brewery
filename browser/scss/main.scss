@@ -633,15 +633,27 @@ ul.rating {
 }
 
 .rating-star {
-  font-size: 25px
+  font-size: 20px
 }
 
 .reviewContainer {
-  max-width: 650px;
+  max-width: 720px;
   margin-left: auto;
   margin-right: auto;
 }
 
+.reviewRepeater {
+  border-top: 1px solid #adadad;
+  height: 100px;
+}
+
+.repeatText {
+  margin-left: 5px;
+}
+
+#reviewTitle {
+  margin-left: 5px;
+}
 
 /*============================================
         ABOUT PAGE
