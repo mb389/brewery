@@ -7,7 +7,6 @@ app.config(function ($stateProvider){
       pendingOrder: function (OrderFactory, AuthService){
         return AuthService.getLoggedInUser(true)
           .then(user => {
-            console.log('heres users', user);
             if(user) return OrderFactory.getOrderByUserIdOrSessionId(user._id);
             else return OrderFactory.getOrderBySessionId()
           })
@@ -42,7 +41,6 @@ app.config(function ($stateProvider){
             return OrderFactory.getPastOrdersForLoggedInUser(user._id)
           })
           .then(orders => {
-            console.log('we got orders in state', orders);
             return orders;
           })
       }

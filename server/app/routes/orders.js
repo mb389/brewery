@@ -10,7 +10,6 @@ var Category = mongoose.model('Category');
 
 
 function checkAdmin (req, res, next) {
-  console.log(req.user)
   if (req.user.isAdmin || req.user.isOwner) {
     next()
   } else {
@@ -20,8 +19,6 @@ function checkAdmin (req, res, next) {
 
 //get pending order by user or session
 router.get('/user/session/:userid', (req, res, next) => {
-  console.log('do we get here?', req.session);
-  console.log("userid:",req.params.userid);
   Order.findOne({user: req.params.userid, status: 'pending'}).populate({
       path: 'products.product',
       model: 'Product',
@@ -31,7 +28,6 @@ router.get('/user/session/:userid', (req, res, next) => {
       }
     }).exec()
     .then(order => {
-      console.log('ORDER', order);
       if(order){
         res.json(order);
       }
@@ -53,7 +49,6 @@ router.get('/user/session/:userid', (req, res, next) => {
 })
 
 router.get('/user/:userid', (req, res, next) => {
-  console.log('right route');
   Order.find({user: req.params.userid, status: { $ne: 'pending'}}).populate({
       path: 'products.product',
       model: 'Product',
@@ -63,7 +58,6 @@ router.get('/user/:userid', (req, res, next) => {
       }
     }).exec()
     .then(orders => {
-      console.log('we got orders', orders);
       res.json(orders)
     })
     .then(null, next)
@@ -71,7 +65,6 @@ router.get('/user/:userid', (req, res, next) => {
 
 router.get('/session/', (req, res, next) => {
   //get any current pending orders for the current session Id
-  console.log('heres the session', req.session.id)
   Order.findOne({sessionId: req.session.id , status: 'pending'}).populate({
     path: 'products.product',
     model: 'Product',
@@ -81,7 +74,6 @@ router.get('/session/', (req, res, next) => {
     }
   }).exec()
   .then(order => {
-    console.log('did we get the order', order);
     res.json(order)
   })
   .then(null, next)
@@ -94,7 +86,6 @@ router.get('/', checkAdmin, (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
-  console.log('or  here', req.session);
   Order.findById(req.params.id).populate('products.product').exec()
   .then(order => res.json(order))
   .then(null, next)
@@ -120,10 +111,8 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   //req.body will be the product, new quantity
-  console.log('id', req.params.id);
   Order.findById(req.params.id)
   .then(order => {
-    console.log('got here?');
     return order.addOrCreateProduct(req.body)
   })
   .then(updatedOrder => res.status(202).json(updatedOrder))
@@ -140,7 +129,6 @@ router.put('/update/:id', (req, res, next) => {
     }
   })
   .then(function(order) {
-    console.log('order we find', order);
     return order.updateOrder(req.body);
   })
   .then(order => res.json(order))

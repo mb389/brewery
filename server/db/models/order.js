@@ -3,6 +3,13 @@ var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 var _ = require('lodash');
 var Promise = require('bluebird')
+var dotenv = require('dotenv').config()
+var User = mongoose.model('User');
+
+
+var api_key = process.env.MAILGUN.api_key;
+var domain = process.env.MAILGUN.domain;
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 
 var schema = new mongoose.Schema({
@@ -120,7 +127,24 @@ function purchase(order) {
 }
 
 
+
+
+
 schema.methods.updateStatus = function(status) {
+  console.log("MAILGUN?", this);
+  User.findById(this.user)
+    .then(user => {
+      var data = {
+        from: 'Brewery Bros <thebros@brewery.com>',
+        to: user.email,
+        subject: 'Updates to your order!',
+        text: 'Hi,' + user.firstName + '! Your order is now ' + status + '! Please let us know if you have any questions.',
+      };
+      mailgun.messages().send(data, function (error, body) {
+        console.log('we got an email?', body);
+      });
+    })
+
   //notifications on post purchase status, incl. shipping, delivery
   this.status = status;
   switch(this.status) {
@@ -138,6 +162,8 @@ schema.methods.updateStatus = function(status) {
       break;
   }
 }
+
+
 
 function processing (order) {
   return order.save()

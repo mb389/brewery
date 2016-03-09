@@ -14,8 +14,12 @@ module.exports = {
     "callbackURL": process.env.FB_URL
   },
   "GOOGLE": {
-    "clientID":  "189101154195-ajedf8tmgtiui05g6rjea2o4hu7ikftf.apps.googleusercontent.com",
-    "clientSecret": "QYRkNVqgt9weXZnvCkLwajJW",
-    "callbackURL":  "http://127.0.0.1:1337/auth/google/callback"
+    "clientID": process.env.GOOG_KEY,
+    "clientSecret": process.env.GOOG_SECRET,
+    "callbackURL": process.env.GOOG_URL
+  },
+  "MAILGUN": {
+      "api_key": process.env.MAILGUN_KEY,
+      "domain": process.env.MAILGUN_DOMAIN
   }
 };

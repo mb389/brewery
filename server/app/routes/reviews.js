@@ -33,7 +33,6 @@ router.get('/product/:productId', (req, res, next) => {
       return User.findById(el.user)
       .then(result => {
         el.user=result;
-        console.log(el)
         return el;
       })
     }))
