@@ -54,7 +54,9 @@
             var data = response.data;
             Session.create(data.id, data.user);
             $rootScope.totalQuantity = 0;
+            console.log('the user on data', data.user);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            $rootScope.adminStatus = false;
             return data.user;
         }
 
@@ -112,6 +114,7 @@
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
             }).then(() => {
               $rootScope.totalQuantity = null;
+              $rootScope.adminStatus = null;
             })
         };
 
