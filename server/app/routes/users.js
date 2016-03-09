@@ -55,6 +55,17 @@ router.get('/:id/isAdmin', (req, res, next) => {
   .then(null, next);
 })
 
+router.get('/password_reset/:token',(req,res,next) => {
+  UserToken({token: req.params.token})
+  .then(token => {
+    return User.findOne({_id: token.userId})
+  })
+  .then(user => {
+    req.logIn=user;
+    res.redirect('/account/password')
+  });
+});
+
 router.post('/', (req, res, next) => {
   User.create(req.body)
   .then(user => {
@@ -62,6 +73,26 @@ router.post('/', (req, res, next) => {
   })
   .then(null, next);
 });
+
+router.post('/password_reset',(req,res,next) => {
+  User.findOne({email: req.body.email})
+  .then(user => {
+    UserToken.new(user._id, function (err, token) {
+          // build the reset url:
+          // http://localhost:3000/password_reset/12345TOKEN
+          var resetUrl = req.protocol + '://' + req.host + '/password_reset/' + token.token;
+          // Create the template vars
+          var locals = {
+            resetUrl: resetUrl,
+            email: user.emails[0].value
+          };
+          mailer.sendOne('password_reset', locals, function (err) {
+            console.log("mail sent!");
+            return req.redirect('/');
+          });
+        });
+  });
+})
 
 router.put('/:id', (req, res, next) => {
   User.findById(req.params.id)
