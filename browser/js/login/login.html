@@ -1,30 +1,35 @@
 <div id="container">
 
 <div class="row content">
-
-
-
+  <div class="col-md-6">
     <alert type="danger" ng-show="error">
         {{ error }}
     </alert>
-    <div class="row">
-  <div class="col-md-6">
-    <form id="login-form" name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)">
-      <div id="login" class="form-group">
+    <form id="login" name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)">
+      <h4 class="text-center">Brewery Bros Login</h4>
+      <div class="form-group">
           <label for="email">Email address</label>
           <input type="text" ng-model="login.email" class="form-control" id="email" placeholder="Enter email">
       </div>
       <div class="form-group">
           <label for="login-password">Password</label>
           <input type="password" ng-model="login.password" class="form-control" id="login-password" placeholder="Password">
+          <a ng-hide="retrieval" ng-click="forgotPassword()">Forgot Password?</a>
+          <label ng-show="retrieval"> Email Sent to {{retrieval}} </label>
+          <div ng-show="forgot">
+            <label for="email">Email address to retrieve Password</label>
+            <input type="text" ng-model="retrieve.email" class="form-control" id="email" placeholder="Enter email">
+            <a class="btn btn-default" ng-click="retrievePassword()">Get New Password</a>
+          </div>
       </div>
       <button type="submit" class="form-control btn btn-default">Submit</button>
       <button ui-sref="signup" class="form-control btn btn-default"> Or Signup </button>
       </form>
     </div>
 
-    <div class="col-md-6">
-      <div id="login" class="form-group">
+    <div id="login" class="col-md-6 text-center">
+      <h4> Login with Provider </h4>
+      <div class="form-group">
         <a href="/auth/google" class="btn btn-info">Log in with Google </a>
       </div>
       <div class="form-group">

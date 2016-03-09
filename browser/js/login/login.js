@@ -25,4 +25,14 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
 
     };
 
+    $scope.forgotPassword = function (){
+      $scope.forgot = true;
+      console.log('password?');
+    }
+
+    $scope.retrievePassword = function (){
+      $scope.retrieval = $scope.retrieve.email;
+      $scope.forgot = false;
+    }
+
 });
