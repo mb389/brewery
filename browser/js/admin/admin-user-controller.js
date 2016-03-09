@@ -10,6 +10,10 @@ app.controller('AdminUserController', function($scope, ProductFactory, OrderFact
     })
   }
 
+  $scope.deletePassword = function() {
+    UserFactory
+  }
+
   $scope.checkUserStatus = function (user, type) {
     switch(type) {
       case 'admin':

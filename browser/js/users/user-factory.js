@@ -48,6 +48,12 @@ app.factory('UserFactory', function ($http){
         .then(response => {
           return response.data;
         })
+    },
+    deletePassword: function(userId) {
+      return $http.delete('/api/users/password_reset/' + userId)
+        .then(response => {
+          return response.data;
+        })
     }
   }
 });
