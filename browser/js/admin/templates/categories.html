@@ -9,7 +9,7 @@
 <!-- PRODUCT EDIT FORM -->
 <div class="form-group">
     <div ng-repeat="category in categories">
-      <button type="button" ng-class="{currentCategory : isBeerCategory(category._id)}" class="btn btn-default btn-lg" ng-click="populateCategory(category)">{{category.name}}, {{category.description}}, {{category.tags}}</button>
+      <button type="button" ng-class="{currentCategory : isBeerCategory(category._id)}" class="btn btn-default btn-lg" ng-click="populateCategory(category)">{{category.name}}, Description: {{category.description}}, Tags: {{category.tags.join(', ')}}</button>
     <!-- <category-button cat={{category}}></category-button> -->
     </div>
   </div>
