@@ -1,8 +1,5 @@
-# Brewery
-
-
 <img src="/brewery.png" 
-alt="Brewery Icon" width="50" height="50"/>
+alt="Brewery Icon" width="50" height="80"/> # Brewery
 
 [![Built at Fullstack Academy](https://img.shields.io/badge/Built%20at-Fullstack%20Academy-red.svg?style=round-square)](http://fullstackacademy.com)
 [![Backlog Issues](https://badge.waffle.io/codyss/brewery.svg?label=backlog&title=Backlog)](http://waffle.io/codyss/brewery)
