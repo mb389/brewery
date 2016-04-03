@@ -1,5 +1,9 @@
 # Brewery
 
+
+<img src="/brewery.png" 
+alt="Brewery Icon" width="50" height="50"/>
+
 [![Built at Fullstack Academy](https://img.shields.io/badge/Built%20at-Fullstack%20Academy-red.svg?style=round-square)](http://fullstackacademy.com)
 [![Backlog Issues](https://badge.waffle.io/codyss/brewery.svg?label=backlog&title=Backlog)](http://waffle.io/codyss/brewery)
 
@@ -33,8 +37,4 @@ Users who signup as shop owners or those who have admin privileges are given a s
 ##LINKS
 + Deployed: brewerybros.herokuapp.com
 + Github: https://github.com/codyss/brewery
-
-
-<img src="/brewery.png" 
-alt="Brewery Icon" width="80" height="80"/>
 
