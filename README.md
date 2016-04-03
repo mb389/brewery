@@ -30,9 +30,11 @@ Users who signup as shop owners or those who have admin privileges are given a s
 + Mocha/Chai
 + Mailgun
 
-#LINKS
+##LINKS
 + Deployed: brewerybros.herokuapp.com
 + Github: https://github.com/codyss/brewery
 
-!["beer"](/brewery.png)
+
+<img src="/brewery.png" 
+alt="Brewery Icon" width="80" height="80"/>
 
