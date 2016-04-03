@@ -7,7 +7,7 @@ Brewery is the ultimate craft beer store.
 <img src="/brewery.png" 
 alt="Brewery Icon" width="30" height="60"/>
 
-Please check out the deployed website [here](brewerybros.herokuapp.com).
+Please check out the deployed website [here](http://brewerybros.herokuapp.com).
 
 ##About
 Brewery is an ecommerce website where users can search for their favorite craft beers, add items to their cart, and checkout. 
@@ -33,6 +33,6 @@ Users who signup as shop owners or those who have admin privileges are given a s
 + Mailgun
 
 ##LINKS
-+ Deployed: brewerybros.herokuapp.com
++ Deployed: http://brewerybros.herokuapp.com
 + Github: https://github.com/codyss/brewery
 
