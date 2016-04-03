@@ -1,10 +1,11 @@
 #Brewery
 [![Built at Fullstack Academy](https://img.shields.io/badge/Built%20at-Fullstack%20Academy-red.svg?style=round-square)](http://fullstackacademy.com)
 [![Backlog Issues](https://badge.waffle.io/codyss/brewery.svg?label=backlog&title=Backlog)](http://waffle.io/codyss/brewery)
-<img src="/brewery.png" 
-alt="Brewery Icon" width="50" height="80"/>
 
 Brewery is the ultimate craft beer store. 
+
+<img src="/brewery.png" 
+alt="Brewery Icon" width="30" height="60"/>
 
 Please check out the deployed website [here](brewerybros.herokuapp.com).
 
