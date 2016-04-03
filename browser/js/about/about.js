@@ -11,7 +11,5 @@ app.config(function ($stateProvider) {
 
 app.controller('AboutController', function ($scope, FullstackPics) {
 
-    // Images of beautiful Fullstack people.
-  
 
 });
