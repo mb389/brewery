@@ -10,7 +10,7 @@ alt="Brewery Icon" width="30" height="60"/>
 Please check out the deployed website [here](http://brewerybros.herokuapp.com).
 
 ##About
-Brewery is an ecommerce website where users can search for their favorite craft beers, add items to their cart, and checkout. 
+Brewery is a multi-tenant e-commerce app where users can search for their favorite craft beers, add items to their cart, and checkout. 
 
 Users can also sign up as shop owners, where they can sell different craft beers. Shop owners have the ability to customize their stores, and users can shop by specific store.
 
