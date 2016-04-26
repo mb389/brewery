@@ -7,6 +7,8 @@ Brewery is the ultimate craft beer store.
 <img src="/brewery.png" 
 alt="Brewery Icon" width="30" height="60"/>
 
+![screenshot](https://raw.githubusercontent.com/mb389/brewery/master/brewery-screenshot.png)
+
 Please check out the deployed website [here](http://brewerybros.herokuapp.com).
 
 ##About
