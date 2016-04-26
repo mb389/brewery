@@ -34,5 +34,5 @@ Users who signup as shop owners or those who have admin privileges are given a s
 
 ##LINKS
 + Deployed: http://brewerybros.herokuapp.com
-+ Github: https://github.com/codyss/brewery
++ Github: https://github.com/mb389/brewery
 
