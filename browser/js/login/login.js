@@ -13,26 +13,21 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
     $scope.error = null;
 
     $scope.sendLogin = function (loginInfo) {
-      console.log('runs login');
+      $scope.error = null;
 
-        $scope.error = null;
-
-        AuthService.login(loginInfo).then(function () {
-            $state.go('home');
-        }).catch(function () {
-            $scope.error = 'Invalid login credentials.';
-        });
-
+      AuthService.login(loginInfo).then(function () {
+          $state.go('home');
+      }).catch(function () {
+          $scope.error = 'Invalid login credentials.';
+      });
     };
 
     $scope.forgotPassword = function (){
       $scope.forgot = true;
-      console.log('password?');
     }
 
     $scope.retrievePassword = function (){
       $scope.retrieval = $scope.retrieve.email;
       $scope.forgot = false;
     }
-
 });

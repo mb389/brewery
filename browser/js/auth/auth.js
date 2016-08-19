@@ -54,7 +54,6 @@
             var data = response.data;
             Session.create(data.id, data.user);
             $rootScope.totalQuantity = 0;
-            console.log('the user on data', data.user);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             $rootScope.adminStatus = false;
             return data.user;
@@ -90,7 +89,6 @@
         };
 
         this.login = function (credentials) {
-          console.log('get to login factory');
             return $http.post('/login', credentials)
                 .then(onSuccessfulLogin)
                 .catch(function () {
@@ -99,7 +97,6 @@
         };
 
         this.signup = function (credentials) {
-          console.log('get to signup factory');
             return $http.post('/signup', credentials)
                 .then(onSuccessfulLogin)
                 .catch(function () {
@@ -110,7 +107,6 @@
         this.logout = function () {
             return $http.get('/logout').then(function () {
                 Session.destroy();
-                console.log('were out');
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
             }).then(() => {
               $rootScope.totalQuantity = null;

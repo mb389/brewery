@@ -23,13 +23,10 @@ app.controller('StoreListCtrl', function ($scope, $log, shopList, StoreFactory) 
 app.controller('StoreCtrl', function ($scope, $log, theStore, storeProducts, storeCategories) {
 
   $scope.store=theStore;
-  // $scope.products=storeProducts;
+  $scope.products=storeProducts;
   $scope.categories=storeCategories;
 
-  $scope.shopBeers = storeProducts.filter(product => {
-    return product.store === theStore._id
-  })
-
+  $scope.shopBeers = storeProducts.filter(product => product.store === theStore._id)
 
 });
 
@@ -47,9 +44,7 @@ app.controller('ProductCtrl', function ($scope, $log, ProductFactory, theProduct
     productToAdd.quantity = Number(quantity);
     $scope.wasAdded=true;
     OrderFactory.addOrCreate(productToAdd)
-    .then(() => {
-       $rootScope.totalQuantity = Number(quantity);
-    })
+    .then(() => $rootScope.totalQuantity = Number(quantity))
     $timeout(function(){
       $scope.wasAdded=false;
     },500);

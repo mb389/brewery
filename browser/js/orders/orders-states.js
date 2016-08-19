@@ -6,10 +6,7 @@ app.config(function ($stateProvider){
     resolve: {
       pendingOrder: function (OrderFactory, AuthService){
         return AuthService.getLoggedInUser(true)
-          .then(user => {
-            if(user) return OrderFactory.getOrderByUserIdOrSessionId(user._id);
-            else return OrderFactory.getOrderBySessionId()
-          })
+          .then(user => user ? OrderFactory.getOrderByUserIdOrSessionId(user._id) : OrderFactory.getOrderBySessionId())
       }
     }
   })

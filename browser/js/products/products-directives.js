@@ -13,7 +13,6 @@ app.directive('starRating', function() {
     templateUrl: 'js/products/templates/ratingStars.html',
     scope: {
         ratingValue: '=',
-        //onRatingSelect: '&',
         read: '='
       },
     link: function(scope) {

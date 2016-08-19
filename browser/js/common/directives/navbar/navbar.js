@@ -26,10 +26,10 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             };
 
             var adminCheck = function(){
-              // if($rootScope.adminStatus) scope.isAdmin = $rootScope.adminStatus;
+
               return AuthService.getLoggedInUser()
               .then(user => {
-                console.log('admin check', user)
+
                 if(!user){
                   scope.isAdmin = false;
                   scope.isOwner = false;
@@ -56,8 +56,8 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             var checkCartQuantity = function (){
                AuthService.getLoggedInUser()
                .then(function(user){
-                    if(!user) return OrderFactory.getOrderBySessionId()
-                   return OrderFactory.getOrderByUserIdOrSessionId(user._id)
+                 console.log(user)
+                 return user ? OrderFactory.getOrderByUserIdOrSessionId(user._id) : OrderFactory.getOrderBySessionId()
                })
                .then(function(order){
                 scope.number=0;
@@ -68,7 +68,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             }
 
             $rootScope.$watch('totalQuantity', function(){
-              console.log('here we are rootscope', $rootScope.totalQuantity);
+
               if(!scope.number) checkCartQuantity();
               if($rootScope.totalQuantity === null) scope.number = null; //logout, cart will always be back to 0
               if($rootScope.totalQuantity === 0) checkCartQuantity();
